@@ -116,13 +116,19 @@ class SiteDetailOutput(object):
                             if siteimpprop[index] is None or len(siteimpprop[index])==0:
                                 print "No results found for: " + site.ReportStringForResult[index]
                             else:
+                                laststring = ""
                                 #if it's just a string we don't want it output like a list
                                 if isinstance(siteimpprop[index], basestring):
-                                    print "" + site.ReportStringForResult[index] + " " + str(siteimpprop[index])
+                                    if "" + site.ReportStringForResult[index] + " " + str(siteimpprop[index]) != laststring:
+                                        print "" + site.ReportStringForResult[index] + " " + str(siteimpprop[index])
+                                        laststring = "" + site.ReportStringForResult[index] + " " + str(siteimpprop[index])
                                 #must be a list since it failed the isinstance check on string
                                 else:
+                                    laststring = ""
                                     for siteresult in siteimpprop[index]:
-                                        print "" + site.ReportStringForResult[index] + " " + str(siteresult)
+                                        if "" + site.ReportStringForResult[index] + " " + str(siteresult) != laststring:
+                                            print "" + site.ReportStringForResult[index] + " " + str(siteresult)
+                                            laststring = "" + site.ReportStringForResult[index] + " " + str(siteresult)
                 else:#this is a singlesite
                     siteimpprop = site.getImportantProperty(0)
                     if target != site.Target:
@@ -131,13 +137,19 @@ class SiteDetailOutput(object):
                     if siteimpprop is None or len(siteimpprop)==0:
                         print "No results found in the " + site.FriendlyName
                     else:
+                        laststring = ""
                         #if it's just a string we don't want it output like a list
                         if isinstance(siteimpprop, basestring):
-                            print "" + site.ReportStringForResult + " " + str(siteimpprop)
+                            if "" + site.ReportStringForResult + " " + str(siteimpprop) != laststring:
+                                print "" + site.ReportStringForResult + " " + str(siteimpprop)
+                                laststring = "" + site.ReportStringForResult + " " + str(siteimpprop)
                         #must be a list since it failed the isinstance check on string
                         else:
+                            laststring = ""
                             for siteresult in siteimpprop:
-                                print "" + site.ReportStringForResult + " " + str(siteresult)
+                                if "" + site.ReportStringForResult + " " + str(siteresult) != laststring:
+                                    print "" + site.ReportStringForResult + " " + str(siteresult)
+                                    laststring = "" + site.ReportStringForResult + " " + str(siteresult)
         else:
             pass
 
@@ -173,13 +185,19 @@ class SiteDetailOutput(object):
                             if siteimpprop[index] is None or len(siteimpprop[index])==0:
                                 f.write("\nNo results found for: " + site.ReportStringForResult[index])
                             else:
+                                laststring = ""
                                 #if it's just a string we don't want it to output like a list
                                 if isinstance(siteimpprop[index], basestring):
-                                    f.write("\n" + site.ReportStringForResult[index] + " " + str(siteimpprop[index]))
+                                    if "" + site.ReportStringForResult[index] + " " + str(siteimpprop[index]) != laststring:
+                                        f.write("\n" + site.ReportStringForResult[index] + " " + str(siteimpprop[index]))
+                                        laststring = "" + site.ReportStringForResult[index] + " " + str(siteimpprop[index])
                                 #must be a list since it failed the isinstance check on string
                                 else:
+                                    laststring = ""
                                     for siteresult in siteimpprop[index]:
-                                        f.write("\n" + site.ReportStringForResult[index] + " " + str(siteresult))
+                                        if "" + site.ReportStringForResult[index] + " " + str(siteresult) != laststring:
+                                            f.write("\n" + site.ReportStringForResult[index] + " " + str(siteresult))
+                                            laststring = "" + site.ReportStringForResult[index] + " " + str(siteresult)
                 else:#this is a singlesite
                     siteimpprop = site.getImportantProperty(0)
                     if target != site.Target:
@@ -188,12 +206,18 @@ class SiteDetailOutput(object):
                     if siteimpprop is None or len(siteimpprop)==0:
                         f.write("\nNo results found in the " + site.FriendlyName)
                     else:
+                        laststring = ""
                         #if it's just a string we don't want it output like a list
                         if isinstance(siteimpprop, basestring):
-                            f.write("\n" + site.ReportStringForResult + " " + str(siteimpprop))
+                            if "" + site.ReportStringForResult + " " + str(siteimpprop) != laststring:
+                                f.write("\n" + site.ReportStringForResult + " " + str(siteimpprop))
+                                laststring = "" + site.ReportStringForResult + " " + str(siteimpprop)
                         else:
+                            laststring = ""
                             for siteresult in siteimpprop:
-                                f.write("\n" + site.ReportStringForResult + " " + str(siteresult))
+                                if "" + site.ReportStringForResult + " " + str(siteresult) != laststring:
+                                    f.write("\n" + site.ReportStringForResult + " " + str(siteresult))
+                                    laststring = "" + site.ReportStringForResult + " " + str(siteresult)
         f.flush()
         f.close()
         print "" + textoutfile + " Generated"
@@ -237,21 +261,27 @@ class SiteDetailOutput(object):
                                 res = "No results found"
                                 csvRW.writerow([tgt,typ,source,res])
                             else:
+                                laststring = ""
                                 #if it's just a string we don't want it to output like a list
                                 if isinstance(siteimpprop, basestring):
                                     tgt = site.Target
                                     typ = site.TargetType
                                     source = site.FriendlyName
                                     res = siteimpprop
-                                    csvRW.writerow([tgt,typ,source,res])
+                                    if "" + tgt + typ + source + res != laststring:
+                                        csvRW.writerow([tgt,typ,source,res])
+                                        laststring = "" + tgt + typ + source + res
                                 #must be a list since it failed the isinstance check on string
                                 else:
+                                    laststring = ""
                                     for siteresult in siteimpprop[index]:
                                         tgt = site.Target
                                         typ = site.TargetType
                                         source = site.FriendlyName[index]
                                         res = siteresult
-                                        csvRW.writerow([tgt,typ,source,res])
+                                        if "" + tgt + typ + source + str(res) != laststring:
+                                            csvRW.writerow([tgt,typ,source,res])
+                                            laststring = "" + tgt + typ + source + str(res)
                 else:#this is a singlesite
                     siteimpprop = site.getImportantProperty(0)
                     if siteimpprop is None or len(siteimpprop)==0:
@@ -261,20 +291,27 @@ class SiteDetailOutput(object):
                         res = "No results found"
                         csvRW.writerow([tgt,typ,source,res])
                     else:
+                        laststring = ""
                         #if it's just a string we don't want it output like a list
                         if isinstance(siteimpprop, basestring):
                             tgt = site.Target
                             typ = site.TargetType
                             source = site.FriendlyName
                             res = siteimpprop
-                            csvRW.writerow([tgt,typ,source,res])
+                            if "" + tgt + typ + source + res != laststring:
+                                csvRW.writerow([tgt,typ,source,res])
+                                laststring = "" + tgt + typ + source + res
                         else:
+                            laststring = ""
                             for siteresult in siteimpprop:
                                 tgt = site.Target
                                 typ = site.TargetType
                                 source = site.FriendlyName
                                 res = siteresult
-                                csvRW.writerow([tgt,typ,source,res])
+                                if "" + tgt + typ + source + str(res) != laststring:
+                                    csvRW.writerow([tgt,typ,source,res])
+                                    laststring = "" + tgt + typ + source + str(res)
+                                    
         f.flush()
         f.close()
         print "" + csvoutfile + " Generated"
