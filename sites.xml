@@ -1,5 +1,50 @@
 <?xml version="1.0"?>
 <automater_root>
+    <site name="malc0de">
+        <sitetype>
+		<entry>ip</entry>
+		<entry>hostname</entry>
+		<entry>md5</entry>
+	</sitetype>
+        <domainurl>http://malc0de.com</domainurl>
+        <reportstringforresult>
+		<entry>[+] Malc0de Date:</entry>
+		<entry>[+] Malc0de IP:</entry>
+		<entry>[+] Malc0de Country:</entry>
+		<entry>[+] Malc0de ASN:</entry>
+		<entry>[+] Malc0de ASN Name:</entry>
+		<entry>[+] Malc0de MD5:</entry>
+	</reportstringforresult>
+        <sitefriendlyname>
+		<entry>Malc0de Date</entry>
+		<entry>Malc0de IP</entry>
+		<entry>Malc0de Country</entry>
+		<entry>Malc0de ASN</entry>
+		<entry>Malc0de ASN Name</entry>
+		<entry>Malc0de MD5</entry>
+	</sitefriendlyname>
+        <regex>
+		<entry>\d{4}\-\d{1,2}\-\d{1,2}</entry>
+		<entry>search=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})</entry>
+		<entry>(?!search=NA)search=([A-Z]{2})</entry>
+		<entry>search=\d{4,5}..(\d{4,5})</entry>
+		<entry>search=\d{4,5}..([A-Za-z]+)</entry>
+		<entry>latest\-scan\/([A-Fa-f0-9]{32})</entry>
+	</regex>
+	<fullurl>http://malc0de.com/database/index.php?search=%TARGET%</fullurl>
+        <importantproperty>
+		<entry>Results</entry>
+		<entry>Results</entry>
+		<entry>Results</entry>
+		<entry>Results</entry>
+		<entry>Results</entry>
+		<entry>Results</entry>
+	</importantproperty>
+	<params></params>
+	<headers></headers>
+	<apikey></apikey>
+    </site>
+    
     <site name="robtex_dns">
         <sitetype>
 		<entry>ip</entry>
