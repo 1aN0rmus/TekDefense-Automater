@@ -44,8 +44,7 @@
 	<headers></headers>
 	<apikey></apikey>
     </site>
-    
-    <site name="robtex_dns">
+        <site name="robtex">
         <sitetype>
 		<entry>ip</entry>
 	</sitetype>
@@ -57,9 +56,9 @@
 		<entry>RobTex DNS</entry>
 	</sitefriendlyname>
         <regex>
-		<entry>robtex\.com\/dns\/(.+)\.html.+\&lt;\/a\&gt;\&lt;\/li</entry>
+		<entry>host\"\s\:\s\"(.+)\"</entry>
 	</regex>
-	<fullurl>https://robtex.com/%TARGET%</fullurl>
+	<fullurl>http://api.tekdefense.com/robtex/rob.php?q=%TARGET%</fullurl>
         <importantproperty>
 		<entry>Results</entry>
 	</importantproperty>
