@@ -1,50 +1,6 @@
 <?xml version="1.0"?>
 <automater_root>
-    <site name="malc0de">
-        <sitetype>
-		<entry>ip</entry>
-		<entry>hostname</entry>
-		<entry>md5</entry>
-	</sitetype>
-        <domainurl>http://malc0de.com</domainurl>
-        <reportstringforresult>
-		<entry>[+] Malc0de Date:</entry>
-		<entry>[+] Malc0de IP:</entry>
-		<entry>[+] Malc0de Country:</entry>
-		<entry>[+] Malc0de ASN:</entry>
-		<entry>[+] Malc0de ASN Name:</entry>
-		<entry>[+] Malc0de MD5:</entry>
-	</reportstringforresult>
-        <sitefriendlyname>
-		<entry>Malc0de Date</entry>
-		<entry>Malc0de IP</entry>
-		<entry>Malc0de Country</entry>
-		<entry>Malc0de ASN</entry>
-		<entry>Malc0de ASN Name</entry>
-		<entry>Malc0de MD5</entry>
-	</sitefriendlyname>
-        <regex>
-		<entry>\d{4}\-\d{1,2}\-\d{1,2}</entry>
-		<entry>search=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})</entry>
-		<entry>(?!search=NA)search=([A-Z]{2})</entry>
-		<entry>search=\d{4,5}..(\d{4,5})</entry>
-		<entry>search=\d{4,5}..([A-Za-z]+)</entry>
-		<entry>latest\-scan\/([A-Fa-f0-9]{32})</entry>
-	</regex>
-	<fullurl>http://malc0de.com/database/index.php?search=%TARGET%</fullurl>
-        <importantproperty>
-		<entry>Results</entry>
-		<entry>Results</entry>
-		<entry>Results</entry>
-		<entry>Results</entry>
-		<entry>Results</entry>
-		<entry>Results</entry>
-	</importantproperty>
-	<params></params>
-	<headers></headers>
-	<apikey></apikey>
-    </site>
-        <site name="robtex">
+    <site name="robtex">
         <sitetype>
 		<entry>ip</entry>
 	</sitetype>
@@ -84,28 +40,6 @@
 	<fullurl>http://www.fortiguard.com/ip_rep/index.php?data=%TARGET%&amp;lookup=Lookup</fullurl>
         <importantproperty>
 		<entry>Results</entry>
-	</importantproperty>
-	<params></params>
-	<headers></headers>
-	<apikey></apikey>
-    </site>
-    <site name="alienvault_reputation">
-        <sitetype>
-		<entry>ip</entry>
-	</sitetype>
-        <domainurl>http://labs.alienvault.com/</domainurl>
-        <reportstringforresult>
-		<entry>[+] Found in AlienVault reputation DB:</entry>
-	</reportstringforresult>
-        <sitefriendlyname>
-		<entry>AlienVault Reputation</entry>
-	</sitefriendlyname>
-        <regex>
-		<entry>.*Reputation\sMonitor\sIP\sDetail.*</entry>
-	</regex>
-	<fullurl>http://www.alienvault.com/apps/rep_monitor/ip/%TARGET%</fullurl>
-        <importantproperty>
-		<entry>FullURL</entry>
 	</importantproperty>
 	<params></params>
 	<headers></headers>
@@ -154,7 +88,7 @@
 	</sitefriendlyname>
         <regex>
 		<entry>An\sError\soccurred</entry>
-		<entry>Detected\&lt;\/font\&gt;\&lt;\/td..td..a.rel..nofollow..href.\"(.{6,75})\"\stitle\=\"View</entry>
+		<entry>\&gt;\s(\w+)\&lt;\/td\&gt;\&lt;td\&gt;\&lt;.{30,50}alert\.png</entry>
 		<entry>ISP\&lt;\/td\&gt;\&lt;td\&gt;(.+)\&lt;\/td\&gt;</entry>
 		<entry>Country\sCode.+flag\"\s\/\&gt;\s(.+)\&lt;\/td\&gt;</entry>
 	</regex>
@@ -313,8 +247,8 @@
 	</sitefriendlyname>
         <regex>
 		<entry>An\sError\soccurred</entry>
-		<entry>(\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}).+Scan\swith\s</entry>
-		<entry>DETECTED.{25,50}href..(.{10,100}).\s*titl</entry>
+		<entry>(\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}).{5,30}Find\swebsites\shosted\shere</entry>
+		<entry>\&gt;\s(\w+)\&lt;\/td\&gt;\&lt;td\&gt;\&lt;.{30,50}alert\.png</entry>
 		<entry>Domain\s1st\sRegistered.+\&lt;td\&gt;(.+)\&lt;\/td\&gt;</entry>
 		<entry>latitude\s\/\slongitude.+\&lt;td\&gt;(.+)\&lt;\/td\&gt;</entry>
 		<entry>alt\=\"flag\".+\&gt;(.+)\&lt;\/td\&gt;</entry>
@@ -357,6 +291,50 @@
         <importantproperty>
 	        <entry>Results</entry>
 	        <entry>Results</entry>
+	</importantproperty>
+	<params></params>
+	<headers></headers>
+	<apikey></apikey>
+    </site>
+    <site name="malc0de">
+        <sitetype>
+		<entry>ip</entry>
+		<entry>hostname</entry>
+		<entry>md5</entry>
+	</sitetype>
+        <domainurl>http://malc0de.com</domainurl>
+        <reportstringforresult>
+		<entry>[+] Malc0de Date:</entry>
+		<entry>[+] Malc0de IP:</entry>
+		<entry>[+] Malc0de Country:</entry>
+		<entry>[+] Malc0de ASN:</entry>
+		<entry>[+] Malc0de ASN Name:</entry>
+		<entry>[+] Malc0de MD5:</entry>
+	</reportstringforresult>
+        <sitefriendlyname>
+		<entry>Malc0de Date</entry>
+		<entry>Malc0de IP</entry>
+		<entry>Malc0de Country</entry>
+		<entry>Malc0de ASN</entry>
+		<entry>Malc0de ASN Name</entry>
+		<entry>Malc0de MD5</entry>
+	</sitefriendlyname>
+        <regex>
+		<entry>\d{4}\-\d{1,2}\-\d{1,2}</entry>
+		<entry>search=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})</entry>
+		<entry>(?!search=NA)search=([A-Z]{2})</entry>
+		<entry>search=\d{4,5}..(\d{4,5})</entry>
+		<entry>search=\d{4,5}..([A-Za-z]+)</entry>
+		<entry>latest\-scan\/([A-Fa-f0-9]{32})</entry>
+	</regex>
+	<fullurl>http://malc0de.com/database/index.php?search=%TARGET%</fullurl>
+        <importantproperty>
+		<entry>Results</entry>
+		<entry>Results</entry>
+		<entry>Results</entry>
+		<entry>Results</entry>
+		<entry>Results</entry>
+		<entry>Results</entry>
 	</importantproperty>
 	<params></params>
 	<headers></headers>
