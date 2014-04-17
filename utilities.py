@@ -30,6 +30,8 @@ class Parser(object):
     hasCSVOutSet
     (Property) CSVOutFile
     (Property) Delay
+    hasProxy
+    (Property) Proxy
     print_help
     hasTarget
     hasNoTarget
@@ -64,6 +66,7 @@ class Parser(object):
         self._parser.add_argument('-d', '--delay', type=int, default = 2, help = 'This will change the delay to the inputted seconds. Default is 2.')
         self._parser.add_argument('-s', '--source', help = 'This option will only run the target against a specific source engine to pull associated domains.  Options are defined in the name attribute of the site element in the XML configuration file')
         self._parser.add_argument('--p', action = "store_true", help = 'This option tells the program to post information to sites that allow posting. By default the program will NOT post to sites that require a post.')
+        self._parser.add_argument('--proxy', help = 'This option will set a proxy for the connections (eg. proxy.example.com:8080)')
         self.args = self._parser.parse_args()
 
     def hasHTMLOutFile(self):
@@ -205,6 +208,45 @@ class Parser(object):
         This Method is tagged as a Property.
         """
         return self.args.delay
+
+    def hasProxy(self):
+        """
+        Checks to determine if user requested a proxy.
+        Returns True if user requested a proxy, False if not.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        Boolean.
+
+        Restriction(s):
+        The Method has no restrictions.
+        """
+        if self.args.proxy:
+            return True
+        else:
+            return False
+
+    @property
+    def Proxy(self):
+        """
+        Returns proxy set by input parameters to the program.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        string -- String containing proxy server in format server:port,
+        default is none
+
+        Restriction(s):
+        This Method is tagged as a Property.
+        """
+        if self.hasProxy():
+            return self.args.proxy
+        else:
+            return None
 
     def print_help(self):
         """
