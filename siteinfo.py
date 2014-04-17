@@ -64,7 +64,7 @@ class SiteFacade(object):
         """
         self._sites = []
 
-    def runSiteAutomation(self, webretrievedelay, targetlist, source, postbydefault):
+    def runSiteAutomation(self, webretrievedelay, proxy, targetlist, source, postbydefault):
         """
         Builds site objects representative of each site listed in the sites.xml
         config file. Appends a Site object or one of it's subordinate objects
@@ -74,6 +74,7 @@ class SiteFacade(object):
         Argument(s):
         webretrievedelay -- The amount of seconds to wait between site retrieve
         calls. Default delay is 2 seconds.
+        proxy -- proxy server address as server:8080
         targetlist -- list of strings representing targets to be investigated.
         Targets can be IP Addresses, MD5 hashes, or hostnames.
         source -- String representing a specific site that should only be used
@@ -99,7 +100,7 @@ class SiteFacade(object):
                             if st.text == targettype:
                                 sitetypematch = True
                         if sitetypematch:
-                            site = Site.buildSiteFromXML(siteelement, webretrievedelay, targettype, targ)
+                            site = Site.buildSiteFromXML(siteelement, webretrievedelay, proxy, targettype, targ)
                             if (site.Params != None or site.Headers != None) and site.APIKey != None:
                                 self._sites.append(PostTransactionAPIKeySite(site))
                             elif site.Params != None or site.Headers != None:
@@ -217,7 +218,7 @@ class Site(object):
     _results
     _messagetopost
     """
-    def __init__(self, domainurl, webretrievedelay, targettype, \
+    def __init__(self, domainurl, webretrievedelay, proxy, targettype, \
                  reportstringforresult, target, friendlyname, regex, fullurl, \
                  importantproperty, params, headers, apikey):
         """
@@ -229,6 +230,7 @@ class Site(object):
         domainurl -- string defined in sites.xml in the domainurl XML tag.
         webretrievedelay -- the amount of seconds to wait between site retrieve
         calls. Default delay is 2 seconds.
+        proxy --
         targettype -- the targettype as defined. Either ip, md5, or hostname.
         reportstringforresult -- string or list of strings that are entered in
         the entry XML tag within the reportstringforresult XML tag in the
@@ -255,6 +257,7 @@ class Site(object):
         """
         self._sourceurl = domainurl
         self._webretrievedelay = webretrievedelay
+        self._proxy = proxy
         self._targetType = targettype
         self._reportstringforresult = reportstringforresult
         self._errormessage = "[-] Cannot scrape"
@@ -280,7 +283,7 @@ class Site(object):
         self._messagetopost = ""
 
     @classmethod
-    def buildSiteFromXML(self, siteelement, webretrievedelay, targettype, target):
+    def buildSiteFromXML(self, siteelement, webretrievedelay, proxy, targettype, target):
         """
         Utilizes the Class Methods within this Class to build the Site object.
         Returns a Site object that defines results returned during the web
@@ -309,7 +312,7 @@ class Site(object):
         params = Site.buildDictionaryFromXML(siteelement, "params")
         headers = Site.buildDictionaryFromXML(siteelement, "headers")
         apikey = Site.buildStringOrListfromXML(siteelement, "apikey")
-        return Site(domainurl, webretrievedelay, targettype, reportstringforresult, target, \
+        return Site(domainurl, webretrievedelay, proxy, targettype, reportstringforresult, target, \
                     sitefriendlyname, regex, fullurl, importantproperty, params, headers, apikey)
 
     @classmethod
@@ -400,6 +403,22 @@ class Site(object):
         This Method is tagged as a Property.
         """
         return self._webretrievedelay
+
+    @property
+    def Proxy(self):
+        """
+        Returns the string representation of the proxy used.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        string -- representation of the proxy used
+
+        Restriction(s):
+        This Method is tagged as a Property.
+        """
+        return self._proxy
 
     @property
     def TargetType(self):
@@ -862,8 +881,12 @@ class Site(object):
         The Method has no restrictions.
         """
         delay = self.WebRetrieveDelay
-        proxy = urllib2.ProxyHandler()
-        opener = urllib2.build_opener(proxy)
+        if re.match("^https://", self.FullURL):
+            proxy = urllib2.ProxyHandler({'https' : self.Proxy})
+            opener = urllib2.build_opener(proxy)
+        else:
+            proxy = urllib2.ProxyHandler({'http' : self.Proxy})
+            opener = urllib2.build_opener(proxy)
         try:
             response = opener.open(self.FullURL)
             content = response.read()
@@ -897,7 +920,7 @@ class SingleResultsSite(Site):
         Nothing is returned from this Method.
         """
         self._site = site
-        super(SingleResultsSite, self).__init__(self._site.URL, self._site.WebRetrieveDelay, self._site.TargetType,\
+        super(SingleResultsSite, self).__init__(self._site.URL, self._site.WebRetrieveDelay, self._site.Proxy, self._site.TargetType,\
                                                self._site.ReportStringForResult, self._site.Target, \
                                                self._site.FriendlyName, self._site.RegEx, self._site.FullURL, \
                                                self._site.ImportantPropertyString, self._site.Params, \
@@ -958,7 +981,7 @@ class MultiResultsSite(Site):
         Nothing is returned from this Method.
         """
         self._site = site
-        super(MultiResultsSite,self).__init__(self._site.URL, self._site.WebRetrieveDelay, self._site.TargetType,\
+        super(MultiResultsSite,self).__init__(self._site.URL, self._site.WebRetrieveDelay, self._site.Proxy, self._site.TargetType,\
                                               self._site.ReportStringForResult, self._site.Target, \
                                               self._site.FriendlyName, self._site.RegEx, self._site.FullURL, \
                                               self._site.ImportantPropertyString, self._site.Params, \
@@ -1058,8 +1081,9 @@ class PostTransactionPositiveCapableSite(Site):
         else:
             regextofindforpost = self._site.RegEx[0]
             newregexlist = self._site.RegEx[1:]
-            super(PostTransactionPositiveCapableSite, self).__init__(self._site.URL, self._site.WebRetrieveDelay, \
-                                                                     self._site.TargetType, self._site.ReportStringForResult, \
+            super(PostTransactionPositiveCapableSite, self).__init__(self._site.URL, self._site.WebRetrieveDelay,
+                                                                     self._site.Proxy, self._site.TargetType, \
+                                                                     self._site.ReportStringForResult, \
                                                                      self._site.Target, self._site.FriendlyName, \
                                                                      newregexlist, self._site.FullURL, \
                                                                      self._site.ImportantPropertyString, \
