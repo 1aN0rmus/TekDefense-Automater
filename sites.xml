@@ -296,7 +296,7 @@
 	<headers></headers>
 	<apikey></apikey>
     </site>
-    <site name="malc0de">
+    <!--<site name="malc0de">
         <sitetype>
 		<entry>ip</entry>
 		<entry>hostname</entry>
@@ -339,5 +339,5 @@
 	<params></params>
 	<headers></headers>
 	<apikey></apikey>
-    </site>
+    </site>-->
 </automater_root>
