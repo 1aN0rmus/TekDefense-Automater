@@ -82,6 +82,7 @@ def main():
 
     sitefac = SiteFacade()
     sitefac.runSiteAutomation(parser.Delay,
+                              parser.Proxy,
                               targetlist,
                               source,
                               parser.hasPost())
