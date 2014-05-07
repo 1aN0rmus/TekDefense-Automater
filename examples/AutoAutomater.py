@@ -49,7 +49,9 @@ def run_automater(targets):
         return None
         
 def main():
-    run_automater(sys.argv[1:])
+    rows=run_automater(sys.argv[1:])
+    for row in rows:
+        print row
 
 if __name__ == "__main__":
     main()
