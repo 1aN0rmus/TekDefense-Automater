@@ -23,11 +23,14 @@ site that has single or multiple results requested and discovered. This
 Class is utilized if an API key is provided in the sites.xml
 configuration file.
 
+See references to Silent mode in Site class documentation for
+inhibiting console output.
+
 Function(s):
 No global exportable functions are defined.
 
 Exception(s):
-No exceptions exported.
+SiteError when Site or a subclass there of is used in Silent mode
 """
 import urllib
 import urllib2
@@ -64,7 +67,7 @@ class SiteFacade(object):
         """
         self._sites = []
 
-    def runSiteAutomation(self, webretrievedelay, targetlist, source, postbydefault):
+    def runSiteAutomation(self, webretrievedelay, targetlist, source, postbydefault,**kwargs):
         """
         Builds site objects representative of each site listed in the sites.xml
         config file. Appends a Site object or one of it's subordinate objects
@@ -99,7 +102,8 @@ class SiteFacade(object):
                             if st.text == targettype:
                                 sitetypematch = True
                         if sitetypematch:
-                            site = Site.buildSiteFromXML(siteelement, webretrievedelay, targettype, targ)
+                            site = Site.buildSiteFromXML(siteelement, webretrievedelay, targettype, targ,silent=kwargs.get('silent', False))
+                            site.Silent = True
                             if (site.Params != None or site.Headers != None) and site.APIKey != None:
                                 self._sites.append(PostTransactionAPIKeySite(site))
                             elif site.Params != None or site.Headers != None:
@@ -159,6 +163,14 @@ class SiteFacade(object):
             return "md5"
 
         return "hostname"
+class SiteError(Exception):
+    """
+    Custom exception for exceptions rasied from site objects
+    """
+    def __init__(self, value):
+         self.value = value
+    def __str__(self):
+         return repr(self.value)
 
 class Site(object):
     """
@@ -168,6 +180,11 @@ class Site(object):
     Site is the parent object to SingleResultsSite, MultiResultsSite,
     PostTransactionPositiveCapableSite, and PostTransactionAPIKeySite.
 
+    Console output can be turned off by setting the Silent property to True
+    When in silent mode when errors are encountered a SiteError is raised
+    Silent mode can be set in the constructor or in the factory buildSiteFromXML 
+    py passing silent=True as a keyword arg.
+    
     Public Method(s):
     (Class Method) buildSiteFromXML
     (Class Method) buildStringOrListfromXML
@@ -190,6 +207,7 @@ class Site(object):
     (Property) APIKey
     (Property) Target
     (Property) Results
+    (Property) Silent
     addResults
     postMessage
     getImportantProperty
@@ -219,7 +237,7 @@ class Site(object):
     """
     def __init__(self, domainurl, webretrievedelay, targettype, \
                  reportstringforresult, target, friendlyname, regex, fullurl, \
-                 importantproperty, params, headers, apikey):
+                 importantproperty, params, headers, apikey, **kwargs):
         """
         Class constructor. Sets the instance variables based on input from
         the arguments supplied when Automater is run and what the sites.xml
@@ -278,9 +296,10 @@ class Site(object):
             self._apikey = apikey
         self._results = []
         self._messagetopost = ""
+        self.Silent = kwargs.get('silent', False)
 
     @classmethod
-    def buildSiteFromXML(self, siteelement, webretrievedelay, targettype, target):
+    def buildSiteFromXML(self, siteelement, webretrievedelay, targettype, target, **kwargs):
         """
         Utilizes the Class Methods within this Class to build the Site object.
         Returns a Site object that defines results returned during the web
@@ -310,7 +329,7 @@ class Site(object):
         headers = Site.buildDictionaryFromXML(siteelement, "headers")
         apikey = Site.buildStringOrListfromXML(siteelement, "apikey")
         return Site(domainurl, webretrievedelay, targettype, reportstringforresult, target, \
-                    sitefriendlyname, regex, fullurl, importantproperty, params, headers, apikey)
+                    sitefriendlyname, regex, fullurl, importantproperty, params, headers, apikey, silent=kwargs.get('silent', False))
 
     @classmethod
     def buildStringOrListfromXML(self, siteelement, elementstring):
@@ -772,8 +791,10 @@ class Site(object):
         Restriction(s):
         The Method has no restrictions.
         """
+        
         self._messagetopost = message
-        print self.MessageToPost
+        if not self.Silent:
+            print self.MessageToPost
 
     def getImportantProperty(self, index):
         """
@@ -901,7 +922,7 @@ class SingleResultsSite(Site):
                                                self._site.ReportStringForResult, self._site.Target, \
                                                self._site.FriendlyName, self._site.RegEx, self._site.FullURL, \
                                                self._site.ImportantPropertyString, self._site.Params, \
-                                               self._site.Headers, self._site.APIKey)
+                                                self._site.Headers, self._site.APIKey,silent=self._site.Silent)
         self.postMessage(self.UserMessage + " " + self.FullURL)
         websitecontent = self.getContentList()
         if websitecontent is not None:
@@ -929,8 +950,12 @@ class SingleResultsSite(Site):
             foundlist = re.findall(repattern, content)
             return foundlist
         except:
-            self.postMessage(self.ErrorMessage + " " + self.FullURL)
-            return None
+            message = self.ErrorMessage + " " + self.FullURL
+            if self.Silent:
+                raise SiteError(message)
+            else:
+                self.postMessage(message)
+        return None
 
 class MultiResultsSite(Site):
     """
@@ -962,7 +987,7 @@ class MultiResultsSite(Site):
                                               self._site.ReportStringForResult, self._site.Target, \
                                               self._site.FriendlyName, self._site.RegEx, self._site.FullURL, \
                                               self._site.ImportantPropertyString, self._site.Params, \
-                                              self._site.Headers, self._site.APIKey)        
+                                              self._site.Headers, self._site.APIKey,silent=self._site.Silent)        
         self._results = [[] for x in xrange(len(self._site.RegEx))]
         self.postMessage(self.UserMessage + " " + self.FullURL)
         for index in range(len(self.RegEx)):
@@ -1014,8 +1039,13 @@ class MultiResultsSite(Site):
             foundlist = re.findall(repattern, content)
             return foundlist
         except:
-            self.postMessage(self.ErrorMessage + " " + self.FullURL)
-            return None
+            message = self.ErrorMessage + " " + self.FullURL
+            if self.Silent:
+                raise SiteError(message)
+            else:
+                self.postMessage(message)
+            
+        return None
 
 class PostTransactionPositiveCapableSite(Site):
     """
@@ -1064,7 +1094,7 @@ class PostTransactionPositiveCapableSite(Site):
                                                                      newregexlist, self._site.FullURL, \
                                                                      self._site.ImportantPropertyString, \
                                                                      self._site.Params, self._site.Headers, \
-                                                                     self._site.APIKey)            
+                                                                     self._site.APIKey, silent=self._site.Silent)            
             self.postMessage(self.UserMessage + " " + self.FullURL)
             content = self.getContent()
             if content != None:
@@ -1131,8 +1161,12 @@ class PostTransactionPositiveCapableSite(Site):
                 foundlist = re.findall(repattern, content)
                 return foundlist
         except:
-            self.postMessage(self.ErrorMessage + " " + self.FullURL)
-            return None
+            message = self.ErrorMessage + " " + self.FullURL
+            if self.Silent:
+                raise SiteError(message)
+            else:
+                self.postMessage(message)
+        return None
 
     def getContent(self):
         """
@@ -1154,7 +1188,11 @@ class PostTransactionPositiveCapableSite(Site):
             content = self.getWebScrape()
             return content
         except:
-            self.postMessage(self.ErrorMessage + " " + self.FullURL)
+            message = self.ErrorMessage + " " + self.FullURL
+            if self.Silent:
+                raise SiteError(message)
+            else:
+                self.postMessage(message)
             return None
 
     def postIsNecessary(self, regex, content):
@@ -1220,8 +1258,12 @@ class PostTransactionPositiveCapableSite(Site):
             content = str(page)
             return content
         except:
-            self.postMessage(self.ErrorMessage + " " + self.FullURL)
-            return None
+            message = self.ErrorMessage + " " + self.FullURL
+            if self.Silent:
+                raise SiteError(message)
+            else:
+                self.postMessage(message)
+        return None
 
 class PostTransactionAPIKeySite(Site):
     """
@@ -1254,7 +1296,7 @@ class PostTransactionAPIKeySite(Site):
                                                        self._site.ReportStringForResult, self._site.Target, \
                                                        self._site.FriendlyName, self._site.RegEx, self._site.FullURL, \
                                                        self._site.ImportantPropertyString, self._site.Params, \
-                                                       self._site.Headers, self._site.APIKey)
+                                                       self._site.Headers, self._site.APIKey, silent=self._site.Silent)
         self.postMessage(self.UserMessage + " " + self.FullURL)
         content = self.submitPost(self.Params, self.Headers)
         if content != None:
@@ -1315,8 +1357,12 @@ class PostTransactionAPIKeySite(Site):
                 foundlist = re.findall(repattern, content)
                 return foundlist
         except:
-            self.postMessage(self.ErrorMessage + " " + self.FullURL)
-            return None
+            message = self.ErrorMessage + " " + self.FullURL
+            if self.Silent:
+                raise SiteError(message)
+            else:
+                self.postMessage(message)
+        return None
 
     def submitPost(self, raw_params, headers):
         """
@@ -1347,5 +1393,9 @@ class PostTransactionAPIKeySite(Site):
             content = str(page)
             return content
         except:
-            self.postMessage(self.ErrorMessage + " " + self.FullURL)
-            return None
+            message = self.ErrorMessage + " " + self.FullURL
+            if self.Silent:
+                raise SiteError(message)
+            else:
+                self.postMessage(message)
+        return None

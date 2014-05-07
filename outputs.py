@@ -222,7 +222,13 @@ class SiteDetailOutput(object):
         f.close()
         print "" + textoutfile + " Generated"
 
+        
     def PrintToCSVFile(self,csvoutfile):
+        f = open(csvoutfile, "wb")
+        self.PrintToCSVFileHandle(f)
+        f.close()
+        
+    def PrintToCSVFileHandle(self,csvoutfilehandle):
         """
         Formats site information correctly and prints it to an output file with comma-seperators.
         Returns nothing.
@@ -238,8 +244,8 @@ class SiteDetailOutput(object):
         """
         sites = sorted(self.ListOfSites, key=attrgetter('Target'))
         target = ""
-        print '\n[+] Generating CSV output: ' + csvoutfile
-        f = open(csvoutfile, "wb")
+        
+        f = csvoutfilehandle
         csvRW = csv.writer(f, quoting=csv.QUOTE_ALL)
         csvRW.writerow(['Target', 'Type', 'Source', 'Result'])
         if sites is not None:
@@ -313,8 +319,9 @@ class SiteDetailOutput(object):
                                     laststring = "" + tgt + typ + source + str(res)
                                     
         f.flush()
-        f.close()
-        print "" + csvoutfile + " Generated"
+        #f.close()
+        
+        
 
     def PrintToHTMLFile(self,htmloutfile):
         """
