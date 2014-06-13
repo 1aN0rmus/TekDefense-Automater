@@ -1,5 +1,117 @@
 <?xml version="1.0"?>
 <automater_root>
+  <site name="investigate_domain">
+      <sitetype>
+          <entry>hostname</entry>
+      </sitetype>
+      <domainurl>http://investigate.opendns.com/</domainurl>
+      <reportstringforresult>
+          <entry>[+] DGA Score from Investigate:</entry>
+          <entry>[+] Perplexity from Investigate:</entry>
+          <entry>[+] Entropy from Investigate:</entry>
+          <entry>[+] SecureRank2 from Investigate:</entry>
+          <entry>[+] PageRank from Investigate:</entry>
+          <entry>[+] ASN Score from Investigate:</entry>
+          <entry>[+] Prefix Score from Investigate:</entry>
+          <entry>[+] RIP Score from Investigate:</entry>
+          <entry>[+] FastFlux from Investigate:</entry>
+          <entry>[+] Popularity from Investigate:</entry>
+          <entry>[+] Geodiversity from Investigate:</entry>
+          <entry>[+] Geodiversity Normalized from Investigate:</entry>
+          <entry>[+] Geo Score from Investigate:</entry>
+          <entry>[+] KSTest from Investigate:</entry>
+          <entry>[+] Attack from Investigate:</entry>
+          <entry>[+] Threat Type from Investigate:</entry>
+      </reportstringforresult>
+      <sitefriendlyname>
+          <entry>DGAScore</entry>
+          <entry>Perplexity</entry>
+          <entry>Entropy</entry>
+          <entry>SecureRank2</entry>
+          <entry>PageRank</entry>
+          <entry>ASNScore</entry>
+          <entry>PrefixScore</entry>
+          <entry>RIPScore</entry>
+          <entry>FastFlux</entry>
+          <entry>Popularity</entry>
+          <entry>Geodiversity</entry>
+          <entry>GeodiversityNorm</entry>
+          <entry>GeoScore</entry>
+          <entry>KSTest</entry>
+          <entry>Attack</entry>
+          <entry>ThreatType</entry>
+      </sitefriendlyname>
+      <regex>
+          <entry>This Should Never Ever Ever Match! We don't want not stinking POST requests</entry>
+          <entry>dga_score: (\d+\.\d+)</entry>
+          <entry>perplexity: (\d+\.\d+)</entry>
+          <entry>entropy: (\d+\.\d+)</entry>
+          <entry>securerank2: (\d+\.\d+)</entry>
+          <entry>pagerank: (\d+\.\d+)</entry>
+          <entry>asn_score: (\d+\.\d+)</entry>
+          <entry>prefix_score: (\d+\.\d+)</entry>
+          <entry>rip_score: (\d+\.\d+)</entry>
+          <entry>fastflux: (true|false)</entry>
+          <entry>popularity: (\d+\.\d+)</entry>
+          <entry>(?&lt;!tld_)geodiversity: (.+)</entry>
+          <entry>geodiversity_normalized: (.+)</entry>
+          <entry>geoscore: (\d+\.\d+)</entry>
+          <entry>ks_test: (\d+\.\d+)</entry>
+          <entry>attack: (\w+)</entry>
+          <entry>threat_type: (\w+)</entry>
+      </regex>
+      <fullurl>https://investigate.api.opendns.com/security/name/%TARGET%</fullurl>
+      <importantproperty>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+          <entry>Results</entry>
+      </importantproperty>
+      <params/>
+      <headers>
+          <entry key="Authorization">Bearer INVESTIGATE_API_TOKEN</entry>
+      </headers>
+      <apikey/>
+  </site>
+  <site name="investigate_ip">
+      <sitetype>
+          <entry>ip</entry>
+      </sitetype>
+      <domainurl>http://investigate.opendns.com/</domainurl>
+      <reportstringforresult>
+          <entry>[+] Malicious Domain from Investigate:</entry>
+          <entry/>
+      </reportstringforresult>
+      <sitefriendlyname>
+          <entry>MaliciousDomain</entry>
+          <entry/>
+      </sitefriendlyname>
+      <regex>
+          <entry>This Should Never Ever Ever Match! We don't want not stinking POST requests</entry>
+          <entry>"name":"([^"]+)"</entry>
+      </regex>
+      <fullurl>https://investigate.api.opendns.com/ips/%TARGET%/latest_domains</fullurl>
+      <importantproperty>
+          <entry>Results</entry>
+      </importantproperty>
+      <params/>
+      <headers>
+          <entry key="Authorization">Bearer INVESTIGATE_API_TOKEN</entry>
+      </headers>
+      <apikey/>
+  </site>
     <site name="robtex">
         <sitetype>
 		<entry>ip</entry>

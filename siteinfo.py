@@ -864,6 +864,8 @@ class Site(object):
         delay = self.WebRetrieveDelay
         proxy = urllib2.ProxyHandler()
         opener = urllib2.build_opener(proxy)
+        if self.Headers:
+          opener.addheaders = [(x, self.Headers[x]) for x in self.Headers]
         try:
             response = opener.open(self.FullURL)
             content = response.read()
