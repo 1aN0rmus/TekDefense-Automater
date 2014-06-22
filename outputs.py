@@ -119,9 +119,9 @@ class SiteDetailOutput(object):
                                 laststring = ""
                                 #if it's just a string we don't want it output like a list
                                 if isinstance(siteimpprop[index], basestring):
-                                    if "" + site.ReportStringForResult[index] + " " + str(siteimpprop[index]) != laststring:
-                                        print "" + site.ReportStringForResult[index] + " " + str(siteimpprop[index])
-                                        laststring = "" + site.ReportStringForResult[index] + " " + str(siteimpprop[index])
+                                    if "" + site.ReportStringForResult[index] + " " + str(siteimpprop) != laststring:
+                                        print "" + site.ReportStringForResult[index] + " " + str(siteimpprop)
+                                        laststring = "" + site.ReportStringForResult[index] + " " + str(siteimpprop)
                                 #must be a list since it failed the isinstance check on string
                                 else:
                                     laststring = ""
@@ -188,9 +188,9 @@ class SiteDetailOutput(object):
                                 laststring = ""
                                 #if it's just a string we don't want it to output like a list
                                 if isinstance(siteimpprop[index], basestring):
-                                    if "" + site.ReportStringForResult[index] + " " + str(siteimpprop[index]) != laststring:
-                                        f.write("\n" + site.ReportStringForResult[index] + " " + str(siteimpprop[index]))
-                                        laststring = "" + site.ReportStringForResult[index] + " " + str(siteimpprop[index])
+                                    if "" + site.ReportStringForResult[index] + " " + str(siteimpprop) != laststring:
+                                        f.write("\n" + site.ReportStringForResult[index] + " " + str(siteimpprop))
+                                        laststring = "" + site.ReportStringForResult[index] + " " + str(siteimpprop)
                                 #must be a list since it failed the isinstance check on string
                                 else:
                                     laststring = ""
