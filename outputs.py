@@ -183,12 +183,12 @@ class SiteDetailOutput(object):
         curr_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         hostname = socket.gethostname()
         prefix = ' '.join([curr_date,hostname])
-        cef_version = "CEF:0"
-        cef_deviceVendor = "0"
-        cef_deviceProduct = "0"
-        cef_deviceVersion = "0"
+        cef_version = "CEF:Version1.1"
+        cef_deviceVendor = "TekDefense"
+        cef_deviceProduct = "Automater"
+        cef_deviceVersion = "2.1"
         cef_SignatureID = "0"
-        cef_Severity = "10"
+        cef_Severity = "2"
         cef_Extension = " "
         cef_fields = [cef_version,cef_deviceVendor,cef_deviceProduct,cef_deviceVersion, \
                        cef_SignatureID, cef_Severity, cef_Extension]
@@ -211,7 +211,7 @@ class SiteDetailOutput(object):
                             res = "No results found"
                             cefRW.writerow([prefix] + cef_fields[:5] + \
                                            ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+res])+"] "] + \
-                                           [1] + ["-"])
+                                           [1] + [tgt])
                         else:
                             if siteimpprop[index] is None or len(siteimpprop[index])==0:
                                 tgt = site.Target
@@ -220,7 +220,7 @@ class SiteDetailOutput(object):
                                 res = "No results found"
                                 cefRW.writerow([prefix] + cef_fields[:5] + \
                                            ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+res])+"] "] + \
-                                           [1] + ["-"])
+                                           [1] + [tgt])
                             else:
                                 laststring = ""
                                 #if it's just a string we don't want it to output like a list
@@ -233,7 +233,7 @@ class SiteDetailOutput(object):
                                         cefRW.writerow([prefix] + cef_fields[:5] + \
                                           ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+res])+"] " + \
                                                re.sub(pattern,"",site.ReportStringForResult[index])+ str(siteimpprop)] + \
-                                           [cef_Severity] + ["-"])
+                                           [cef_Severity] + [tgt])
                                         laststring = "" + tgt + typ + source + res
                                 #must be a list since it failed the isinstance check on string
                                 else:
@@ -247,7 +247,7 @@ class SiteDetailOutput(object):
                                             cefRW.writerow([prefix] + cef_fields[:5] + \
                                            ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+str(res)])+"] " + \
                                                re.sub(pattern,"",site.ReportStringForResult[index])+ str(siteresult)] + \
-                                           [cef_Severity] + ["-"])
+                                           [cef_Severity] + [tgt])
                                             laststring = "" + tgt + typ + source + str(res)
                 else:#this is a singlesite
                     siteimpprop = site.getImportantProperty(0)
@@ -258,7 +258,7 @@ class SiteDetailOutput(object):
                         res = "No results found"
                         cefRW.writerow([prefix] + cef_fields[:5] + \
                                           ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+res])+"] "] + \
-                                           [1] + ["-"])
+                                           [1] + [tgt])
                     else:
                         laststring = ""
                         #if it's just a string we don't want it output like a list
@@ -271,7 +271,7 @@ class SiteDetailOutput(object):
                                 cefRW.writerow([prefix] + cef_fields[:5] + \
                                           ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+res])+"] " + \
                                                re.sub(pattern,"",site.ReportStringForResult)+ str(siteimpprop)] + \
-                                           [cef_Severity] + ["-"])
+                                           [cef_Severity] + [tgt])
                                 laststring = "" + tgt + typ + source + res
                         else:
                             laststring = ""
@@ -284,7 +284,7 @@ class SiteDetailOutput(object):
                                     cefRW.writerow([prefix] + cef_fields[:5] + \
                                          ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+str(res)])+"] " + \
                                                re.sub(pattern,"",site.ReportStringForResult)+ str(siteimpprop)] + \
-                                           [cef_Severity] + ["-"])
+                                           [cef_Severity] + [tgt])
                                     laststring = "" + tgt + typ + source + str(res)
                                     
         f.flush()
