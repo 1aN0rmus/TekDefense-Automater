@@ -62,6 +62,7 @@ class Parser(object):
         self._parser = argparse.ArgumentParser(description = desc)
         self._parser.add_argument('target', help = 'List one IP Address (CIDR or dash notation accepted), URL or Hash to query or pass the filename of a file containing IP Address info, URL or Hash to query each separated by a newline.')
         self._parser.add_argument('-o', '--output', help = 'This option will output the results to a file.')
+        self._parser.add_argument('-f', '--cef', help = 'This option will output the results to a CEF formatted file.')
         self._parser.add_argument('-w', '--web', help = 'This option will output the results to an HTML file.')
         self._parser.add_argument('-c', '--csv', help = 'This option will output the results to a CSV file.')
         self._parser.add_argument('-d', '--delay', type=int, default = 2, help = 'This will change the delay to the inputted seconds. Default is 2.')
@@ -70,6 +71,48 @@ class Parser(object):
         self._parser.add_argument('--proxy', help = 'This option will set a proxy to use (eg. proxy.example.com:8080)')
         self._parser.add_argument('-a', '--useragent', default = 'Automater/2.1', help = 'This option allows the user to set the user-agent seen by web servers being utilized. By default, the user-agent is set to Automater/version')
         self.args = self._parser.parse_args()
+
+    def hasCEFOutFile(self):
+        """
+        Checks to determine if user requested an output file formatted in CEF.
+        Returns True if user requested CEF output, False if not.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        Boolean.
+
+        Restriction(s):
+        The Method has no restrictions.
+        """
+        if self.args.cef:
+            return True
+        else:
+            return False
+
+    @property
+    def CEFOutFile(self):
+        """
+        Checks if there is an CEF output requested.
+        Returns string name of CEF output file if requested
+        or None if not requested.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        string -- Name of an output file to write to system.
+        None -- if CEF output was not requested.
+
+        Restriction(s):
+        This Method is tagged as a Property.
+        """
+        if self.hasCEFOutFile():
+            return self.args.cef
+        else:
+            return None
+
 
     def hasHTMLOutFile(self):
         """
