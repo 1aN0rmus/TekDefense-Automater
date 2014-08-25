@@ -16,6 +16,9 @@ No exceptions exported.
 """
 
 import csv
+import socket
+import re
+from datetime import datetime
 from operator import attrgetter
 
 class SiteDetailOutput(object):
@@ -79,6 +82,8 @@ class SiteDetailOutput(object):
         The Method has no restrictions.
         """
         self.PrintToScreen()
+        if parser.hasCEFOutFile():
+            self.PrintToCEFFile(parser.CEFOutFile)
         if parser.hasTextOutFile():
             self.PrintToTextFile(parser.TextOutFile)
         if parser.hasHTMLOutFile():
@@ -86,6 +91,8 @@ class SiteDetailOutput(object):
         if parser.hasCSVOutSet():
             self.PrintToCSVFile(parser.CSVOutFile)
 
+    
+        
     def PrintToScreen(self):
         """
         Formats site information correctly and prints it to the user's standard output.
@@ -152,6 +159,138 @@ class SiteDetailOutput(object):
                                     laststring = "" + site.ReportStringForResult + " " + str(siteresult)
         else:
             pass
+
+
+    def PrintToCEFFile(self,cefoutfile):
+        """
+        Formats site information correctly and prints it to an output file in CEF format.
+        CEF format specification from http://mita-tac.wikispaces.com/file/view/CEF+White+Paper+071709.pdf
+        "Jan 18 11:07:53 host message"
+        where message:
+        "CEF:Version|Device Vendor|Device Product|Device Version|Signature ID|Name|Severity|Extension"
+        Returns nothing.
+        
+        Argument(s):
+        cefoutfile -- A string representation of a file that will store the output.
+        
+        Return value(s):
+        Nothing is returned from this Method.
+        
+        Restriction(s):
+        The Method has no restrictions.
+        """
+        sites = sorted(self.ListOfSites, key=attrgetter('Target'))
+        curr_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        hostname = socket.gethostname()
+        prefix = ' '.join([curr_date,hostname])
+        cef_version = "CEF:Version1.1"
+        cef_deviceVendor = "TekDefense"
+        cef_deviceProduct = "Automater"
+        cef_deviceVersion = "2.1"
+        cef_SignatureID = "0"
+        cef_Severity = "2"
+        cef_Extension = " "
+        cef_fields = [cef_version,cef_deviceVendor,cef_deviceProduct,cef_deviceVersion, \
+                       cef_SignatureID, cef_Severity, cef_Extension]
+        pattern = "^\[\+\]\s+"
+        target = ""
+        print '\n[+] Generating CEF output: ' + cefoutfile
+        f = open(cefoutfile, "wb")
+        csv.register_dialect('escaped',delimiter='|',escapechar='\\',doublequote=False,quoting=csv.QUOTE_NONE)
+        cefRW = csv.writer(f,'escaped')
+        #cefRW.writerow(['Target', 'Type', 'Source', 'Result'])
+        if sites is not None:
+            for site in sites:
+                if not isinstance(site._regex,basestring): #this is a multisite:
+                    for index in range(len(site.RegEx)): #the regexs will ensure we have the exact number of lookups
+                        siteimpprop = site.getImportantProperty(index)
+                        if siteimpprop is None or len(siteimpprop)==0:
+                            tgt = site.Target
+                            typ = site.TargetType
+                            source = site.FriendlyName[index]
+                            res = "No results found"
+                            cefRW.writerow([prefix] + cef_fields[:5] + \
+                                           ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+res])+"] "] + \
+                                           [1] + [tgt])
+                        else:
+                            if siteimpprop[index] is None or len(siteimpprop[index])==0:
+                                tgt = site.Target
+                                typ = site.TargetType
+                                source = site.FriendlyName[index]
+                                res = "No results found"
+                                cefRW.writerow([prefix] + cef_fields[:5] + \
+                                           ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+res])+"] "] + \
+                                           [1] + [tgt])
+                            else:
+                                laststring = ""
+                                #if it's just a string we don't want it to output like a list
+                                if isinstance(siteimpprop, basestring):
+                                    tgt = site.Target
+                                    typ = site.TargetType
+                                    source = site.FriendlyName
+                                    res = siteimpprop
+                                    if "" + tgt + typ + source + res != laststring:
+                                        cefRW.writerow([prefix] + cef_fields[:5] + \
+                                          ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+res])+"] " + \
+                                               re.sub(pattern,"",site.ReportStringForResult[index])+ str(siteimpprop)] + \
+                                           [cef_Severity] + [tgt])
+                                        laststring = "" + tgt + typ + source + res
+                                #must be a list since it failed the isinstance check on string
+                                else:
+                                    laststring = ""
+                                    for siteresult in siteimpprop[index]:
+                                        tgt = site.Target
+                                        typ = site.TargetType
+                                        source = site.FriendlyName[index]
+                                        res =   siteresult  
+                                        if "" + tgt + typ + source + str(res) != laststring:
+                                            cefRW.writerow([prefix] + cef_fields[:5] + \
+                                           ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+str(res)])+"] " + \
+                                               re.sub(pattern,"",site.ReportStringForResult[index])+ str(siteresult)] + \
+                                           [cef_Severity] + [tgt])
+                                            laststring = "" + tgt + typ + source + str(res)
+                else:#this is a singlesite
+                    siteimpprop = site.getImportantProperty(0)
+                    if siteimpprop is None or len(siteimpprop)==0:
+                        tgt = site.Target
+                        typ = site.TargetType
+                        source = site.FriendlyName
+                        res = "No results found"
+                        cefRW.writerow([prefix] + cef_fields[:5] + \
+                                          ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+res])+"] "] + \
+                                           [1] + [tgt])
+                    else:
+                        laststring = ""
+                        #if it's just a string we don't want it output like a list
+                        if isinstance(siteimpprop, basestring):
+                            tgt = site.Target
+                            typ = site.TargetType
+                            source = site.FriendlyName
+                            res = siteimpprop
+                            if "" + tgt + typ + source + res != laststring:
+                                cefRW.writerow([prefix] + cef_fields[:5] + \
+                                          ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+res])+"] " + \
+                                               re.sub(pattern,"",site.ReportStringForResult)+ str(siteimpprop)] + \
+                                           [cef_Severity] + [tgt])
+                                laststring = "" + tgt + typ + source + res
+                        else:
+                            laststring = ""
+                            for siteresult in siteimpprop:
+                                tgt = site.Target
+                                typ = site.TargetType
+                                source = site.FriendlyName
+                                res = siteresult
+                                if "" + tgt + typ + source + str(res) != laststring:
+                                    cefRW.writerow([prefix] + cef_fields[:5] + \
+                                         ["["+",".join(["tgt="+tgt,"typ="+typ,"src="+source,"res="+str(res)])+"] " + \
+                                               re.sub(pattern,"",site.ReportStringForResult)+ str(siteimpprop)] + \
+                                           [cef_Severity] + [tgt])
+                                    laststring = "" + tgt + typ + source + str(res)
+                                    
+        f.flush()
+        f.close()
+        print "" + cefoutfile + " Generated"
+
 
     def PrintToTextFile(self,textoutfile):
         """

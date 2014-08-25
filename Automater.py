@@ -9,6 +9,7 @@ Hash to query each separated by a newline.
 
 Optional Parameters are:
 -o, --output -- This option will output the results to a file.
+-f, --cef -- This option will output the results to a CEF formatted file.
 -w, --web -- This option will output the results to an HTML file.
 -c, --csv -- This option will output the results to a CSV file.
 -d, --delay -- Change the delay to the inputted seconds. Default is 2.
