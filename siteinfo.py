@@ -925,6 +925,9 @@ class Site(object):
                 proxy = urllib2.ProxyHandler({'http' : self.Proxy})
                 opener = urllib2.build_opener(proxy)
         opener.addheaders = [('User-agent', self.UserAgent)]
+        if self.Headers:
+            opener.addheaders += [(x, self.Headers[x]) for x in self.Headers]
+
         try:
             response = opener.open(self.FullURL)
             content = response.read()
