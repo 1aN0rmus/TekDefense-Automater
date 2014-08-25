@@ -918,12 +918,11 @@ class Site(object):
             proxy = urllib2.ProxyHandler()
             opener = urllib2.build_opener(proxy)
         else:
-            if re.match("^https://", self.FullURL):
-                proxy = urllib2.ProxyHandler({'https' : self.Proxy})
-                opener = urllib2.build_opener(proxy)
-            else:
-                proxy = urllib2.ProxyHandler({'http' : self.Proxy})
-                opener = urllib2.build_opener(proxy)
+            proxy = urllib2.ProxyHandler({
+                'https': self.Proxy,
+                'http': self.Proxy
+            })
+            opener = urllib2.build_opener(proxy)
         opener.addheaders = [('User-agent', self.UserAgent)]
         if self.Headers:
             opener.addheaders += [(x, self.Headers[x]) for x in self.Headers]
@@ -1288,12 +1287,11 @@ class PostTransactionPositiveCapableSite(Site):
             proxy = urllib2.ProxyHandler()
             opener = urllib2.build_opener(proxy)
         else:
-            if re.match("^https://", self.FullURL):
-                proxy = urllib2.ProxyHandler({'https' : self.Proxy})
-                opener = urllib2.build_opener(proxy)
-            else:
-                proxy = urllib2.ProxyHandler({'http' : self.Proxy})
-                opener = urllib2.build_opener(proxy)
+            proxy = urllib2.ProxyHandler({
+                'https': self.Proxy,
+                'http': self.Proxy
+            })
+            opener = urllib2.build_opener(proxy)
         opener.addheaders = [('User-agent', self.UserAgent)]
         try:
             url = (self.URL)
@@ -1428,12 +1426,11 @@ class PostTransactionAPIKeySite(Site):
             proxy = urllib2.ProxyHandler()
             opener = urllib2.build_opener(proxy)
         else:
-            if re.match("^https://", self.FullURL):
-                proxy = urllib2.ProxyHandler({'https' : self.Proxy})
-                opener = urllib2.build_opener(proxy)
-            else:
-                proxy = urllib2.ProxyHandler({'http' : self.Proxy})
-                opener = urllib2.build_opener(proxy)
+            proxy = urllib2.ProxyHandler({
+                'https': self.Proxy,
+                'http': self.Proxy
+            })
+            opener = urllib2.build_opener(proxy)
         opener.addheaders = [('User-agent', self.UserAgent)]
         try:
             url = (self.FullURL)
