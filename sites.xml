@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <automater_root>
+  <!--
   <site name="investigate_domain">
       <sitetype>
           <entry>hostname</entry>
@@ -85,6 +86,7 @@
       </headers>
       <apikey/>
   </site>
+  -->
   <site name="investigate_ip">
       <sitetype>
           <entry>ip</entry>
