@@ -362,7 +362,7 @@
         <regex>
 		<entry>An\sError\soccurred</entry>
 		<entry>(\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}).{5,30}Find\swebsites\shosted\shere</entry>
-		<entry>\&gt;\s(\w+)\&lt;\/td\&gt;\&lt;td\&gt;\&lt;.{30,50}alert\.png</entry>
+		<entry>\&gt;\s([ a-zA-Z0-9_-]+)\&lt;\/td\&gt;\&lt;td\&gt;\&lt;.{30,50}alert\.png</entry>
 		<entry>Domain\s1st\sRegistered.+\&lt;td\&gt;(.+)\&lt;\/td\&gt;</entry>
 		<entry>latitude\s\/\slongitude.+\&lt;td\&gt;(.+)\&lt;\/td\&gt;</entry>
 		<entry>alt\=\"flag\".+\&gt;(.+)\&lt;\/td\&gt;</entry>
@@ -453,5 +453,69 @@
 	<params></params>
 	<headers></headers>
 	<apikey></apikey>
+    </site>
+    <site name="ReputationAuthority">
+        <sitetype>
+		<entry>ip</entry>
+	</sitetype>
+        <domainurl>http://http://www.reputationauthority.org</domainurl>
+        <reportstringforresult>
+		<entry>[+] Reputation Authority Score:</entry>
+	</reportstringforresult>
+        <sitefriendlyname>
+		<entry>RA Score</entry>
+	</sitefriendlyname>
+        <regex>
+		<entry>bsnd.+&gt;(\d{1,2}\/\d{1,3})</entry>
+	</regex>
+	<fullurl>http://www.reputationauthority.org/lookup.php?ip=%TARGET%</fullurl>
+        <importantproperty>
+		<entry>Results</entry>
+	</importantproperty>
+	<params></params>
+	<headers></headers>
+	<apikey></apikey>
+    </site>
+    <site name="FreeGeo">
+        <sitetype>
+                <entry>ip</entry>
+        </sitetype>
+        <domainurl>http://freegeoip.net</domainurl>
+        <reportstringforresult>
+                <entry>[+] FreeGeoIP Country Name:</entry>
+                <entry>[+] FreeGeoIP Region Name:</entry>
+                <entry>[+] FreeGeoIP City:</entry>
+                <entry>[+] FreeGeoIP Zipcode:</entry>
+                <entry>[+] FreeGeoIP Latitude:</entry>
+                <entry>[+] FreeGeoIP Longitude:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+                <entry>FreeGeoIP Country Name</entry>
+                <entry>FreeGeoIP Region Name</entry>
+                <entry>FreeGeoIP City</entry>
+                <entry>FreeGeoIP Zipcode</entry>
+                <entry>FreeGeoIP Latitude</entry>
+                <entry>FreeGeoIP Longitude</entry>
+        </sitefriendlyname>
+        <regex>
+                <entry>country_name\"\:\"(.+)\"\,\"region_c</entry>
+                <entry>region_name\"\:\"(.+)\"\,\"city</entry>
+                <entry>city\"\:\"(.+)\"\,\"zip</entry>
+                <entry>zipcode\"\:\"(\d{5})</entry>
+                <entry>latitude\"\:(.+)\,\"long</entry>
+                <entry>longitude\"\:(.+)\,\"metro</entry>
+        </regex>
+        <fullurl>http://freegeoip.net/json/%TARGET%</fullurl>
+        <importantproperty>
+                <entry>Results</entry>
+                <entry>Results</entry>
+                <entry>Results</entry>
+                <entry>Results</entry>
+                <entry>Results</entry>
+                <entry>Results</entry>
+        </importantproperty>
+        <params></params>
+        <headers></headers>
+        <apikey></apikey>
     </site>
 </automater_root>
