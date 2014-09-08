@@ -518,4 +518,38 @@
         <headers></headers>
         <apikey></apikey>
     </site>
+    <site name="SANS API">
+	<sitetype>
+		<entry>ip</entry>
+	</sitetype>
+        <domainurl>https://isc.sans.edu/</domainurl>
+        <reportstringforresult>
+			<entry>[+] SANS total target IPs seen:</entry>
+			<entry>[+] SANS total packets blocked:</entry>
+			<entry>[+] SANS last seen on:</entry>
+			<entry>[+] SANS first seen on:</entry>
+		</reportstringforresult>
+		<sitefriendlyname>
+			<entry>attacks</entry>
+			<entry>count</entry>
+			<entry>maxdate</entry>
+			<entry>mindate</entry>
+		</sitefriendlyname>
+		<regex>
+			<entry>attacks\&gt;(\d+)\&lt;</entry>
+			<entry>count\&gt;(\d+)\&lt;</entry>
+			<entry>maxdate\&gt;(\d{4}-\d{2}-\d{2})\&lt;</entry>
+			<entry>mindate\&gt;(\d{4}-\d{2}-\d{2})\&lt;</entry>
+		</regex>
+		<fullurl>https://isc.sans.edu/api/ip/%TARGET%</fullurl>
+		<importantproperty>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+		</importantproperty>
+        <params></params>
+        <headers></headers>
+        <apikey></apikey>
+    </site>
 </automater_root>
