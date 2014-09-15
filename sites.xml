@@ -552,4 +552,66 @@
         <headers></headers>
         <apikey></apikey>
     </site>
+    <site name="Project Honeypot">
+	<sitetype>
+		<entry>ip</entry>
+	</sitetype>
+        <domainurl>https://www.projecthoneypot.org</domainurl>
+        <reportstringforresult>
+			<entry>[+] ProjectHoneypot activity type:</entry>
+			<entry>[+] ProjectHoneypot first mail received:</entry>
+			<entry>[+] ProjectHoneypot last mail received:</entry>
+			<entry>[+] ProjectHoneypot total mails received:</entry>
+			<entry>[+] ProjectHoneypot spider first seen:</entry>
+			<entry>[+] ProjectHoneypot spider last seen:</entry>
+			<entry>[+] ProjectHoneypot spider sightings:</entry>
+			<entry>[+] ProjectHoneypot user-agents observed:</entry>
+			<entry>[+] ProjectHoneypot first post on:</entry>
+			<entry>[+] ProjectHoneypot last post on:</entry>
+			<entry>[+] ProjectHoneypot form posts:</entry>
+		</reportstringforresult>
+		<sitefriendlyname>
+			<entry>type</entry>
+			<entry>firstmail</entry>
+			<entry>lastmail</entry>
+			<entry>mailtotal</entry>
+			<entry>firstspider</entry>
+			<entry>lastspider</entry>
+			<entry>spidertotal</entry>
+			<entry>useragents</entry>
+			<entry>firstpost</entry>
+			<entry>lastpost</entry>
+			<entry>posttotal</entry>
+		</sitefriendlyname>
+		<regex>
+			<entry>consistent\swith\sthat\sof\sa\s.+\&quot;\&gt;([a-zA-Z\s]+)\&lt;\/a\&gt;\&lt;\/b\&gt;</entry>
+			<entry>\&gt;First.+Received.+From.[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+)</entry>
+			<entry>\&gt;Last.+Received.+From.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+)</entry>
+			<entry>\&gt;Number.+Received.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+)</entry>
+			<entry>\&gt;Spider.+First.+Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+)</entry>
+			<entry>\&gt;Spider.+Last.+Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+)</entry>
+			<entry>\&gt;Spider.+Sightings.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+)</entry>
+			<entry>\&gt;User-Agents.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9\-\(\),\s]+)\s\s</entry>
+			<entry>\&gt;First.+Post.+On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+)</entry>
+			<entry>\&gt;Last.+Post.+On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+)</entry>
+			<entry>\&gt;Form.+Posts.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+)</entry>
+		</regex>
+		<fullurl>http://www.projecthoneypot.org/ip_%TARGET%</fullurl>
+		<importantproperty>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+		</importantproperty>
+        <params></params>
+        <headers></headers>
+        <apikey></apikey>
+    </site>
 </automater_root>
