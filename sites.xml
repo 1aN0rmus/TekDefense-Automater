@@ -113,7 +113,7 @@
       </headers>
       <apikey/>
   </site>
-
+  -->
     <site name="robtex">
         <sitetype>
 		<entry>ip</entry>
@@ -136,7 +136,6 @@
 	<headers></headers>
 	<apikey></apikey>
     </site>
--->
     <site name="fortinet_classify">
         <sitetype>
 		<entry>ip</entry>
@@ -477,10 +476,52 @@
 	<headers></headers>
 	<apikey></apikey>
     </site>
-	<site name="SANS API">
-		<sitetype>
-			<entry>ip</entry>
-		</sitetype>
+    <site name="FreeGeo">
+        <sitetype>
+                <entry>ip</entry>
+        </sitetype>
+        <domainurl>http://freegeoip.net</domainurl>
+        <reportstringforresult>
+                <entry>[+] FreeGeoIP Country Name:</entry>
+                <entry>[+] FreeGeoIP Region Name:</entry>
+                <entry>[+] FreeGeoIP City:</entry>
+                <entry>[+] FreeGeoIP Zipcode:</entry>
+                <entry>[+] FreeGeoIP Latitude:</entry>
+                <entry>[+] FreeGeoIP Longitude:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+                <entry>FreeGeoIP Country Name</entry>
+                <entry>FreeGeoIP Region Name</entry>
+                <entry>FreeGeoIP City</entry>
+                <entry>FreeGeoIP Zipcode</entry>
+                <entry>FreeGeoIP Latitude</entry>
+                <entry>FreeGeoIP Longitude</entry>
+        </sitefriendlyname>
+        <regex>
+                <entry>country_name\"\:\"(.+)\"\,\"region_c</entry>
+                <entry>region_name\"\:\"(.+)\"\,\"city</entry>
+                <entry>city\"\:\"(.+)\"\,\"zip</entry>
+                <entry>zipcode\"\:\"(\d{5})</entry>
+                <entry>latitude\"\:(.+)\,\"long</entry>
+                <entry>longitude\"\:(.+)\,\"metro</entry>
+        </regex>
+        <fullurl>http://freegeoip.net/json/%TARGET%</fullurl>
+        <importantproperty>
+                <entry>Results</entry>
+                <entry>Results</entry>
+                <entry>Results</entry>
+                <entry>Results</entry>
+                <entry>Results</entry>
+                <entry>Results</entry>
+        </importantproperty>
+        <params></params>
+        <headers></headers>
+        <apikey></apikey>
+    </site>
+    <site name="SANS API">
+	<sitetype>
+		<entry>ip</entry>
+	</sitetype>
         <domainurl>https://isc.sans.edu/</domainurl>
         <reportstringforresult>
 			<entry>[+] SANS total target IPs seen:</entry>
@@ -510,8 +551,9 @@
         <params></params>
         <headers></headers>
         <apikey></apikey>
-	</site>
-	<site name="Project Honeypot">
+    </site>
+<!--
+    <site name="Project Honeypot">
 		<sitetype>
 			<entry>ip</entry>
 		</sitetype>
@@ -612,68 +654,6 @@
         <params></params>
         <headers></headers>
         <apikey></apikey>
-	</site>
-	<!--
-    <site name="FreeGeo">
-        <sitetype>
-                <entry>ip</entry>
-        </sitetype>
-        <domainurl>http://freegeoip.net</domainurl>
-        <reportstringforresult>
-                <entry>[+] FreeGeoIP Country Name:</entry>
-                <entry>[+] FreeGeoIP Region Name:</entry>
-                <entry>[+] FreeGeoIP City:</entry>
-                <entry>[+] FreeGeoIP Zipcode:</entry>
-                <entry>[+] FreeGeoIP Latitude:</entry>
-                <entry>[+] FreeGeoIP Longitude:</entry>
-        </reportstringforresult>
-        <sitefriendlyname>
-                <entry>FreeGeoIP Country Name</entry>
-                <entry>FreeGeoIP Region Name</entry>
-                <entry>FreeGeoIP City</entry>
-                <entry>FreeGeoIP Zipcode</entry>
-                <entry>FreeGeoIP Latitude</entry>
-                <entry>FreeGeoIP Longitude</entry>
-        </sitefriendlyname>
-        <regex>
-                <entry>country_name\"\:\"(.+)\"\,\"region_c</entry>
-                <entry>region_name\"\:\"(.+)\"\,\"city</entry>
-                <entry>city\"\:\"(.+)\"\,\"zip</entry>
-                <entry>zipcode\"\:\"(\d{5})</entry>
-                <entry>latitude\"\:(.+)\,\"long</entry>
-                <entry>longitude\"\:(.+)\,\"metro</entry>
-        </regex>
-        <fullurl>http://freegeoip.net/json/%TARGET%</fullurl>
-        <importantproperty>
-                <entry>Results</entry>
-                <entry>Results</entry>
-                <entry>Results</entry>
-                <entry>Results</entry>
-                <entry>Results</entry>
-                <entry>Results</entry>
-        </importantproperty>
-        <params></params>
-        <headers></headers>
-        <apikey></apikey>
-    </site>
-	<site name="BlackList Alert">
-		<sitetype>
-			<entry>ip</entry>
-		</sitetype>
-		<domainurl>http://blacklistalert.org/</domainurl>
-		<reportstringforresult>
-			<entry>[+] Blacklisted on:</entry>
-		</reportstringforresult>
-		<sitefriendlyname>
-		</sitefriendlyname>
-		<messagetopost>
-		</messagetopost>
-		<regex>
-			<entry>&gt;(.+)\s&lt;.+Listed!</entry>
-		</regex>
-		<importantproperty>
-			<entry>Results</entry>
-		<importantproperty>
 	</site>
 -->
 </automater_root>
