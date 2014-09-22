@@ -123,7 +123,7 @@
 		<entry>[+] A records from Robtex.com:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-		<entry>RobTex DNS</entry>
+		<entry>RTex DNS</entry>
 	</sitefriendlyname>
         <regex>
 		<entry>host\"\s\:\s\"(.+)\"</entry>
@@ -146,7 +146,7 @@
 		<entry>[+] Fortinet URL Category:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-		<entry>Fortinet URL</entry>
+		<entry>FNet URL</entry>
 	</sitefriendlyname>
         <regex>
 		<entry>Category:\s(.+)\&lt;\/h3\&gt;\s\&lt;a</entry>
@@ -169,8 +169,8 @@
 	        <entry>[+] pDNS malicious URLs from VirusTotal:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-	        <entry>pDNSDomain</entry>
-	        <entry>pDNSURL</entry>
+	        <entry>VT pDNSDomain</entry>
+	        <entry>VT pDNSURL</entry>
 	</sitefriendlyname>
         <regex>
 	        <entry>(\d{4}\-\d{1,2}\-\d{1,2})\s+&lt;.{30,70}\/en\/domain\/(.{1,80})\/information</entry>
@@ -196,9 +196,9 @@
 		<entry>[+] Country from IPVoid:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-		<entry>IPVoid Blacklist</entry>
-		<entry>IPVoid ISP</entry>
-		<entry>IPVoid Geo</entry>
+		<entry>IV Blacklist</entry>
+		<entry>IV ISP</entry>
+		<entry>IV Geo</entry>
 	</sitefriendlyname>
         <regex>
 		<entry>An\sError\soccurred</entry>
@@ -229,16 +229,16 @@
         <reportstringforresult>
 		<entry>[+] MD5 found on VT:</entry>
 		<entry>[+] Scan date submitted:</entry>
-		<entry>[+] # of virus engines detected on:</entry>
-		<entry>[+] # of total scan engines:</entry>
-		<entry>[+] Malware detected on:</entry>
+		<entry>[+] Detected Engines:</entry>
+		<entry>[+] Total Engines:</entry>
+		<entry>[+] Date:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-		<entry>VirusTotal Found</entry>
-		<entry>VirusTotal Date</entry>
-		<entry>VirusTotal Virus Engines Detected</entry>
-		<entry>VirusTotal Total Engines</entry>
-		<entry>VirusTotal Malware Detected On</entry>
+		<entry>VT Found</entry>
+		<entry>VT Date</entry>
+		<entry>VT Detected</entry>
+		<entry>VT Engines</entry>
+		<entry>VT Date</entry>
 	</sitefriendlyname>
         <regex>
 		<entry>response_code...(1)</entry>
@@ -276,8 +276,8 @@
 		<entry>[+] Malicious Indicators from ThreatExpert:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-		<entry>ThreatExpert Date</entry>
-		<entry>Malicious Indicators</entry>
+		<entry>TE Date</entry>
+		<entry>TE Indicators</entry>
 	</sitefriendlyname>
         <regex>
 		<entry>Submission\sreceived.\s(.+)\&lt;\/li\&gt;</entry>
@@ -302,8 +302,8 @@
     	    <entry>[+] URL found at VXVault:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-	        <entry>VxVault Date</entry>
-	        <entry>VxVault URL</entry>
+	        <entry>Vx Date</entry>
+	        <entry>Vx URL</entry>
 	</sitefriendlyname>
         <regex>
 	        <entry>\&gt;(\d{2}\-\d{2})\&lt;</entry>
@@ -327,7 +327,7 @@
 		<entry>[+] URL redirects to:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-		<entry>UnShort.me Redirect</entry>
+		<entry>Un Redirect</entry>
 	</sitefriendlyname>
         <regex>
 		<entry>result\"\&gt;\s\&lt;a\shref\=\".+\&gt;(.+)\&lt;\/a\&gt;\s</entry>
@@ -353,11 +353,11 @@
 		<entry>[+] Country from URLVoid:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-		<entry>URLVoid IP</entry>
-		<entry>URLVoid Blacklists</entry>
-		<entry>URLVoid Domain</entry>
-		<entry>URLVoid Location</entry>
-		<entry>URLVoid Country</entry>
+		<entry>UV IP</entry>
+		<entry>UV Blacklists</entry>
+		<entry>UV Domain</entry>
+		<entry>UV Location</entry>
+		<entry>UV Country</entry>
 	</sitefriendlyname>
         <regex>
 		<entry>An\sError\soccurred</entry>
@@ -394,8 +394,8 @@
 	        <entry>[+] pDNS malicious URLs from VirusTotal:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-	        <entry>pDNSIP</entry>
-	        <entry>pDNSURL</entry>
+	        <entry>VT pDNSIP</entry>
+	        <entry>VT pDNSURL</entry>
 	</sitefriendlyname>
         <regex>
 	        <entry>(\d{4}\-\d{1,2}\-\d{1,2})\s+&lt;.{30,70}\/en\/ip-address\/(.{1,80})\/information</entry>
@@ -426,12 +426,12 @@
 		<entry>[+] Malc0de MD5:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-		<entry>Malc0de Date</entry>
-		<entry>Malc0de IP</entry>
-		<entry>Malc0de Country</entry>
-		<entry>Malc0de ASN</entry>
-		<entry>Malc0de ASN Name</entry>
-		<entry>Malc0de MD5</entry>
+		<entry>MC Date</entry>
+		<entry>MC IP</entry>
+		<entry>MC Country</entry>
+		<entry>MC ASN</entry>
+		<entry>MC ASN Name</entry>
+		<entry>MC MD5</entry>
 	</sitefriendlyname>
         <regex>
 		<entry>\d{4}\-\d{1,2}\-\d{1,2}</entry>
@@ -490,12 +490,12 @@
                 <entry>[+] FreeGeoIP Longitude:</entry>
         </reportstringforresult>
         <sitefriendlyname>
-                <entry>FreeGeoIP Country Name</entry>
-                <entry>FreeGeoIP Region Name</entry>
-                <entry>FreeGeoIP City</entry>
-                <entry>FreeGeoIP Zipcode</entry>
-                <entry>FreeGeoIP Latitude</entry>
-                <entry>FreeGeoIP Longitude</entry>
+                <entry>FGIP CN</entry>
+                <entry>FGIP RN</entry>
+                <entry>FGIP City</entry>
+                <entry>FGIP Zip</entry>
+                <entry>FGIP LAT</entry>
+                <entry>FGIP LON</entry>
         </sitefriendlyname>
         <regex>
                 <entry>country_name\"\:\"(.+)\"\,\"region_c</entry>
@@ -530,10 +530,10 @@
 			<entry>[+] SANS first seen on:</entry>
 		</reportstringforresult>
 		<sitefriendlyname>
-			<entry>attacks</entry>
-			<entry>count</entry>
-			<entry>maxdate</entry>
-			<entry>mindate</entry>
+			<entry>SANS attacks</entry>
+			<entry>SANS count</entry>
+			<entry>SANS maxdate</entry>
+			<entry>SANS mindate</entry>
 		</sitefriendlyname>
 		<regex>
 			<entry>attacks\&gt;(\d+)\&lt;</entry>
@@ -546,6 +546,28 @@
 			<entry>Results</entry>
 			<entry>Results</entry>
 			<entry>Results</entry>
+			<entry>Results</entry>
+		</importantproperty>
+        <params></params>
+        <headers></headers>
+        <apikey></apikey>
+    </site>
+        <site name="totalhash_ip">
+	<sitetype>
+		<entry>ip</entry>
+	</sitetype>
+        <domainurl>https://totalhash.com/</domainurl>
+        <reportstringforresult>
+			<entry>[+] Totalhash:</entry>
+		</reportstringforresult>
+		<sitefriendlyname>
+			<entry>THIP</entry>
+		</sitefriendlyname>
+		<regex>
+			<entry>\/analysis/(\w{40}).+(\d{4}\-\d{1,2}\-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2})</entry>
+		</regex>
+		<fullurl>http://totalhash.com/network/dnsrr:*%TARGET%*%20or%20ip:%TARGET%</fullurl>
+		<importantproperty>
 			<entry>Results</entry>
 		</importantproperty>
         <params></params>
