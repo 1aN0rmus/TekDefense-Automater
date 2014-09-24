@@ -655,5 +655,35 @@
         <headers></headers>
         <apikey></apikey>
 	</site>
+		<site name="McAfee ThreatCenter">
+		<sitetype>
+			<entry>hostname</entry>
+		</sitetype>
+        <domainurl>http://www.mcafee.com</domainurl>
+        <reportstringforresult>
+			<entry>[+] McAfee Web Risk:</entry>
+			<entry>[+] McAfee Web Category:</entry>
+			<entry>[+] McAfee Last Seen:</entry>
+		</reportstringforresult>
+		<sitefriendlyname>
+			<entry>webrep</entry>
+			<entry>category</entry>
+			<entry>lastseen</entry>
+		</sitefriendlyname>
+		<regex>
+			<entry>ctl00_mainContent_imgRisk\&quot;\stitle=\&quot;([A-Za-z]+)\&quot;</entry>
+			<entry>Web\sCategory:[\n\s]*\&lt;\/strong\&gt;[\n\s]*([A-Z][A-Za-z\s\/,]+)\&lt;</entry>
+			<entry>Last\sSeen:[\n\s]*\&lt;\/strong\&gt;[\n\s]*([0-9\-]+)\&lt;</entry>
+		</regex>
+		<fullurl>http://www.mcafee.com/threat-intelligence/domain/default.aspx?domain=%TARGET%&amp;region=us</fullurl>
+		<importantproperty>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+		</importantproperty>
+        <params></params>
+        <headers></headers>
+        <apikey></apikey>
+	</site>
 -->
 </automater_root>
