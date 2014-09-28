@@ -611,7 +611,7 @@
 			<entry>\&gt;Number\&amp;nbsp;Received.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z\)])</entry>
 			<entry>\&gt;Spider\&amp;nbsp;First\&amp;nbsp;Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
 			<entry>\&gt;Spider\&amp;nbsp;Last\&amp;nbsp;Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z])</entry>
-			<entry>\&gt;Spider\&amp;nbsp;Sightings.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z\)])</entry>
+			<entry>\&gt;Spider\&amp;nbsp;Sightings.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(]+[a-zA-Z\)])</entry>
 			<entry>\&gt;User-Agents.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9\-\(\),\s]+[a-zA-Z\)])</entry>
 			<entry>\&gt;First\&amp;nbsp;Post\&amp;nbsp;On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
 			<entry>\&gt;Last\&amp;nbsp;Post\&amp;nbsp;On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
