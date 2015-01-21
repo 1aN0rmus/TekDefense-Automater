@@ -174,7 +174,7 @@
 	</sitefriendlyname>
         <regex>
 	        <entry>test-ref</entry>
-			<entry>(\d{4}\-\d{1,2}\-\d{1,2})\s+&lt;.{30,70}\/en\/domain\/(.{1,80})\/information</entry>
+		<entry>(\d{4}\-\d{1,2}\-\d{1,2})\s+&lt;.{30,70}\/en\/domain\/(.{1,80})\/information</entry>
 	        <entry>(\d{4}\-\d{1,2}\-\d{1,2}).{1,20}\s+&lt;.{10,80}\/en\/url\/.{1,100}\/analysis\/.{1,5}\s+(http.{1,70}\/)</entry>
 		</regex>
 	<fullurl>https://www.virustotal.com/en/ip-address/%TARGET%/information/</fullurl>
@@ -405,6 +405,7 @@
 	        <entry>VT pDNSURL</entry>
 	</sitefriendlyname>
         <regex>
+		<entry>\w{3}</entry>
 	        <entry>(\d{4}\-\d{1,2}\-\d{1,2})\s+&lt;.{30,70}\/en\/ip-address\/(.{1,80})\/information</entry>
 	        <entry>(\d{4}\-\d{1,2}\-\d{1,2}).{1,20}\s+&lt;.{10,80}\/en\/url\/.{1,100}\/analysis\/.{1,5}\s+(http.{1,70}\/)</entry>
 	</regex>
@@ -414,7 +415,13 @@
 	        <entry>Results</entry>
 	</importantproperty>
 	<params></params>
-	<headers></headers>
+	<headers>
+		<entry key="Accept">text/html, application/xhtml+xml, */*</entry>
+		<entry key="Accept-Language">en-US</entry>
+		<entry key="Accept-Encoding">gzip, deflate</entry>
+		<entry key="DNT">1</entry>
+		<entry key="Connection">Keep-Alive</entry>
+	</headers>
 	<apikey></apikey>
     </site>
     <site name="malc0de">
