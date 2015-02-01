@@ -141,7 +141,7 @@
 		<entry>ip</entry>
 		<entry>hostname</entry>
 	</sitetype>
-        <domainurl>http://fortiguard.com/</domainurl>
+        <domainurl>https://fortiguard.com/</domainurl>
         <reportstringforresult>
 		<entry>[+] Fortinet URL Category:</entry>
 	</reportstringforresult>
@@ -151,7 +151,7 @@
         <regex>
 		<entry>Category:\s(.+)\&lt;\/h3\&gt;\s\&lt;a</entry>
 	</regex>
-	<fullurl>http://www.fortiguard.com/ip_rep/index.php?data=%TARGET%&amp;lookup=Lookup</fullurl>
+	<fullurl>https://www.fortiguard.com/ip_rep/index.php?data=%TARGET%&amp;lookup=Lookup</fullurl>
         <importantproperty>
 		<entry>Results</entry>
 	</importantproperty>
@@ -430,7 +430,7 @@
 		<entry>hostname</entry>
 		<entry>md5</entry>
 	</sitetype>
-        <domainurl>http://malc0de.com</domainurl>
+        <domainurl>https://malc0de.com</domainurl>
         <reportstringforresult>
 		<entry>[+] Malc0de Date:</entry>
 		<entry>[+] Malc0de IP:</entry>
@@ -455,7 +455,7 @@
 		<entry>search=\d{4,5}..([A-Za-z]+)</entry>
 		<entry>latest\-scan\/([A-Fa-f0-9]{32})</entry>
 	</regex>
-	<fullurl>http://malc0de.com/database/index.php?search=%TARGET%</fullurl>
+	<fullurl>https://malc0de.com/database/index.php?search=%TARGET%</fullurl>
         <importantproperty>
 		<entry>Results</entry>
 		<entry>Results</entry>
@@ -472,7 +472,7 @@
         <sitetype>
 		<entry>ip</entry>
 	</sitetype>
-        <domainurl>http://http://www.reputationauthority.org</domainurl>
+        <domainurl>http://www.reputationauthority.org</domainurl>
         <reportstringforresult>
 		<entry>[+] Reputation Authority Score:</entry>
 	</reportstringforresult>
@@ -494,7 +494,7 @@
         <sitetype>
                 <entry>ip</entry>
         </sitetype>
-        <domainurl>http://freegeoip.net</domainurl>
+        <domainurl>https://freegeoip.net</domainurl>
         <reportstringforresult>
                 <entry>[+] FreeGeoIP Country Name:</entry>
                 <entry>[+] FreeGeoIP Region Name:</entry>
@@ -519,7 +519,7 @@
                 <entry>latitude\"\:(.+)\,\"long</entry>
                 <entry>longitude\"\:(.+)\,\"metro</entry>
         </regex>
-        <fullurl>http://freegeoip.net/json/%TARGET%</fullurl>
+        <fullurl>https://freegeoip.net/json/%TARGET%</fullurl>
         <importantproperty>
                 <entry>Results</entry>
                 <entry>Results</entry>
@@ -570,7 +570,7 @@
 	<sitetype>
 		<entry>ip</entry>
 	</sitetype>
-        <domainurl>https://totalhash.com/</domainurl>
+        <domainurl>http://totalhash.com/</domainurl>
         <reportstringforresult>
 			<entry>[+] Totalhash:</entry>
 		</reportstringforresult>
