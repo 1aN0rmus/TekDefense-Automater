@@ -43,7 +43,7 @@
           <entry>ThreatType</entry>
       </sitefriendlyname>
       <regex>
-          <entry>This Should Never Ever Ever Match! We don't want not stinking POST requests</entry>
+          <entry>This Should Never Ever Ever Match! We don't want no stinking POST requests</entry>
           <entry>dga_score: (\d+\.\d+)</entry>
           <entry>perplexity: (\d+\.\d+)</entry>
           <entry>entropy: (\d+\.\d+)</entry>
@@ -100,7 +100,7 @@
           <entry/>
       </sitefriendlyname>
       <regex>
-          <entry>This Should Never Ever Ever Match! We don't want not stinking POST requests</entry>
+          <entry>This Should Never Ever Ever Match! We don't want no stinking POST requests</entry>
           <entry>"name":"([^"]+)"</entry>
       </regex>
       <fullurl>https://investigate.api.opendns.com/ips/%TARGET%/latest_domains</fullurl>
