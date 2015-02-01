@@ -118,7 +118,7 @@
         <sitetype>
 		<entry>ip</entry>
 	</sitetype>
-        <domainurl>http://robtex.com/</domainurl>
+        <domainurl>https://robtex.com/</domainurl>
         <reportstringforresult>
 		<entry>[+] A records from Robtex.com:</entry>
 	</reportstringforresult>
@@ -303,6 +303,7 @@
         <sitetype>
     	    <entry>md5</entry>
     	</sitetype>
+		<!--supports TLS but uses an invalid cert-->
         <domainurl>http://vxvault.siri-urz.net/</domainurl>
         <reportstringforresult>
     	    <entry>[+] Date found at VXVault:</entry>
@@ -468,6 +469,7 @@
 	<headers></headers>
 	<apikey></apikey>
     </site>
+	<!--supports TLS but uses an invalid cert-->
     <site name="ReputationAuthority">
         <sitetype>
 		<entry>ip</entry>
@@ -570,6 +572,7 @@
 	<sitetype>
 		<entry>ip</entry>
 	</sitetype>
+	<!--supports TLS but uses an invalid cert-->
         <domainurl>http://totalhash.com/</domainurl>
         <reportstringforresult>
 			<entry>[+] Totalhash:</entry>
