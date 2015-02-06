@@ -32,6 +32,7 @@ Exception(s):
 No exceptions exported.
 """
 
+import logging
 import sys
 from siteinfo import SiteFacade
 from utilities import Parser, IPWrapper
@@ -53,6 +54,11 @@ def main():
     """
     sites = []
     parser = Parser('IP, URL, and Hash Passive Analysis tool')
+
+    if parser.QuietMode:
+        logging.basicConfig(level=logging.ERROR, format="%(message)s")
+    else:
+        logging.basicConfig(level=logging.DEBUG, format="%(message)s")
 
     # if no target run and print help
     if parser.hasNoTarget():

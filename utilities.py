@@ -42,6 +42,7 @@ class Parser(object):
     hasPost
     (Property) InputFile
     (Property) UserAgent
+    (Property) QuietMode
 
     Instance variable(s):
     _parser
@@ -70,6 +71,7 @@ class Parser(object):
         self._parser.add_argument('--p', '--post', action = "store_true", help = 'This option tells the program to post information to sites that allow posting. By default the program will NOT post to sites that require a post.')
         self._parser.add_argument('--proxy', help = 'This option will set a proxy to use (eg. proxy.example.com:8080)')
         self._parser.add_argument('-a', '--useragent', default = 'Automater/2.1', help = 'This option allows the user to set the user-agent seen by web servers being utilized. By default, the user-agent is set to Automater/version')
+        self._parser.add_argument('-q', '--quiet', default=False, help = 'This option suppresses all console output, unless stdout is used as an output file for one of the other options', action='store_true')
         self.args = self._parser.parse_args()
 
     def hasCEFOutFile(self):
@@ -483,6 +485,13 @@ class Parser(object):
         This Method is tagged as a Property.
         """
         return self.args.useragent
+
+    @property
+    def QuietMode(self):
+        """
+
+        """
+        return self.args.quiet
 
 class IPWrapper(object):
     """

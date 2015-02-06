@@ -19,8 +19,11 @@ import csv
 import socket
 import re
 import sys
+import logging
 from datetime import datetime
 from operator import attrgetter
+
+logger = logging.getLogger("Automater")
 
 class SiteDetailOutput(object):
     """
@@ -82,7 +85,8 @@ class SiteDetailOutput(object):
         Restriction(s):
         The Method has no restrictions.
         """
-        self.PrintToScreen()
+        if not parser.QuietMode:
+            self.PrintToScreen()
         if parser.hasCEFOutFile():
             self.PrintToCEFFile(parser.CEFOutFile)
         if parser.hasTextOutFile():
@@ -195,7 +199,7 @@ class SiteDetailOutput(object):
                        cef_SignatureID, cef_Severity, cef_Extension]
         pattern = "^\[\+\]\s+"
         target = ""
-        print '\n[+] Generating CEF output: ' + cefoutfile
+        logger.debug("[+] Generating CEF output: {0}".format(cefoutfile))
         if cefoutfile == "-":
             f = sys.stdout
         else:
@@ -294,7 +298,7 @@ class SiteDetailOutput(object):
         if cefoutfile != "-":
             f.flush()
             f.close()
-        print "" + cefoutfile + " Generated"
+        logger.debug("{0} Generated".format(cefoutfile))
 
 
     def PrintToTextFile(self,textoutfile):
@@ -313,7 +317,7 @@ class SiteDetailOutput(object):
         """
         sites = sorted(self.ListOfSites, key=attrgetter('Target'))
         target = ""
-        print "\n[+] Generating text output: " + textoutfile
+        logger.debug("[+] Generating text output: {0}".format(textoutfile))
         if textoutfile == "-":
             f = sys.stdout
         else:
@@ -368,7 +372,7 @@ class SiteDetailOutput(object):
         if textoutfile != "-":
             f.flush()
             f.close()
-        print "" + textoutfile + " Generated"
+        logger.debug("{0} Generated".format(textoutfile))
 
     def PrintToCSVFile(self,csvoutfile):
         """
@@ -386,7 +390,7 @@ class SiteDetailOutput(object):
         """
         sites = sorted(self.ListOfSites, key=attrgetter('Target'))
         target = ""
-        print '\n[+] Generating CSV output: ' + csvoutfile
+        logger.debug("[+] Generating CSV output: {0}".format(csvoutfile))
         if csvoutfile == "-":
             f = sys.stdout
         else:
@@ -466,7 +470,7 @@ class SiteDetailOutput(object):
         if csvoutfile != "-":
             f.flush()
             f.close()
-        print "" + csvoutfile + " Generated"
+        logger.debug("{0} Generated".format(csvoutfile))
 
     def PrintToHTMLFile(self,htmloutfile):
         """
@@ -484,7 +488,7 @@ class SiteDetailOutput(object):
         """
         sites = sorted(self.ListOfSites, key=attrgetter('Target'))
         target = ""
-        print '\n[+] Generating HTML output: ' + htmloutfile
+        logger.debug("[+] Generating HTML output: {0}".format(htmloutfile))
         if htmloutfile == "-":
             f = sys.stdout
         else:
@@ -557,7 +561,7 @@ class SiteDetailOutput(object):
         if htmloutfile != "-":
             f.flush()
             f.close()
-        print "" + htmloutfile + " Generated"
+        logger.debug("{0} Generated".format(htmloutfile))
 
     def getHTMLOpening(self):
         """

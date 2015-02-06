@@ -33,9 +33,12 @@ import urllib
 import urllib2
 import time
 import re
+import logging
 from operator import attrgetter
 from inputs import SitesFile
 from utilities import Parser
+
+logger = logging.getLogger("Automater")
 
 class SiteFacade(object):
     """
@@ -824,7 +827,7 @@ class Site(object):
         The Method has no restrictions.
         """
         self._messagetopost = message
-        print self.MessageToPost
+        logger.info(self.MessageToPost)
 
     def getImportantProperty(self, index):
         """
@@ -1140,7 +1143,7 @@ class PostTransactionPositiveCapableSite(Site):
             content = self.getContent()
             if content != None:
                 if self.postIsNecessary(regextofindforpost, content) and self.Params is not None and self.Headers is not None:
-                    print '[-] This target requires a submission. Submitting now, this may take a moment.'
+                    logger.warn("[-] This target requires a submission. Submitting now, this may take a moment.")
                     content = self.submitPost(self.Params, self.Headers)
                 else:
                     pass
