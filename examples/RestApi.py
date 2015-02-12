@@ -2,6 +2,22 @@
 """
 Example of Automater automation as a Rest API.
 Results returned as JSON string
+
+The site names must match the site name attribute in the sites sites.xml file
+Available sites as defined in the sites.xml file in this repository are:
+  robtex
+  fortinet_classify
+  vtpDNSIP
+  ipvoid
+  virustotal
+  threatexpert
+  vxvault
+  unshortme
+  urlvoid
+  vtpDNSDom
+  malc0de
+'allsources' queries all available sites
+
 Usage:
 python example/RestApi.py <list of target domains URLS>
 
