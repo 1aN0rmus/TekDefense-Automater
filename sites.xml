@@ -11,7 +11,11 @@
         <sitefriendlyname>
 		<entry>RobTex DNS</entry>
 	</sitefriendlyname>
-        <regex>
+    <resulttype>
+      <entry>IP</entry>
+      <entry>URL</entry>
+    </resulttype>
+    <regex>
 		<entry>host\"\s\:\s\"(.+)\"</entry>
 	</regex>
 	<fullurl>http://api.tekdefense.com/robtex/rob.php?q=%TARGET%</fullurl>
@@ -32,8 +36,11 @@
 		<entry>[+] Fortinet URL Category:</entry>
 	</reportstringforresult>
         <sitefriendlyname>
-		<entry>Fortinet URL</entry>
-	</sitefriendlyname>
+		  <entry>Fortinet URL</entry>
+	    </sitefriendlyname>
+        <resulttype>
+          <entry>URL</entry>
+        </resulttype>
         <regex>
 		<entry>Category:\s(.+)\&lt;\/h3\&gt;\s\&lt;a</entry>
 	</regex>
@@ -54,10 +61,14 @@
         	<entry>[+] pDNS data from VirusTotal:</entry>
 	        <entry>[+] pDNS malicious URLs from VirusTotal:</entry>
 	</reportstringforresult>
-        <sitefriendlyname>
-	        <entry>pDNSDomain</entry>
-	        <entry>pDNSURL</entry>
+    <sitefriendlyname>
+	  <entry>pDNSDomain</entry>
+	  <entry>pDNSURL</entry>
 	</sitefriendlyname>
+    <resulttype>
+      <entry>Domain</entry>
+      <entry>URL</entry>
+    </resulttype>
         <regex>
 	        <entry>(\d{4}\-\d{1,2}\-\d{1,2})\s+&lt;.{30,70}\/en\/domain\/(.{1,80})\/information</entry>
 	        <entry>(\d{4}\-\d{1,2}\-\d{1,2}).{1,20}\s+&lt;.{10,80}\/en\/url\/.{1,100}\/analysis\/.{1,5}\s+(http.{1,70}\/)</entry>
@@ -86,7 +97,12 @@
 		<entry>IPVoid ISP</entry>
 		<entry>IPVoid Geo</entry>
 	</sitefriendlyname>
-        <regex>
+    <resulttype>
+      <entry>Blacklist</entry>
+      <entry>ISP</entry>
+      <entry>Geo Code</entry>
+    </resulttype>
+    <regex>
 		<entry>An\sError\soccurred</entry>
 		<entry>\&gt;\s(\w+)\&lt;\/td\&gt;\&lt;td\&gt;\&lt;.{30,50}alert\.png</entry>
 		<entry>ISP\&lt;\/td\&gt;\&lt;td\&gt;(.+)\&lt;\/td\&gt;</entry>
@@ -126,6 +142,15 @@
 		<entry>VirusTotal Total Engines</entry>
 		<entry>VirusTotal Malware Detected On</entry>
 	</sitefriendlyname>
+    <resulttype>
+      <entry>Found</entry>
+      <entry>date</entry>
+      <entry>Detected</entry>
+      <entry>Total</entry>
+      <entry>On</entry>
+    </resulttype>
+        
+        
         <regex>
 		<entry>response_code...(1)</entry>
 		<entry>scan_date....(.{18,25})\"\,</entry>
@@ -165,6 +190,10 @@
 		<entry>ThreatExpert Date</entry>
 		<entry>Malicious Indicators</entry>
 	</sitefriendlyname>
+    <resulttype>
+      <entry>Date</entry>
+      <entry>Indicators</entry>
+    </resulttype>
         <regex>
 		<entry>Submission\sreceived.\s(.+)\&lt;\/li\&gt;</entry>
 		<entry>1\"&gt;(.{5,100})\&lt;\/td.{10,35}src\=</entry>
@@ -191,6 +220,10 @@
 	        <entry>VxVault Date</entry>
 	        <entry>VxVault URL</entry>
 	</sitefriendlyname>
+            <resulttype>
+          <entry>Date</entry>
+          <entry>URL</entry>
+        </resulttype>
         <regex>
 	        <entry>\&gt;(\d{2}\-\d{2})\&lt;</entry>
 	        <entry>\[D\].{2,40}\Wphp\?id.{2,10}\&gt;(.{5,100})&lt;\/a</entry>
@@ -215,6 +248,9 @@
         <sitefriendlyname>
 		<entry>UnShort.me Redirect</entry>
 	</sitefriendlyname>
+    <resulttype>
+      <entry>URL</entry>
+    </resulttype>
         <regex>
 		<entry>result\"\&gt;\s\&lt;a\shref\=\".+\&gt;(.+)\&lt;\/a\&gt;\s</entry>
 	</regex>
@@ -245,6 +281,13 @@
 		<entry>URLVoid Location</entry>
 		<entry>URLVoid Country</entry>
 	</sitefriendlyname>
+    <resulttype>
+      <entry>IP</entry>
+      <entry>Blacklist</entry>
+      <entry>Domain</entry>
+      <entry>Location</entry>
+      <entry>Country</entry>
+    </resulttype>
         <regex>
 		<entry>An\sError\soccurred</entry>
 		<entry>(\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}).{5,30}Find\swebsites\shosted\shere</entry>
@@ -282,7 +325,11 @@
         <sitefriendlyname>
 	        <entry>pDNSIP</entry>
 	        <entry>pDNSURL</entry>
-	</sitefriendlyname>
+	    </sitefriendlyname>
+        <resulttype>
+          <entry>IP</entry>
+          <entry>URL</entry>
+        </resulttype>
         <regex>
 	        <entry>(\d{4}\-\d{1,2}\-\d{1,2})\s+&lt;.{30,70}\/en\/ip-address\/(.{1,80})\/information</entry>
 	        <entry>(\d{4}\-\d{1,2}\-\d{1,2}).{1,20}\s+&lt;.{10,80}\/en\/url\/.{1,100}\/analysis\/.{1,5}\s+(http.{1,70}\/)</entry>
@@ -311,7 +358,7 @@
 		<entry>[+] Malc0de ASN Name:</entry>
 		<entry>[+] Malc0de MD5:</entry>
 	</reportstringforresult>
-        <sitefriendlyname>
+    <sitefriendlyname>
 		<entry>Malc0de Date</entry>
 		<entry>Malc0de IP</entry>
 		<entry>Malc0de Country</entry>
@@ -319,6 +366,14 @@
 		<entry>Malc0de ASN Name</entry>
 		<entry>Malc0de MD5</entry>
 	</sitefriendlyname>
+        <resulttype>
+		<entry>Malc0de Date</entry>
+		<entry>Malc0de IP</entry>
+		<entry>Malc0de Country</entry>
+		<entry>Malc0de ASN</entry>
+		<entry>Malc0de ASN Name</entry>
+		<entry>Malc0de MD5</entry>
+	  </resulttype>
         <regex>
 		<entry>\d{4}\-\d{1,2}\-\d{1,2}</entry>
 		<entry>search=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})</entry>
