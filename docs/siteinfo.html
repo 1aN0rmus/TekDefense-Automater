@@ -8,7 +8,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>siteinfo</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/opt/hacking/python/local-projects/TekDefense-Automater/siteinfo.py">/opt/hacking/python/local-projects/TekDefense-Automater/siteinfo.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/jim/Files/TekDefense/TekDefense-Automater-Private/siteinfo.py">/home/jim/Files/TekDefense/TekDefense-Automater-Private/siteinfo.py</a></font></td></tr></table>
     <p><tt>The&nbsp;siteinfo.py&nbsp;module&nbsp;provides&nbsp;site&nbsp;lookup&nbsp;and&nbsp;result<br>
 storage&nbsp;for&nbsp;those&nbsp;sites&nbsp;based&nbsp;on&nbsp;the&nbsp;sites.xml&nbsp;config<br>
 file&nbsp;and&nbsp;the&nbsp;arguments&nbsp;sent&nbsp;in&nbsp;to&nbsp;the&nbsp;Automater.<br>
@@ -28,7 +28,7 @@ required&nbsp;and&nbsp;requested&nbsp;via&nbsp;a&nbsp;--p&nbsp;argument&nbsp;uti
 called.&nbsp;This&nbsp;Class&nbsp;expects&nbsp;to&nbsp;find&nbsp;the&nbsp;first&nbsp;regular&nbsp;expression&nbsp;listed<br>
 in&nbsp;the&nbsp;sites.xml&nbsp;config&nbsp;file.&nbsp;If&nbsp;that&nbsp;regex&nbsp;is&nbsp;found,&nbsp;it&nbsp;tells&nbsp;the&nbsp;class<br>
 that&nbsp;a&nbsp;post&nbsp;is&nbsp;necessary.<br>
-<a href="#PostTransactionAPIKeySite">PostTransactionAPIKeySite</a>&nbsp;--&nbsp;Class&nbsp;used&nbsp;to&nbsp;store&nbsp;information&nbsp;from&nbsp;a&nbsp;<br>
+<a href="#PostTransactionAPIKeySite">PostTransactionAPIKeySite</a>&nbsp;--&nbsp;Class&nbsp;used&nbsp;to&nbsp;store&nbsp;information&nbsp;from&nbsp;a<br>
 site&nbsp;that&nbsp;has&nbsp;single&nbsp;or&nbsp;multiple&nbsp;results&nbsp;requested&nbsp;and&nbsp;discovered.&nbsp;This<br>
 Class&nbsp;is&nbsp;utilized&nbsp;if&nbsp;an&nbsp;API&nbsp;key&nbsp;is&nbsp;provided&nbsp;in&nbsp;the&nbsp;sites.xml<br>
 configuration&nbsp;file.<br>
@@ -130,12 +130,14 @@ Nothing&nbsp;is&nbsp;returned&nbsp;from&nbsp;this&nbsp;Method.<br>
 Restriction(s):<br>
 The&nbsp;Method&nbsp;has&nbsp;no&nbsp;restrictions.</tt></dd></dl>
 
-<dl><dt><a name="MultiResultsSite-getContentList"><strong>getContentList</strong></a>(self, index)</dt><dd><tt>Retrieves&nbsp;a&nbsp;list&nbsp;of&nbsp;information&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;sites&nbsp;defined<br>
+<dl><dt><a name="MultiResultsSite-getContentList"><strong>getContentList</strong></a>(self, webcontent, index)</dt><dd><tt>Retrieves&nbsp;a&nbsp;list&nbsp;of&nbsp;information&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;sites&nbsp;defined<br>
 in&nbsp;the&nbsp;sites.xml&nbsp;configuration&nbsp;file.<br>
 Returns&nbsp;the&nbsp;list&nbsp;of&nbsp;found&nbsp;information&nbsp;from&nbsp;the&nbsp;sites&nbsp;being&nbsp;used<br>
 as&nbsp;resources&nbsp;or&nbsp;returns&nbsp;None&nbsp;if&nbsp;the&nbsp;site&nbsp;cannot&nbsp;be&nbsp;discovered.<br>
 &nbsp;<br>
 Argument(s):<br>
+webcontent&nbsp;--&nbsp;actual&nbsp;content&nbsp;of&nbsp;the&nbsp;web&nbsp;page&nbsp;that's&nbsp;been&nbsp;returned<br>
+from&nbsp;a&nbsp;request.<br>
 index&nbsp;--&nbsp;the&nbsp;integer&nbsp;representing&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;regex&nbsp;list.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
@@ -197,7 +199,8 @@ Restriction(s):<br>
 The&nbsp;Method&nbsp;has&nbsp;no&nbsp;restrictions.</tt></dd></dl>
 
 <dl><dt><a name="MultiResultsSite-getWebScrape"><strong>getWebScrape</strong></a>(self)</dt><dd><tt>Attempts&nbsp;to&nbsp;retrieve&nbsp;a&nbsp;string&nbsp;from&nbsp;a&nbsp;web&nbsp;site.&nbsp;String&nbsp;retrieved&nbsp;is<br>
-the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;HTML&nbsp;markup.<br>
+the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;HTML&nbsp;markup.&nbsp;Requests&nbsp;via&nbsp;proxy&nbsp;if<br>
+--proxy&nbsp;option&nbsp;was&nbsp;chosen&nbsp;during&nbsp;execution&nbsp;of&nbsp;the&nbsp;Automater.<br>
 Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;the<br>
 HTML&nbsp;markup&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;site.<br>
 &nbsp;<br>
@@ -245,7 +248,7 @@ Dictionary&nbsp;representing&nbsp;all&nbsp;entry&nbsp;keys&nbsp;found&nbsp;withi
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Class&nbsp;Method</tt></dd></dl>
 
-<dl><dt><a name="MultiResultsSite-buildSiteFromXML"><strong>buildSiteFromXML</strong></a>(self, siteelement, webretrievedelay, targettype, target, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Utilizes&nbsp;the&nbsp;Class&nbsp;Methods&nbsp;within&nbsp;this&nbsp;Class&nbsp;to&nbsp;build&nbsp;the&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+<dl><dt><a name="MultiResultsSite-buildSiteFromXML"><strong>buildSiteFromXML</strong></a>(self, siteelement, webretrievedelay, proxy, targettype, target, useragent)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Utilizes&nbsp;the&nbsp;Class&nbsp;Methods&nbsp;within&nbsp;this&nbsp;Class&nbsp;to&nbsp;build&nbsp;the&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
 Returns&nbsp;a&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;that&nbsp;defines&nbsp;results&nbsp;returned&nbsp;during&nbsp;the&nbsp;web<br>
 retrieval&nbsp;investigations.<br>
 &nbsp;<br>
@@ -254,8 +257,11 @@ siteelement&nbsp;--&nbsp;the&nbsp;siteelement&nbsp;<a href="__builtin__.html#obj
 start&nbsp;element.<br>
 webretrievedelay&nbsp;--&nbsp;the&nbsp;amount&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;between&nbsp;site&nbsp;retrieve<br>
 calls.&nbsp;Default&nbsp;delay&nbsp;is&nbsp;2&nbsp;seconds.<br>
+proxy&nbsp;--&nbsp;sets&nbsp;a&nbsp;proxy&nbsp;to&nbsp;use&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;proxy.example.com:8080.<br>
 targettype&nbsp;--&nbsp;the&nbsp;targettype&nbsp;as&nbsp;defined.&nbsp;Either&nbsp;ip,&nbsp;md5,&nbsp;or&nbsp;hostname.<br>
 target&nbsp;--&nbsp;the&nbsp;target&nbsp;that&nbsp;will&nbsp;be&nbsp;used&nbsp;to&nbsp;gather&nbsp;information&nbsp;on.<br>
+useragent&nbsp;--&nbsp;the&nbsp;string&nbsp;utilized&nbsp;to&nbsp;represent&nbsp;the&nbsp;user-agent&nbsp;when<br>
+web&nbsp;requests&nbsp;or&nbsp;submissions&nbsp;are&nbsp;made.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
 <a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
@@ -404,6 +410,18 @@ instance&nbsp;variable.<br>
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
 </dl>
+<dl><dt><strong>Proxy</strong></dt>
+<dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representation&nbsp;of&nbsp;the&nbsp;proxy&nbsp;used.<br>
+&nbsp;<br>
+Argument(s):<br>
+No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+string&nbsp;--&nbsp;representation&nbsp;of&nbsp;the&nbsp;proxy&nbsp;used<br>
+&nbsp;<br>
+Restriction(s):<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
+</dl>
 <dl><dt><strong>RegEx</strong></dt>
 <dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;a&nbsp;regular&nbsp;expression<br>
 required&nbsp;to&nbsp;retrieve&nbsp;the&nbsp;information&nbsp;being&nbsp;investigated.<br>
@@ -481,6 +499,23 @@ No&nbsp;arguments&nbsp;are&nbsp;required.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
 string&nbsp;--&nbsp;representing&nbsp;the&nbsp;URL&nbsp;of&nbsp;the&nbsp;site.<br>
+&nbsp;<br>
+Restriction(s):<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
+</dl>
+<dl><dt><strong>UserAgent</strong></dt>
+<dd><tt>Returns&nbsp;string&nbsp;representing&nbsp;the&nbsp;user-agent&nbsp;that&nbsp;will<br>
+be&nbsp;used&nbsp;when&nbsp;requesting&nbsp;or&nbsp;submitting&nbsp;information&nbsp;to<br>
+a&nbsp;web&nbsp;site.&nbsp;This&nbsp;is&nbsp;a&nbsp;user-provided&nbsp;string&nbsp;implemented<br>
+on&nbsp;the&nbsp;command&nbsp;line&nbsp;at&nbsp;execution&nbsp;or&nbsp;provided&nbsp;by&nbsp;default<br>
+if&nbsp;not&nbsp;added&nbsp;during&nbsp;execution.<br>
+&nbsp;<br>
+Argument(s):<br>
+No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+string&nbsp;--&nbsp;representation&nbsp;of&nbsp;the&nbsp;UserAgent&nbsp;from&nbsp;the&nbsp;_userAgent<br>
+instance&nbsp;variable.<br>
 &nbsp;<br>
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
@@ -586,7 +621,8 @@ Restriction(s):<br>
 The&nbsp;Method&nbsp;has&nbsp;no&nbsp;restrictions.</tt></dd></dl>
 
 <dl><dt><a name="PostTransactionAPIKeySite-submitPost"><strong>submitPost</strong></a>(self, raw_params, headers)</dt><dd><tt>Submits&nbsp;information&nbsp;to&nbsp;a&nbsp;web&nbsp;site&nbsp;being&nbsp;used&nbsp;as&nbsp;a&nbsp;resource&nbsp;that<br>
-requires&nbsp;a&nbsp;post&nbsp;of&nbsp;information.<br>
+requires&nbsp;a&nbsp;post&nbsp;of&nbsp;information.&nbsp;Submits&nbsp;via&nbsp;proxy&nbsp;if&nbsp;--proxy<br>
+option&nbsp;was&nbsp;chosen&nbsp;during&nbsp;execution&nbsp;of&nbsp;the&nbsp;Automater.<br>
 Returns&nbsp;a&nbsp;string&nbsp;that&nbsp;contains&nbsp;entire&nbsp;web&nbsp;site&nbsp;being&nbsp;used&nbsp;as&nbsp;a<br>
 resource&nbsp;including&nbsp;HTML&nbsp;markup&nbsp;information.<br>
 &nbsp;<br>
@@ -669,7 +705,8 @@ Restriction(s):<br>
 The&nbsp;Method&nbsp;has&nbsp;no&nbsp;restrictions.</tt></dd></dl>
 
 <dl><dt><a name="PostTransactionAPIKeySite-getWebScrape"><strong>getWebScrape</strong></a>(self)</dt><dd><tt>Attempts&nbsp;to&nbsp;retrieve&nbsp;a&nbsp;string&nbsp;from&nbsp;a&nbsp;web&nbsp;site.&nbsp;String&nbsp;retrieved&nbsp;is<br>
-the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;HTML&nbsp;markup.<br>
+the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;HTML&nbsp;markup.&nbsp;Requests&nbsp;via&nbsp;proxy&nbsp;if<br>
+--proxy&nbsp;option&nbsp;was&nbsp;chosen&nbsp;during&nbsp;execution&nbsp;of&nbsp;the&nbsp;Automater.<br>
 Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;the<br>
 HTML&nbsp;markup&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;site.<br>
 &nbsp;<br>
@@ -717,7 +754,7 @@ Dictionary&nbsp;representing&nbsp;all&nbsp;entry&nbsp;keys&nbsp;found&nbsp;withi
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Class&nbsp;Method</tt></dd></dl>
 
-<dl><dt><a name="PostTransactionAPIKeySite-buildSiteFromXML"><strong>buildSiteFromXML</strong></a>(self, siteelement, webretrievedelay, targettype, target, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Utilizes&nbsp;the&nbsp;Class&nbsp;Methods&nbsp;within&nbsp;this&nbsp;Class&nbsp;to&nbsp;build&nbsp;the&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+<dl><dt><a name="PostTransactionAPIKeySite-buildSiteFromXML"><strong>buildSiteFromXML</strong></a>(self, siteelement, webretrievedelay, proxy, targettype, target, useragent)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Utilizes&nbsp;the&nbsp;Class&nbsp;Methods&nbsp;within&nbsp;this&nbsp;Class&nbsp;to&nbsp;build&nbsp;the&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
 Returns&nbsp;a&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;that&nbsp;defines&nbsp;results&nbsp;returned&nbsp;during&nbsp;the&nbsp;web<br>
 retrieval&nbsp;investigations.<br>
 &nbsp;<br>
@@ -726,8 +763,11 @@ siteelement&nbsp;--&nbsp;the&nbsp;siteelement&nbsp;<a href="__builtin__.html#obj
 start&nbsp;element.<br>
 webretrievedelay&nbsp;--&nbsp;the&nbsp;amount&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;between&nbsp;site&nbsp;retrieve<br>
 calls.&nbsp;Default&nbsp;delay&nbsp;is&nbsp;2&nbsp;seconds.<br>
+proxy&nbsp;--&nbsp;sets&nbsp;a&nbsp;proxy&nbsp;to&nbsp;use&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;proxy.example.com:8080.<br>
 targettype&nbsp;--&nbsp;the&nbsp;targettype&nbsp;as&nbsp;defined.&nbsp;Either&nbsp;ip,&nbsp;md5,&nbsp;or&nbsp;hostname.<br>
 target&nbsp;--&nbsp;the&nbsp;target&nbsp;that&nbsp;will&nbsp;be&nbsp;used&nbsp;to&nbsp;gather&nbsp;information&nbsp;on.<br>
+useragent&nbsp;--&nbsp;the&nbsp;string&nbsp;utilized&nbsp;to&nbsp;represent&nbsp;the&nbsp;user-agent&nbsp;when<br>
+web&nbsp;requests&nbsp;or&nbsp;submissions&nbsp;are&nbsp;made.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
 <a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
@@ -876,6 +916,18 @@ instance&nbsp;variable.<br>
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
 </dl>
+<dl><dt><strong>Proxy</strong></dt>
+<dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representation&nbsp;of&nbsp;the&nbsp;proxy&nbsp;used.<br>
+&nbsp;<br>
+Argument(s):<br>
+No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+string&nbsp;--&nbsp;representation&nbsp;of&nbsp;the&nbsp;proxy&nbsp;used<br>
+&nbsp;<br>
+Restriction(s):<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
+</dl>
 <dl><dt><strong>RegEx</strong></dt>
 <dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;a&nbsp;regular&nbsp;expression<br>
 required&nbsp;to&nbsp;retrieve&nbsp;the&nbsp;information&nbsp;being&nbsp;investigated.<br>
@@ -953,6 +1005,23 @@ No&nbsp;arguments&nbsp;are&nbsp;required.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
 string&nbsp;--&nbsp;representing&nbsp;the&nbsp;URL&nbsp;of&nbsp;the&nbsp;site.<br>
+&nbsp;<br>
+Restriction(s):<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
+</dl>
+<dl><dt><strong>UserAgent</strong></dt>
+<dd><tt>Returns&nbsp;string&nbsp;representing&nbsp;the&nbsp;user-agent&nbsp;that&nbsp;will<br>
+be&nbsp;used&nbsp;when&nbsp;requesting&nbsp;or&nbsp;submitting&nbsp;information&nbsp;to<br>
+a&nbsp;web&nbsp;site.&nbsp;This&nbsp;is&nbsp;a&nbsp;user-provided&nbsp;string&nbsp;implemented<br>
+on&nbsp;the&nbsp;command&nbsp;line&nbsp;at&nbsp;execution&nbsp;or&nbsp;provided&nbsp;by&nbsp;default<br>
+if&nbsp;not&nbsp;added&nbsp;during&nbsp;execution.<br>
+&nbsp;<br>
+Argument(s):<br>
+No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+string&nbsp;--&nbsp;representation&nbsp;of&nbsp;the&nbsp;UserAgent&nbsp;from&nbsp;the&nbsp;_userAgent<br>
+instance&nbsp;variable.<br>
 &nbsp;<br>
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
@@ -1097,7 +1166,8 @@ Restriction(s):<br>
 The&nbsp;Method&nbsp;has&nbsp;no&nbsp;restrictions.</tt></dd></dl>
 
 <dl><dt><a name="PostTransactionPositiveCapableSite-submitPost"><strong>submitPost</strong></a>(self, raw_params, headers)</dt><dd><tt>Submits&nbsp;information&nbsp;to&nbsp;a&nbsp;web&nbsp;site&nbsp;being&nbsp;used&nbsp;as&nbsp;a&nbsp;resource&nbsp;that<br>
-requires&nbsp;a&nbsp;post&nbsp;of&nbsp;information.<br>
+requires&nbsp;a&nbsp;post&nbsp;of&nbsp;information.&nbsp;Submits&nbsp;via&nbsp;proxy&nbsp;if&nbsp;--proxy<br>
+option&nbsp;was&nbsp;chosen&nbsp;during&nbsp;execution&nbsp;of&nbsp;the&nbsp;Automater.<br>
 Returns&nbsp;a&nbsp;string&nbsp;that&nbsp;contains&nbsp;entire&nbsp;web&nbsp;site&nbsp;being&nbsp;used&nbsp;as&nbsp;a<br>
 resource&nbsp;including&nbsp;HTML&nbsp;markup&nbsp;information.<br>
 &nbsp;<br>
@@ -1180,7 +1250,8 @@ Restriction(s):<br>
 The&nbsp;Method&nbsp;has&nbsp;no&nbsp;restrictions.</tt></dd></dl>
 
 <dl><dt><a name="PostTransactionPositiveCapableSite-getWebScrape"><strong>getWebScrape</strong></a>(self)</dt><dd><tt>Attempts&nbsp;to&nbsp;retrieve&nbsp;a&nbsp;string&nbsp;from&nbsp;a&nbsp;web&nbsp;site.&nbsp;String&nbsp;retrieved&nbsp;is<br>
-the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;HTML&nbsp;markup.<br>
+the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;HTML&nbsp;markup.&nbsp;Requests&nbsp;via&nbsp;proxy&nbsp;if<br>
+--proxy&nbsp;option&nbsp;was&nbsp;chosen&nbsp;during&nbsp;execution&nbsp;of&nbsp;the&nbsp;Automater.<br>
 Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;the<br>
 HTML&nbsp;markup&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;site.<br>
 &nbsp;<br>
@@ -1228,7 +1299,7 @@ Dictionary&nbsp;representing&nbsp;all&nbsp;entry&nbsp;keys&nbsp;found&nbsp;withi
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Class&nbsp;Method</tt></dd></dl>
 
-<dl><dt><a name="PostTransactionPositiveCapableSite-buildSiteFromXML"><strong>buildSiteFromXML</strong></a>(self, siteelement, webretrievedelay, targettype, target, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Utilizes&nbsp;the&nbsp;Class&nbsp;Methods&nbsp;within&nbsp;this&nbsp;Class&nbsp;to&nbsp;build&nbsp;the&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+<dl><dt><a name="PostTransactionPositiveCapableSite-buildSiteFromXML"><strong>buildSiteFromXML</strong></a>(self, siteelement, webretrievedelay, proxy, targettype, target, useragent)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Utilizes&nbsp;the&nbsp;Class&nbsp;Methods&nbsp;within&nbsp;this&nbsp;Class&nbsp;to&nbsp;build&nbsp;the&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
 Returns&nbsp;a&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;that&nbsp;defines&nbsp;results&nbsp;returned&nbsp;during&nbsp;the&nbsp;web<br>
 retrieval&nbsp;investigations.<br>
 &nbsp;<br>
@@ -1237,8 +1308,11 @@ siteelement&nbsp;--&nbsp;the&nbsp;siteelement&nbsp;<a href="__builtin__.html#obj
 start&nbsp;element.<br>
 webretrievedelay&nbsp;--&nbsp;the&nbsp;amount&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;between&nbsp;site&nbsp;retrieve<br>
 calls.&nbsp;Default&nbsp;delay&nbsp;is&nbsp;2&nbsp;seconds.<br>
+proxy&nbsp;--&nbsp;sets&nbsp;a&nbsp;proxy&nbsp;to&nbsp;use&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;proxy.example.com:8080.<br>
 targettype&nbsp;--&nbsp;the&nbsp;targettype&nbsp;as&nbsp;defined.&nbsp;Either&nbsp;ip,&nbsp;md5,&nbsp;or&nbsp;hostname.<br>
 target&nbsp;--&nbsp;the&nbsp;target&nbsp;that&nbsp;will&nbsp;be&nbsp;used&nbsp;to&nbsp;gather&nbsp;information&nbsp;on.<br>
+useragent&nbsp;--&nbsp;the&nbsp;string&nbsp;utilized&nbsp;to&nbsp;represent&nbsp;the&nbsp;user-agent&nbsp;when<br>
+web&nbsp;requests&nbsp;or&nbsp;submissions&nbsp;are&nbsp;made.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
 <a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
@@ -1387,6 +1461,18 @@ instance&nbsp;variable.<br>
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
 </dl>
+<dl><dt><strong>Proxy</strong></dt>
+<dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representation&nbsp;of&nbsp;the&nbsp;proxy&nbsp;used.<br>
+&nbsp;<br>
+Argument(s):<br>
+No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+string&nbsp;--&nbsp;representation&nbsp;of&nbsp;the&nbsp;proxy&nbsp;used<br>
+&nbsp;<br>
+Restriction(s):<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
+</dl>
 <dl><dt><strong>RegEx</strong></dt>
 <dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;a&nbsp;regular&nbsp;expression<br>
 required&nbsp;to&nbsp;retrieve&nbsp;the&nbsp;information&nbsp;being&nbsp;investigated.<br>
@@ -1468,6 +1554,23 @@ string&nbsp;--&nbsp;representing&nbsp;the&nbsp;URL&nbsp;of&nbsp;the&nbsp;site.<b
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
 </dl>
+<dl><dt><strong>UserAgent</strong></dt>
+<dd><tt>Returns&nbsp;string&nbsp;representing&nbsp;the&nbsp;user-agent&nbsp;that&nbsp;will<br>
+be&nbsp;used&nbsp;when&nbsp;requesting&nbsp;or&nbsp;submitting&nbsp;information&nbsp;to<br>
+a&nbsp;web&nbsp;site.&nbsp;This&nbsp;is&nbsp;a&nbsp;user-provided&nbsp;string&nbsp;implemented<br>
+on&nbsp;the&nbsp;command&nbsp;line&nbsp;at&nbsp;execution&nbsp;or&nbsp;provided&nbsp;by&nbsp;default<br>
+if&nbsp;not&nbsp;added&nbsp;during&nbsp;execution.<br>
+&nbsp;<br>
+Argument(s):<br>
+No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+string&nbsp;--&nbsp;representation&nbsp;of&nbsp;the&nbsp;UserAgent&nbsp;from&nbsp;the&nbsp;_userAgent<br>
+instance&nbsp;variable.<br>
+&nbsp;<br>
+Restriction(s):<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
+</dl>
 <dl><dt><strong>UserMessage</strong></dt>
 <dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;the&nbsp;Full&nbsp;URL&nbsp;which&nbsp;is&nbsp;the<br>
 domain&nbsp;URL&nbsp;plus&nbsp;querystrings&nbsp;and&nbsp;other&nbsp;information&nbsp;required<br>
@@ -1535,13 +1638,14 @@ site&nbsp;--&nbsp;the&nbsp;site&nbsp;that&nbsp;we&nbsp;will&nbsp;decorate.<br>
 Return&nbsp;value(s):<br>
 Nothing&nbsp;is&nbsp;returned&nbsp;from&nbsp;this&nbsp;Method.</tt></dd></dl>
 
-<dl><dt><a name="SingleResultsSite-getContentList"><strong>getContentList</strong></a>(self)</dt><dd><tt>Retrieves&nbsp;a&nbsp;list&nbsp;of&nbsp;information&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;sites&nbsp;defined<br>
+<dl><dt><a name="SingleResultsSite-getContentList"><strong>getContentList</strong></a>(self, webcontent)</dt><dd><tt>Retrieves&nbsp;a&nbsp;list&nbsp;of&nbsp;information&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;sites&nbsp;defined<br>
 in&nbsp;the&nbsp;sites.xml&nbsp;configuration&nbsp;file.<br>
 Returns&nbsp;the&nbsp;list&nbsp;of&nbsp;found&nbsp;information&nbsp;from&nbsp;the&nbsp;sites&nbsp;being&nbsp;used<br>
 as&nbsp;resources&nbsp;or&nbsp;returns&nbsp;None&nbsp;if&nbsp;the&nbsp;site&nbsp;cannot&nbsp;be&nbsp;discovered.<br>
 &nbsp;<br>
 Argument(s):<br>
-No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+webcontent&nbsp;--&nbsp;actual&nbsp;content&nbsp;of&nbsp;the&nbsp;web&nbsp;page&nbsp;that's&nbsp;been&nbsp;returned<br>
+from&nbsp;a&nbsp;request.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
 list&nbsp;--&nbsp;information&nbsp;found&nbsp;from&nbsp;a&nbsp;web&nbsp;site&nbsp;being&nbsp;used&nbsp;as&nbsp;a&nbsp;resource.<br>
@@ -1615,7 +1719,8 @@ Restriction(s):<br>
 The&nbsp;Method&nbsp;has&nbsp;no&nbsp;restrictions.</tt></dd></dl>
 
 <dl><dt><a name="SingleResultsSite-getWebScrape"><strong>getWebScrape</strong></a>(self)</dt><dd><tt>Attempts&nbsp;to&nbsp;retrieve&nbsp;a&nbsp;string&nbsp;from&nbsp;a&nbsp;web&nbsp;site.&nbsp;String&nbsp;retrieved&nbsp;is<br>
-the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;HTML&nbsp;markup.<br>
+the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;HTML&nbsp;markup.&nbsp;Requests&nbsp;via&nbsp;proxy&nbsp;if<br>
+--proxy&nbsp;option&nbsp;was&nbsp;chosen&nbsp;during&nbsp;execution&nbsp;of&nbsp;the&nbsp;Automater.<br>
 Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;the<br>
 HTML&nbsp;markup&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;site.<br>
 &nbsp;<br>
@@ -1663,7 +1768,7 @@ Dictionary&nbsp;representing&nbsp;all&nbsp;entry&nbsp;keys&nbsp;found&nbsp;withi
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Class&nbsp;Method</tt></dd></dl>
 
-<dl><dt><a name="SingleResultsSite-buildSiteFromXML"><strong>buildSiteFromXML</strong></a>(self, siteelement, webretrievedelay, targettype, target, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Utilizes&nbsp;the&nbsp;Class&nbsp;Methods&nbsp;within&nbsp;this&nbsp;Class&nbsp;to&nbsp;build&nbsp;the&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+<dl><dt><a name="SingleResultsSite-buildSiteFromXML"><strong>buildSiteFromXML</strong></a>(self, siteelement, webretrievedelay, proxy, targettype, target, useragent)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Utilizes&nbsp;the&nbsp;Class&nbsp;Methods&nbsp;within&nbsp;this&nbsp;Class&nbsp;to&nbsp;build&nbsp;the&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
 Returns&nbsp;a&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;that&nbsp;defines&nbsp;results&nbsp;returned&nbsp;during&nbsp;the&nbsp;web<br>
 retrieval&nbsp;investigations.<br>
 &nbsp;<br>
@@ -1672,8 +1777,11 @@ siteelement&nbsp;--&nbsp;the&nbsp;siteelement&nbsp;<a href="__builtin__.html#obj
 start&nbsp;element.<br>
 webretrievedelay&nbsp;--&nbsp;the&nbsp;amount&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;between&nbsp;site&nbsp;retrieve<br>
 calls.&nbsp;Default&nbsp;delay&nbsp;is&nbsp;2&nbsp;seconds.<br>
+proxy&nbsp;--&nbsp;sets&nbsp;a&nbsp;proxy&nbsp;to&nbsp;use&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;proxy.example.com:8080.<br>
 targettype&nbsp;--&nbsp;the&nbsp;targettype&nbsp;as&nbsp;defined.&nbsp;Either&nbsp;ip,&nbsp;md5,&nbsp;or&nbsp;hostname.<br>
 target&nbsp;--&nbsp;the&nbsp;target&nbsp;that&nbsp;will&nbsp;be&nbsp;used&nbsp;to&nbsp;gather&nbsp;information&nbsp;on.<br>
+useragent&nbsp;--&nbsp;the&nbsp;string&nbsp;utilized&nbsp;to&nbsp;represent&nbsp;the&nbsp;user-agent&nbsp;when<br>
+web&nbsp;requests&nbsp;or&nbsp;submissions&nbsp;are&nbsp;made.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
 <a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
@@ -1822,6 +1930,18 @@ instance&nbsp;variable.<br>
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
 </dl>
+<dl><dt><strong>Proxy</strong></dt>
+<dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representation&nbsp;of&nbsp;the&nbsp;proxy&nbsp;used.<br>
+&nbsp;<br>
+Argument(s):<br>
+No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+string&nbsp;--&nbsp;representation&nbsp;of&nbsp;the&nbsp;proxy&nbsp;used<br>
+&nbsp;<br>
+Restriction(s):<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
+</dl>
 <dl><dt><strong>RegEx</strong></dt>
 <dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;a&nbsp;regular&nbsp;expression<br>
 required&nbsp;to&nbsp;retrieve&nbsp;the&nbsp;information&nbsp;being&nbsp;investigated.<br>
@@ -1903,6 +2023,23 @@ string&nbsp;--&nbsp;representing&nbsp;the&nbsp;URL&nbsp;of&nbsp;the&nbsp;site.<b
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
 </dl>
+<dl><dt><strong>UserAgent</strong></dt>
+<dd><tt>Returns&nbsp;string&nbsp;representing&nbsp;the&nbsp;user-agent&nbsp;that&nbsp;will<br>
+be&nbsp;used&nbsp;when&nbsp;requesting&nbsp;or&nbsp;submitting&nbsp;information&nbsp;to<br>
+a&nbsp;web&nbsp;site.&nbsp;This&nbsp;is&nbsp;a&nbsp;user-provided&nbsp;string&nbsp;implemented<br>
+on&nbsp;the&nbsp;command&nbsp;line&nbsp;at&nbsp;execution&nbsp;or&nbsp;provided&nbsp;by&nbsp;default<br>
+if&nbsp;not&nbsp;added&nbsp;during&nbsp;execution.<br>
+&nbsp;<br>
+Argument(s):<br>
+No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+string&nbsp;--&nbsp;representation&nbsp;of&nbsp;the&nbsp;UserAgent&nbsp;from&nbsp;the&nbsp;_userAgent<br>
+instance&nbsp;variable.<br>
+&nbsp;<br>
+Restriction(s):<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
+</dl>
 <dl><dt><strong>UserMessage</strong></dt>
 <dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;the&nbsp;Full&nbsp;URL&nbsp;which&nbsp;is&nbsp;the<br>
 domain&nbsp;URL&nbsp;plus&nbsp;querystrings&nbsp;and&nbsp;other&nbsp;information&nbsp;required<br>
@@ -1977,6 +2114,7 @@ Public&nbsp;Method(s):<br>
 (Property)&nbsp;Headers<br>
 (Property)&nbsp;APIKey<br>
 (Property)&nbsp;Target<br>
+(Property)&nbsp;UserAgent<br>
 (Property)&nbsp;Results<br>
 (Property)&nbsp;Silent<br>
 addResults<br>
@@ -1996,6 +2134,7 @@ _reportstringforresult<br>
 _errormessage<br>
 _usermessage<br>
 _target<br>
+_userAgent<br>
 _friendlyName<br>
 _regex<br>
 _fullURL<br>
@@ -2007,7 +2146,7 @@ _results<br>
 _messagetopost<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="Site-__init__"><strong>__init__</strong></a>(self, domainurl, webretrievedelay, targettype, reportstringforresult, target, friendlyname, regex, fullurl, importantproperty, params, headers, apikey, **kwargs)</dt><dd><tt>Class&nbsp;constructor.&nbsp;Sets&nbsp;the&nbsp;instance&nbsp;variables&nbsp;based&nbsp;on&nbsp;input&nbsp;from<br>
+<dl><dt><a name="Site-__init__"><strong>__init__</strong></a>(self, domainurl, webretrievedelay, proxy, targettype, reportstringforresult, target, useragent, friendlyname, regex, fullurl, importantproperty, params, headers, apikey)</dt><dd><tt>Class&nbsp;constructor.&nbsp;Sets&nbsp;the&nbsp;instance&nbsp;variables&nbsp;based&nbsp;on&nbsp;input&nbsp;from<br>
 the&nbsp;arguments&nbsp;supplied&nbsp;when&nbsp;Automater&nbsp;is&nbsp;run&nbsp;and&nbsp;what&nbsp;the&nbsp;sites.xml<br>
 config&nbsp;file&nbsp;stores.<br>
 &nbsp;<br>
@@ -2015,11 +2154,14 @@ Argument(s):<br>
 domainurl&nbsp;--&nbsp;string&nbsp;defined&nbsp;in&nbsp;sites.xml&nbsp;in&nbsp;the&nbsp;domainurl&nbsp;XML&nbsp;tag.<br>
 webretrievedelay&nbsp;--&nbsp;the&nbsp;amount&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;between&nbsp;site&nbsp;retrieve<br>
 calls.&nbsp;Default&nbsp;delay&nbsp;is&nbsp;2&nbsp;seconds.<br>
+proxy&nbsp;--&nbsp;will&nbsp;set&nbsp;a&nbsp;proxy&nbsp;to&nbsp;use&nbsp;(eg.&nbsp;proxy.example.com:8080).<br>
 targettype&nbsp;--&nbsp;the&nbsp;targettype&nbsp;as&nbsp;defined.&nbsp;Either&nbsp;ip,&nbsp;md5,&nbsp;or&nbsp;hostname.<br>
 reportstringforresult&nbsp;--&nbsp;string&nbsp;or&nbsp;list&nbsp;of&nbsp;strings&nbsp;that&nbsp;are&nbsp;entered&nbsp;in<br>
 the&nbsp;entry&nbsp;XML&nbsp;tag&nbsp;within&nbsp;the&nbsp;reportstringforresult&nbsp;XML&nbsp;tag&nbsp;in&nbsp;the<br>
 sites.xml&nbsp;configuration&nbsp;file.<br>
 target&nbsp;--&nbsp;the&nbsp;target&nbsp;that&nbsp;will&nbsp;be&nbsp;used&nbsp;to&nbsp;gather&nbsp;information&nbsp;on.<br>
+useragent&nbsp;--&nbsp;the&nbsp;user-agent&nbsp;string&nbsp;that&nbsp;will&nbsp;be&nbsp;utilized&nbsp;when&nbsp;submitting<br>
+information&nbsp;to&nbsp;or&nbsp;requesting&nbsp;information&nbsp;from&nbsp;a&nbsp;website<br>
 friendlyname&nbsp;--&nbsp;string&nbsp;or&nbsp;list&nbsp;of&nbsp;strings&nbsp;that&nbsp;are&nbsp;entered&nbsp;in<br>
 the&nbsp;entry&nbsp;XML&nbsp;tag&nbsp;within&nbsp;the&nbsp;sitefriendlyname&nbsp;XML&nbsp;tag&nbsp;in&nbsp;the<br>
 sites.xml&nbsp;configuration&nbsp;file.<br>
@@ -2103,7 +2245,8 @@ Restriction(s):<br>
 The&nbsp;Method&nbsp;has&nbsp;no&nbsp;restrictions.</tt></dd></dl>
 
 <dl><dt><a name="Site-getWebScrape"><strong>getWebScrape</strong></a>(self)</dt><dd><tt>Attempts&nbsp;to&nbsp;retrieve&nbsp;a&nbsp;string&nbsp;from&nbsp;a&nbsp;web&nbsp;site.&nbsp;String&nbsp;retrieved&nbsp;is<br>
-the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;HTML&nbsp;markup.<br>
+the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;HTML&nbsp;markup.&nbsp;Requests&nbsp;via&nbsp;proxy&nbsp;if<br>
+--proxy&nbsp;option&nbsp;was&nbsp;chosen&nbsp;during&nbsp;execution&nbsp;of&nbsp;the&nbsp;Automater.<br>
 Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;the&nbsp;entire&nbsp;web&nbsp;site&nbsp;including&nbsp;the<br>
 HTML&nbsp;markup&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;site.<br>
 &nbsp;<br>
@@ -2151,7 +2294,7 @@ Dictionary&nbsp;representing&nbsp;all&nbsp;entry&nbsp;keys&nbsp;found&nbsp;withi
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Class&nbsp;Method</tt></dd></dl>
 
-<dl><dt><a name="Site-buildSiteFromXML"><strong>buildSiteFromXML</strong></a>(self, siteelement, webretrievedelay, targettype, target, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Utilizes&nbsp;the&nbsp;Class&nbsp;Methods&nbsp;within&nbsp;this&nbsp;Class&nbsp;to&nbsp;build&nbsp;the&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+<dl><dt><a name="Site-buildSiteFromXML"><strong>buildSiteFromXML</strong></a>(self, siteelement, webretrievedelay, proxy, targettype, target, useragent)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Utilizes&nbsp;the&nbsp;Class&nbsp;Methods&nbsp;within&nbsp;this&nbsp;Class&nbsp;to&nbsp;build&nbsp;the&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
 Returns&nbsp;a&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;that&nbsp;defines&nbsp;results&nbsp;returned&nbsp;during&nbsp;the&nbsp;web<br>
 retrieval&nbsp;investigations.<br>
 &nbsp;<br>
@@ -2160,8 +2303,11 @@ siteelement&nbsp;--&nbsp;the&nbsp;siteelement&nbsp;<a href="__builtin__.html#obj
 start&nbsp;element.<br>
 webretrievedelay&nbsp;--&nbsp;the&nbsp;amount&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;between&nbsp;site&nbsp;retrieve<br>
 calls.&nbsp;Default&nbsp;delay&nbsp;is&nbsp;2&nbsp;seconds.<br>
+proxy&nbsp;--&nbsp;sets&nbsp;a&nbsp;proxy&nbsp;to&nbsp;use&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;proxy.example.com:8080.<br>
 targettype&nbsp;--&nbsp;the&nbsp;targettype&nbsp;as&nbsp;defined.&nbsp;Either&nbsp;ip,&nbsp;md5,&nbsp;or&nbsp;hostname.<br>
 target&nbsp;--&nbsp;the&nbsp;target&nbsp;that&nbsp;will&nbsp;be&nbsp;used&nbsp;to&nbsp;gather&nbsp;information&nbsp;on.<br>
+useragent&nbsp;--&nbsp;the&nbsp;string&nbsp;utilized&nbsp;to&nbsp;represent&nbsp;the&nbsp;user-agent&nbsp;when<br>
+web&nbsp;requests&nbsp;or&nbsp;submissions&nbsp;are&nbsp;made.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
 <a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>.<br>
@@ -2310,6 +2456,18 @@ instance&nbsp;variable.<br>
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
 </dl>
+<dl><dt><strong>Proxy</strong></dt>
+<dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representation&nbsp;of&nbsp;the&nbsp;proxy&nbsp;used.<br>
+&nbsp;<br>
+Argument(s):<br>
+No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+string&nbsp;--&nbsp;representation&nbsp;of&nbsp;the&nbsp;proxy&nbsp;used<br>
+&nbsp;<br>
+Restriction(s):<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
+</dl>
 <dl><dt><strong>RegEx</strong></dt>
 <dd><tt>Returns&nbsp;the&nbsp;string&nbsp;representing&nbsp;a&nbsp;regular&nbsp;expression<br>
 required&nbsp;to&nbsp;retrieve&nbsp;the&nbsp;information&nbsp;being&nbsp;investigated.<br>
@@ -2387,6 +2545,23 @@ No&nbsp;arguments&nbsp;are&nbsp;required.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
 string&nbsp;--&nbsp;representing&nbsp;the&nbsp;URL&nbsp;of&nbsp;the&nbsp;site.<br>
+&nbsp;<br>
+Restriction(s):<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
+</dl>
+<dl><dt><strong>UserAgent</strong></dt>
+<dd><tt>Returns&nbsp;string&nbsp;representing&nbsp;the&nbsp;user-agent&nbsp;that&nbsp;will<br>
+be&nbsp;used&nbsp;when&nbsp;requesting&nbsp;or&nbsp;submitting&nbsp;information&nbsp;to<br>
+a&nbsp;web&nbsp;site.&nbsp;This&nbsp;is&nbsp;a&nbsp;user-provided&nbsp;string&nbsp;implemented<br>
+on&nbsp;the&nbsp;command&nbsp;line&nbsp;at&nbsp;execution&nbsp;or&nbsp;provided&nbsp;by&nbsp;default<br>
+if&nbsp;not&nbsp;added&nbsp;during&nbsp;execution.<br>
+&nbsp;<br>
+Argument(s):<br>
+No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+string&nbsp;--&nbsp;representation&nbsp;of&nbsp;the&nbsp;UserAgent&nbsp;from&nbsp;the&nbsp;_userAgent<br>
+instance&nbsp;variable.<br>
 &nbsp;<br>
 Restriction(s):<br>
 This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Property.</tt></dd>
@@ -2531,7 +2706,7 @@ string.<br>
 Restriction(s):<br>
 The&nbsp;Method&nbsp;has&nbsp;no&nbsp;restrictions.</tt></dd></dl>
 
-<dl><dt><a name="SiteFacade-runSiteAutomation"><strong>runSiteAutomation</strong></a>(self, webretrievedelay, targetlist, source, postbydefault, **kwargs)</dt><dd><tt>Builds&nbsp;site&nbsp;objects&nbsp;representative&nbsp;of&nbsp;each&nbsp;site&nbsp;listed&nbsp;in&nbsp;the&nbsp;sites.xml<br>
+<dl><dt><a name="SiteFacade-runSiteAutomation"><strong>runSiteAutomation</strong></a>(self, webretrievedelay, proxy, targetlist, source, postbydefault, useragent)</dt><dd><tt>Builds&nbsp;site&nbsp;objects&nbsp;representative&nbsp;of&nbsp;each&nbsp;site&nbsp;listed&nbsp;in&nbsp;the&nbsp;sites.xml<br>
 config&nbsp;file.&nbsp;Appends&nbsp;a&nbsp;<a href="#Site">Site</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;or&nbsp;one&nbsp;of&nbsp;it's&nbsp;subordinate&nbsp;objects<br>
 to&nbsp;the&nbsp;_sites&nbsp;instance&nbsp;variable&nbsp;so&nbsp;retrieved&nbsp;information&nbsp;can&nbsp;be&nbsp;used.<br>
 Returns&nbsp;nothing.<br>
@@ -2539,6 +2714,7 @@ Returns&nbsp;nothing.<br>
 Argument(s):<br>
 webretrievedelay&nbsp;--&nbsp;The&nbsp;amount&nbsp;of&nbsp;seconds&nbsp;to&nbsp;wait&nbsp;between&nbsp;site&nbsp;retrieve<br>
 calls.&nbsp;Default&nbsp;delay&nbsp;is&nbsp;2&nbsp;seconds.<br>
+proxy&nbsp;--&nbsp;proxy&nbsp;server&nbsp;address&nbsp;as&nbsp;server:port_number<br>
 targetlist&nbsp;--&nbsp;list&nbsp;of&nbsp;strings&nbsp;representing&nbsp;targets&nbsp;to&nbsp;be&nbsp;investigated.<br>
 Targets&nbsp;can&nbsp;be&nbsp;IP&nbsp;Addresses,&nbsp;MD5&nbsp;hashes,&nbsp;or&nbsp;hostnames.<br>
 source&nbsp;--&nbsp;String&nbsp;representing&nbsp;a&nbsp;specific&nbsp;site&nbsp;that&nbsp;should&nbsp;only&nbsp;be&nbsp;used<br>
@@ -2546,6 +2722,8 @@ for&nbsp;investigation&nbsp;purposes&nbsp;instead&nbsp;of&nbsp;all&nbsp;sites&nb
 config&nbsp;file.<br>
 postbydefault&nbsp;--&nbsp;Boolean&nbsp;value&nbsp;to&nbsp;tell&nbsp;the&nbsp;program&nbsp;if&nbsp;the&nbsp;user&nbsp;wants<br>
 to&nbsp;post&nbsp;data&nbsp;to&nbsp;a&nbsp;site&nbsp;if&nbsp;a&nbsp;post&nbsp;is&nbsp;required.&nbsp;Default&nbsp;is&nbsp;to&nbsp;NOT&nbsp;post.<br>
+useragent&nbsp;--&nbsp;String&nbsp;representing&nbsp;user-agent&nbsp;that&nbsp;will&nbsp;be&nbsp;utilized&nbsp;when<br>
+requesting&nbsp;or&nbsp;submitting&nbsp;data&nbsp;to&nbsp;or&nbsp;from&nbsp;a&nbsp;web&nbsp;site.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
 Nothing&nbsp;is&nbsp;returned&nbsp;from&nbsp;this&nbsp;Method.<br>

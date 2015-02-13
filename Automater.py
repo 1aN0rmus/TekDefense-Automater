@@ -9,15 +9,19 @@ Hash to query each separated by a newline.
 
 Optional Parameters are:
 -o, --output -- This option will output the results to a file.
+-f, --cef -- This option will output the results to a CEF formatted file.
 -w, --web -- This option will output the results to an HTML file.
 -c, --csv -- This option will output the results to a CSV file.
 -d, --delay -- Change the delay to the inputted seconds. Default is 2.
 -s, --source -- Will only run the target against a specific source engine
 to pull associated domains.  Options are defined in the name attribute of
 the site element in the XML configuration file
---p -- Tells the program to post information to sites that allow posting.
+--p --post -- Tells the program to post information to sites that allow posting.
 By default the program will NOT post to sites that require a post.
-        
+--proxy -- This option will set a proxy (eg. proxy.example.com:8080)
+-a --useragent -- Will set a user-agent string in the header of a web request.
+is set by default to Automater/version#
+
 Class(es):
 No classes are defined in this module.
 
@@ -37,13 +41,13 @@ from inputs import TargetFile
 def main():
     """
     Serves as the instantiation point to start Automater.
-    
+
     Argument(s):
     No arguments are required.
-    
+
     Return value(s):
     Nothing is returned from this Method.
-    
+
     Restriction(s):
     The Method has no restrictions.
     """
@@ -81,10 +85,8 @@ def main():
             targetlist.append(target)
 
     sitefac = SiteFacade()
-    sitefac.runSiteAutomation(parser.Delay,
-                              targetlist,
-                              source,
-                              parser.hasPost())
+    sitefac.runSiteAutomation(parser.Delay, parser.Proxy, targetlist, \
+                              source, parser.hasPost(), parser.UserAgent)
     sites = sitefac.Sites
     if sites is not None:
         SiteDetailOutput(sites).createOutputInfo(parser)

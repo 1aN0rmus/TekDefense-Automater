@@ -37,8 +37,8 @@ from twisted.web.resource import Resource
 from twisted.internet import reactor
 
 sys.path.append(".") #Path to TekDefense-Automater if you havent installed it already
-from siteinfo import SiteFacade,SiteError
-from automater_outputs import SiteDetailOutput
+from siteinfo import SiteFacade
+from outputs import SiteDetailOutput
 
 class AutomaterRestApi(Resource):
     def __init__(self):
@@ -72,17 +72,16 @@ class AutomaterHandler(Resource):
       sitefac = SiteFacade()
       
       try:
-          sitefac.runSiteAutomation(1,
+          sitefac.runSiteAutomation(1,None,
                                     [targetlist],
                                     self.site,
-                                    False,silent=True)
+                                    False,"Automater/2.1", True) 
           sites = sitefac.Sites
           if sites is not None:
               out = SiteDetailOutput(sites)
               return out.jsonOutput()
           return "{}"
-              # If you just want results as string just return output.getvalue()
-      except SiteError as e:
+      except Exception as e:
           print e.message
           return None
       

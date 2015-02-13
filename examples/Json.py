@@ -10,8 +10,8 @@ import sys
 import csv
 
 sys.path.append(".") #Path to TekDefense-Automater if you havent installed it already
-from siteinfo import SiteFacade,SiteError
-from automater_outputs import SiteDetailOutput
+from siteinfo import SiteFacade
+from outputs import SiteDetailOutput
 
  
 def run_automater(targets):
@@ -23,17 +23,17 @@ def run_automater(targets):
     source = "allsources"
     sitefac = SiteFacade()
     try:
-        sitefac.runSiteAutomation(1,
+        sitefac.runSiteAutomation(1,None,
                               targetlist,
                               source,
-                              False,silent=True)
+                              False,"Automater/2.1",quiet=True)
         sites = sitefac.Sites
         if sites is not None:
             out = SiteDetailOutput(sites)
             return out.jsonOutput()
         return None
             # If you just want results as string just return output.getvalue()
-    except SiteError as e:
+    except Exception as e:
         print e.message
         return None
         

@@ -1,37 +1,28 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head><title>Python: module Automater</title>
+<html><head><title>Python: module inputs</title>
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
 <tr bgcolor="#7799ee">
 <td valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Automater</strong></big></big></font></td
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>inputs</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"></font></td></tr></table>
-    <p><tt>The&nbsp;Automater.py&nbsp;module&nbsp;defines&nbsp;the&nbsp;<a href="#-main">main</a>()&nbsp;function&nbsp;for&nbsp;Automater.<br>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/jim/Files/TekDefense/TekDefense-Automater-Private/inputs.py">/home/jim/Files/TekDefense/TekDefense-Automater-Private/inputs.py</a></font></td></tr></table>
+    <p><tt>The&nbsp;inputs.py&nbsp;module&nbsp;represents&nbsp;some&nbsp;form&nbsp;of&nbsp;all&nbsp;inputs<br>
+to&nbsp;the&nbsp;Automater&nbsp;program&nbsp;to&nbsp;include&nbsp;target&nbsp;files,&nbsp;and<br>
+the&nbsp;standard&nbsp;config&nbsp;file&nbsp;-&nbsp;sites.xml.&nbsp;Any&nbsp;addition&nbsp;to<br>
+Automater&nbsp;that&nbsp;brings&nbsp;any&nbsp;other&nbsp;input&nbsp;requirement&nbsp;should<br>
+be&nbsp;programmed&nbsp;in&nbsp;this&nbsp;module.<br>
 &nbsp;<br>
-Parameter&nbsp;Required&nbsp;is:<br>
-target&nbsp;--&nbsp;List&nbsp;one&nbsp;IP&nbsp;Address&nbsp;(CIDR&nbsp;or&nbsp;dash&nbsp;notation&nbsp;accepted),&nbsp;URL&nbsp;or&nbsp;Hash<br>
-to&nbsp;query&nbsp;or&nbsp;pass&nbsp;the&nbsp;filename&nbsp;of&nbsp;a&nbsp;file&nbsp;containing&nbsp;IP&nbsp;Address&nbsp;info,&nbsp;URL&nbsp;or<br>
-Hash&nbsp;to&nbsp;query&nbsp;each&nbsp;separated&nbsp;by&nbsp;a&nbsp;newline.<br>
-&nbsp;<br>
-Optional&nbsp;Parameters&nbsp;are:<br>
--o,&nbsp;--output&nbsp;--&nbsp;This&nbsp;option&nbsp;will&nbsp;output&nbsp;the&nbsp;results&nbsp;to&nbsp;a&nbsp;file.<br>
--w,&nbsp;--web&nbsp;--&nbsp;This&nbsp;option&nbsp;will&nbsp;output&nbsp;the&nbsp;results&nbsp;to&nbsp;an&nbsp;HTML&nbsp;file.<br>
--c,&nbsp;--csv&nbsp;--&nbsp;This&nbsp;option&nbsp;will&nbsp;output&nbsp;the&nbsp;results&nbsp;to&nbsp;a&nbsp;CSV&nbsp;file.<br>
--d,&nbsp;--delay&nbsp;--&nbsp;Change&nbsp;the&nbsp;delay&nbsp;to&nbsp;the&nbsp;inputted&nbsp;seconds.&nbsp;Default&nbsp;is&nbsp;2.<br>
--s,&nbsp;--source&nbsp;--&nbsp;Will&nbsp;only&nbsp;run&nbsp;the&nbsp;target&nbsp;against&nbsp;a&nbsp;specific&nbsp;source&nbsp;engine<br>
-to&nbsp;pull&nbsp;associated&nbsp;domains.&nbsp;&nbsp;Options&nbsp;are&nbsp;defined&nbsp;in&nbsp;the&nbsp;name&nbsp;attribute&nbsp;of<br>
-the&nbsp;site&nbsp;element&nbsp;in&nbsp;the&nbsp;XML&nbsp;configuration&nbsp;file<br>
---p&nbsp;--&nbsp;Tells&nbsp;the&nbsp;program&nbsp;to&nbsp;post&nbsp;information&nbsp;to&nbsp;sites&nbsp;that&nbsp;allow&nbsp;posting.<br>
-By&nbsp;default&nbsp;the&nbsp;program&nbsp;will&nbsp;NOT&nbsp;post&nbsp;to&nbsp;sites&nbsp;that&nbsp;require&nbsp;a&nbsp;post.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 Class(es):<br>
-No&nbsp;classes&nbsp;are&nbsp;defined&nbsp;in&nbsp;this&nbsp;module.<br>
-&nbsp;<br>
+<a href="#TargetFile">TargetFile</a>&nbsp;--&nbsp;Provides&nbsp;a&nbsp;representation&nbsp;of&nbsp;a&nbsp;file&nbsp;containing&nbsp;target<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strings&nbsp;for&nbsp;Automater&nbsp;to&nbsp;utilize.<br>
+<a href="#SitesFile">SitesFile</a>&nbsp;--&nbsp;Provides&nbsp;a&nbsp;representation&nbsp;of&nbsp;the&nbsp;sites.xml<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 Function(s):<br>
-main&nbsp;--&nbsp;Provides&nbsp;the&nbsp;instantiation&nbsp;point&nbsp;for&nbsp;Automater.<br>
+No&nbsp;global&nbsp;exportable&nbsp;functions&nbsp;are&nbsp;defined.<br>
 &nbsp;<br>
 Exception(s):<br>
 No&nbsp;exceptions&nbsp;exported.</tt></p>
@@ -42,23 +33,110 @@ No&nbsp;exceptions&nbsp;exported.</tt></p>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="sys.html">sys</a><br>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="os.html">os</a><br>
 </td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#eeaa77">
+<tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
     
-<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-main"><strong>main</strong></a>()</dt><dd><tt>Serves&nbsp;as&nbsp;the&nbsp;instantiation&nbsp;point&nbsp;to&nbsp;start&nbsp;Automater.<br>
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="inputs.html#SitesFile">SitesFile</a>
+</font></dt><dt><font face="helvetica, arial"><a href="inputs.html#TargetFile">TargetFile</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SitesFile">class <strong>SitesFile</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#SitesFile">SitesFile</a>&nbsp;represents&nbsp;an&nbsp;XML&nbsp;Elementree&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;representing&nbsp;the<br>
+program's&nbsp;configuration&nbsp;file.&nbsp;Returns&nbsp;XML&nbsp;Elementree&nbsp;<a href="__builtin__.html#object">object</a>.<br>
+&nbsp;<br>
+Method(s):<br>
+(Class&nbsp;Method)&nbsp;getXMLTree<br>
+(Class&nbsp;Method)&nbsp;fileExists<br>
+&nbsp;<br>
+Instance&nbsp;variable(s):<br>
+No&nbsp;instance&nbsp;variables.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Class methods defined here:<br>
+<dl><dt><a name="SitesFile-fileExists"><strong>fileExists</strong></a>(self)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Checks&nbsp;if&nbsp;a&nbsp;file&nbsp;exists.&nbsp;Returns&nbsp;boolean&nbsp;representing&nbsp;if&nbsp;file&nbsp;exists.<br>
 &nbsp;<br>
 Argument(s):<br>
 No&nbsp;arguments&nbsp;are&nbsp;required.<br>
 &nbsp;<br>
 Return&nbsp;value(s):<br>
-Nothing&nbsp;is&nbsp;returned&nbsp;from&nbsp;this&nbsp;Method.<br>
+Boolean<br>
+&nbsp;<br>
+Restrictions:<br>
+File&nbsp;must&nbsp;be&nbsp;named&nbsp;sites.xml&nbsp;and&nbsp;must&nbsp;be&nbsp;in&nbsp;same&nbsp;directory&nbsp;as&nbsp;caller.<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Class&nbsp;Method</tt></dd></dl>
+
+<dl><dt><a name="SitesFile-getXMLTree"><strong>getXMLTree</strong></a>(self)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Opens&nbsp;a&nbsp;config&nbsp;file&nbsp;for&nbsp;reading.<br>
+Returns&nbsp;XML&nbsp;Elementree&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;representing&nbsp;XML&nbsp;Config&nbsp;file.<br>
+&nbsp;<br>
+Argument(s):<br>
+No&nbsp;arguments&nbsp;are&nbsp;required.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+ElementTree<br>
+&nbsp;<br>
+Restrictions:<br>
+File&nbsp;must&nbsp;be&nbsp;named&nbsp;sites.xml&nbsp;and&nbsp;must&nbsp;be&nbsp;in&nbsp;same&nbsp;directory&nbsp;as&nbsp;caller.<br>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Class&nbsp;Method</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="TargetFile">class <strong>TargetFile</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#TargetFile">TargetFile</a>&nbsp;provides&nbsp;a&nbsp;Class&nbsp;Method&nbsp;to&nbsp;retrieve&nbsp;information&nbsp;from&nbsp;a&nbsp;file-<br>
+based&nbsp;target&nbsp;when&nbsp;one&nbsp;is&nbsp;entered&nbsp;as&nbsp;the&nbsp;first&nbsp;parameter&nbsp;to&nbsp;the&nbsp;program.<br>
+&nbsp;<br>
+Public&nbsp;Method(s):<br>
+(Class&nbsp;Method)&nbsp;TargetList<br>
+&nbsp;<br>
+Instance&nbsp;variable(s):<br>
+No&nbsp;instance&nbsp;variables.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Class methods defined here:<br>
+<dl><dt><a name="TargetFile-TargetList"><strong>TargetList</strong></a>(self, filename)<font color="#909090"><font face="helvetica, arial"> from <a href="__builtin__.html#type">__builtin__.type</a></font></font></dt><dd><tt>Opens&nbsp;a&nbsp;file&nbsp;for&nbsp;reading.<br>
+Returns&nbsp;each&nbsp;string&nbsp;from&nbsp;each&nbsp;line&nbsp;of&nbsp;a&nbsp;single&nbsp;or&nbsp;multi-line&nbsp;file.<br>
+&nbsp;<br>
+Argument(s):<br>
+filename&nbsp;--&nbsp;string&nbsp;based&nbsp;name&nbsp;of&nbsp;the&nbsp;file&nbsp;that&nbsp;will&nbsp;be&nbsp;retrieved&nbsp;and&nbsp;parsed.<br>
+&nbsp;<br>
+Return&nbsp;value(s):<br>
+Iterator&nbsp;of&nbsp;string(s)&nbsp;found&nbsp;in&nbsp;a&nbsp;single&nbsp;or&nbsp;multi-line&nbsp;file.<br>
 &nbsp;<br>
 Restriction(s):<br>
-The&nbsp;Method&nbsp;has&nbsp;no&nbsp;restrictions.</tt></dd></dl>
-</td></tr></table>
+This&nbsp;Method&nbsp;is&nbsp;tagged&nbsp;as&nbsp;a&nbsp;Class&nbsp;Method</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
 </body></html>

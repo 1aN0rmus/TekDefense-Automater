@@ -18,19 +18,16 @@ required and requested via a --p argument utilized when the program is
 called. This Class expects to find the first regular expression listed
 in the sites.xml config file. If that regex is found, it tells the class
 that a post is necessary.
-PostTransactionAPIKeySite -- Class used to store information from a 
+PostTransactionAPIKeySite -- Class used to store information from a
 site that has single or multiple results requested and discovered. This
 Class is utilized if an API key is provided in the sites.xml
 configuration file.
-
-See references to Silent mode in Site class documentation for
-inhibiting console output.
 
 Function(s):
 No global exportable functions are defined.
 
 Exception(s):
-SiteError when Site or a subclass there of is used in Silent mode
+No exceptions exported.
 """
 import urllib
 import urllib2
@@ -44,11 +41,11 @@ class SiteFacade(object):
     """
     SiteFacade provides a Facade to run the multiple requirements needed
     to automate the site retrieval and storage processes.
-    
+
     Public Method(s):
     runSiteAutomation
     (Property) Sites
-    
+
     Instance variable(s):
     _sites
     """
@@ -58,17 +55,17 @@ class SiteFacade(object):
         Class constructor. Simply creates a blank list and assigns it to
         instance variable _sites that will be filled with retrieved info
         from sites defined in the sites.xml configuration file.
-        
+
         Argument(s):
         No arguments are required.
-        
+
         Return value(s):
         Nothing is returned from this Method.
         """
-        self._sites = []
-        self._targetresultlist = []
 
-    def runSiteAutomation(self, webretrievedelay, targetlist, source, postbydefault,**kwargs):
+        self._sites = []
+
+    def runSiteAutomation(self, webretrievedelay, proxy, targetlist, source, postbydefault, useragent, quiet = False):
         """
         Builds site objects representative of each site listed in the sites.xml
         config file. Appends a Site object or one of it's subordinate objects
@@ -78,6 +75,7 @@ class SiteFacade(object):
         Argument(s):
         webretrievedelay -- The amount of seconds to wait between site retrieve
         calls. Default delay is 2 seconds.
+        proxy -- proxy server address as server:port_number
         targetlist -- list of strings representing targets to be investigated.
         Targets can be IP Addresses, MD5 hashes, or hostnames.
         source -- String representing a specific site that should only be used
@@ -85,6 +83,8 @@ class SiteFacade(object):
         config file.
         postbydefault -- Boolean value to tell the program if the user wants
         to post data to a site if a post is required. Default is to NOT post.
+        useragent -- String representing user-agent that will be utilized when
+        requesting or submitting data to or from a web site.
 
         Return value(s):
         Nothing is returned from this Method.
@@ -92,43 +92,26 @@ class SiteFacade(object):
         Restriction(s):
         The Method has no restrictions.
         """
-        targetresultlist = []
         if SitesFile.fileExists():
-            for targ in targetlist:
-                sitetree = SitesFile.getXMLTree()
-                sitelist = []
-                for siteelement in sitetree.iter(tag = "site"):
-                    if source == "allsources" or source == siteelement.get("name"):
-                    
+            sitetree = SitesFile.getXMLTree()
+            for siteelement in sitetree.iter(tag = "site"):
+                if source == "allsources" or source == siteelement.get("name"):
+                    for targ in targetlist:
                         sitetypematch = False
                         targettype = self.identifyTargetType(targ)
-                        
                         for st in siteelement.find("sitetype").findall("entry"):
                             if st.text == targettype:
                                 sitetypematch = True
                         if sitetypematch:
-                            site = Site.buildSiteFromXML(siteelement, webretrievedelay, targettype, targ,silent=kwargs.get('silent', False))
+                            site = Site.buildSiteFromXML(siteelement, webretrievedelay, proxy, targettype, targ, useragent, quiet)
                             if (site.Params != None or site.Headers != None) and site.APIKey != None:
-                                s = PostTransactionAPIKeySite(site)
-                                self._sites.append(s)
-                                sitelist.append(s)
+                                self._sites.append(PostTransactionAPIKeySite(site))
                             elif site.Params != None or site.Headers != None:
-                                s = PostTransactionPositiveCapableSite(site, postbydefault)
-                                self._sites.append(s)
-                                sitelist.append(s)
+                                self._sites.append(PostTransactionPositiveCapableSite(site, postbydefault))
                             elif isinstance(site.RegEx, basestring):
-                                s = SingleResultsSite(site)
-                                self._sites.append(s)
-                                sitelist.append(s)
+                                self._sites.append(SingleResultsSite(site))
                             else:
-                                s = MultiResultsSite(site)
-                                self._sites.append(s)
-                                sitelist.append(s)
-                targetresultlist.append(Target(targ,targettype,sites=sitelist))
-        self._targetresultlist = targetresultlist
-    @property
-    def TargetResultList(self):
-        return self._targetresultlist
+                                self._sites.append(MultiResultsSite(site))
 
     @property
     def Sites(self):
@@ -181,6 +164,7 @@ class SiteFacade(object):
 
         return "hostname"
 
+    @classmethod
     def available_sites(self):
         """
         Builds site objects representative of each site listed in the sites.xml
@@ -193,34 +177,8 @@ class SiteFacade(object):
             sitelist = []
             for siteelement in sitetree.iter(tag = "site"):
                 sitelist.append(siteelement.get("name"))
-
         return sitelist
-class SiteError(Exception):
-    """
-    Custom exception for exceptions rasied from site objects
-    """
-    def __init__(self, value):
-         self.value = value
-    def __str__(self):
-         return repr(self.value)
-
-class Target(object):
-    def __init__(self,target,target_type,sites=[]):
-        self._target = target
-        self._target_type = target_type
-        self._sites = sites
     
-    @property
-    def Target(self):
-        return self._target
-    
-    @property
-    def Target_type(self):
-        return self.target_type
-    
-    @property
-    def Sites(self):
-        return self._sites
     
 class Site(object):
     """
@@ -230,11 +188,6 @@ class Site(object):
     Site is the parent object to SingleResultsSite, MultiResultsSite,
     PostTransactionPositiveCapableSite, and PostTransactionAPIKeySite.
 
-    Console output can be turned off by setting the Silent property to True
-    When in silent mode when errors are encountered a SiteError is raised
-    Silent mode can be set in the constructor or in the factory buildSiteFromXML 
-    py passing silent=True as a keyword arg.
-    
     Public Method(s):
     (Class Method) buildSiteFromXML
     (Class Method) buildStringOrListfromXML
@@ -256,9 +209,8 @@ class Site(object):
     (Property) Headers
     (Property) APIKey
     (Property) Target
+    (Property) UserAgent
     (Property) Results
-    (Property) Silent
-    (Property) ResultType
     addResults
     postMessage
     getImportantProperty
@@ -276,6 +228,7 @@ class Site(object):
     _errormessage
     _usermessage
     _target
+    _userAgent
     _friendlyName
     _regex
     _fullURL
@@ -285,11 +238,11 @@ class Site(object):
     _apikey
     _results
     _messagetopost
-    _resulttype
+    _quiet
     """
-    def __init__(self, domainurl, webretrievedelay, targettype, \
-                 reportstringforresult, target, friendlyname, regex, fullurl, \
-                 importantproperty, params, headers, apikey, resulttype,**kwargs):
+    def __init__(self, domainurl, webretrievedelay, proxy, targettype, \
+                 reportstringforresult, target, useragent, friendlyname, regex, \
+                 fullurl, importantproperty, params, headers, apikey, quiet):
         """
         Class constructor. Sets the instance variables based on input from
         the arguments supplied when Automater is run and what the sites.xml
@@ -299,11 +252,14 @@ class Site(object):
         domainurl -- string defined in sites.xml in the domainurl XML tag.
         webretrievedelay -- the amount of seconds to wait between site retrieve
         calls. Default delay is 2 seconds.
+        proxy -- will set a proxy to use (eg. proxy.example.com:8080).
         targettype -- the targettype as defined. Either ip, md5, or hostname.
         reportstringforresult -- string or list of strings that are entered in
         the entry XML tag within the reportstringforresult XML tag in the
         sites.xml configuration file.
         target -- the target that will be used to gather information on.
+        useragent -- the user-agent string that will be utilized when submitting
+        information to or requesting information from a website
         friendlyname -- string or list of strings that are entered in
         the entry XML tag within the sitefriendlyname XML tag in the
         sites.xml configuration file.
@@ -319,17 +275,19 @@ class Site(object):
         XML tag in the sites.xml configuration file.
         apikey -- string or list of strings found in the entry XML tags within
         the apikey XML tag in the sites.xml configuration file.
-
+        quiet -- supress output of status messages to the console
         Return value(s):
         Nothing is returned from this Method.
         """
         self._sourceurl = domainurl
         self._webretrievedelay = webretrievedelay
+        self._proxy = proxy
         self._targetType = targettype
         self._reportstringforresult = reportstringforresult
         self._errormessage = "[-] Cannot scrape"
         self._usermessage = "[*] Checking"
         self._target = target
+        self._userAgent = useragent
         self._friendlyName = friendlyname
         self._regex = regex
         self._fullURL = ""
@@ -348,11 +306,10 @@ class Site(object):
             self._apikey = apikey
         self._results = []
         self._messagetopost = ""
-        self._resulttype = resulttype
-        self.Silent = kwargs.get('silent', False)
+        self._quiet = quiet
 
     @classmethod
-    def buildSiteFromXML(self, siteelement, webretrievedelay, targettype, target, **kwargs):
+    def buildSiteFromXML(self, siteelement, webretrievedelay, proxy, targettype, target, useragent, quiet = False):
         """
         Utilizes the Class Methods within this Class to build the Site object.
         Returns a Site object that defines results returned during the web
@@ -363,9 +320,12 @@ class Site(object):
         start element.
         webretrievedelay -- the amount of seconds to wait between site retrieve
         calls. Default delay is 2 seconds.
+        proxy -- sets a proxy to use in the form of proxy.example.com:8080.
         targettype -- the targettype as defined. Either ip, md5, or hostname.
         target -- the target that will be used to gather information on.
-
+        useragent -- the string utilized to represent the user-agent when
+        web requests or submissions are made.
+        quiet -- Supress output of status messages to console
         Return value(s):
         Site object.
 
@@ -375,16 +335,14 @@ class Site(object):
         domainurl = siteelement.find("domainurl").text
         reportstringforresult = Site.buildStringOrListfromXML(siteelement, "reportstringforresult")
         sitefriendlyname = Site.buildStringOrListfromXML(siteelement, "sitefriendlyname")
-        resulttype = Site.buildStringOrListfromXML(siteelement, "resulttype")
         regex = Site.buildStringOrListfromXML(siteelement, "regex")
         fullurl = siteelement.find("fullurl").text
         importantproperty = Site.buildStringOrListfromXML(siteelement, "importantproperty")
         params = Site.buildDictionaryFromXML(siteelement, "params")
         headers = Site.buildDictionaryFromXML(siteelement, "headers")
         apikey = Site.buildStringOrListfromXML(siteelement, "apikey")
-        return Site(domainurl, webretrievedelay, targettype, reportstringforresult, target, \
-                    sitefriendlyname, regex, fullurl, importantproperty, params, headers, apikey, \
-                    resulttype,silent=kwargs.get('silent', False))
+        return Site(domainurl, webretrievedelay, proxy, targettype, reportstringforresult, target, \
+                    useragent, sitefriendlyname, regex, fullurl, importantproperty, params, headers, apikey, quiet)
 
     @classmethod
     def buildStringOrListfromXML(self, siteelement, elementstring):
@@ -458,10 +416,6 @@ class Site(object):
         return variablename
 
     @property
-    def ResultType(self):
-        self._resulttype
-    
-    @property
     def WebRetrieveDelay(self):
         """
         Returns the string representation of the number of
@@ -478,6 +432,22 @@ class Site(object):
         This Method is tagged as a Property.
         """
         return self._webretrievedelay
+
+    @property
+    def Proxy(self):
+        """
+        Returns the string representation of the proxy used.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        string -- representation of the proxy used
+
+        Restriction(s):
+        This Method is tagged as a Property.
+        """
+        return self._proxy
 
     @property
     def TargetType(self):
@@ -547,7 +517,7 @@ class Site(object):
         """
         return self._regex
 
-    @property    
+    @property
     def URL(self):
         """
         Returns the string representing the Domain URL which is
@@ -578,7 +548,7 @@ class Site(object):
 
         Restriction(s):
         This Method is tagged as a Property.
-        """    
+        """
         return self._messagetopost
 
     @property
@@ -796,6 +766,27 @@ class Site(object):
         return self._target
 
     @property
+    def UserAgent(self):
+        """
+        Returns string representing the user-agent that will
+        be used when requesting or submitting information to
+        a web site. This is a user-provided string implemented
+        on the command line at execution or provided by default
+        if not added during execution.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        string -- representation of the UserAgent from the _userAgent
+        instance variable.
+
+        Restriction(s):
+        This Method is tagged as a Property.
+        """
+        return self._userAgent
+
+    @property
     def Results(self):
         """
         Checks the instance variable _results is empty or None.
@@ -850,9 +841,10 @@ class Site(object):
         Restriction(s):
         The Method has no restrictions.
         """
-        
-        self._messagetopost = message
-        if not self.Silent:
+        if self._quiet:
+            pass
+        else:
+            self._messagetopost = message
             print self.MessageToPost
 
     def getImportantProperty(self, index):
@@ -928,7 +920,8 @@ class Site(object):
     def getWebScrape(self):
         """
         Attempts to retrieve a string from a web site. String retrieved is
-        the entire web site including HTML markup.
+        the entire web site including HTML markup. Requests via proxy if
+        --proxy option was chosen during execution of the Automater.
         Returns the string representing the entire web site including the
         HTML markup retrieved from the site.
 
@@ -942,8 +935,19 @@ class Site(object):
         The Method has no restrictions.
         """
         delay = self.WebRetrieveDelay
-        proxy = urllib2.ProxyHandler()
-        opener = urllib2.build_opener(proxy)
+        if self.Proxy == None:
+            proxy = urllib2.ProxyHandler()
+            opener = urllib2.build_opener(proxy)
+        else:
+            proxy = urllib2.ProxyHandler({
+                'https': self.Proxy,
+                'http': self.Proxy
+            })
+            opener = urllib2.build_opener(proxy)
+        opener.addheaders = [('User-agent', self.UserAgent)]
+        if self.Headers:
+            opener.addheaders += [(x, self.Headers[x]) for x in self.Headers]
+
         try:
             response = opener.open(self.FullURL)
             content = response.read()
@@ -952,6 +956,7 @@ class Site(object):
             return contentString
         except:
             self.postMessage('[-] Cannot connect to ' + self.FullURL)
+
 
 class SingleResultsSite(Site):
     """
@@ -977,17 +982,18 @@ class SingleResultsSite(Site):
         Nothing is returned from this Method.
         """
         self._site = site
-        super(SingleResultsSite, self).__init__(self._site.URL, self._site.WebRetrieveDelay, self._site.TargetType,\
-                                               self._site.ReportStringForResult, self._site.Target, \
-                                               self._site.FriendlyName, self._site.RegEx, self._site.FullURL, \
-                                               self._site.ImportantPropertyString, self._site.Params, \
-                                                self._site.Headers, self._site.APIKey,self._site._resulttype,silent=self._site.Silent)
+        super(SingleResultsSite, self).__init__(self._site.URL, self._site.WebRetrieveDelay, self._site.Proxy, \
+                                                self._site.TargetType, self._site.ReportStringForResult, \
+                                                self._site.Target, self._site.UserAgent, self._site.FriendlyName, \
+                                                self._site.RegEx, self._site.FullURL, self._site.ImportantPropertyString, \
+                                                self._site.Params, self._site.Headers, self._site.APIKey, self._site._quiet)
         self.postMessage(self.UserMessage + " " + self.FullURL)
-        websitecontent = self.getContentList()
+        webcontent = self.getWebScrape()
+        websitecontent = self.getContentList(webcontent)
         if websitecontent is not None:
             self.addResults(websitecontent)
 
-    def getContentList(self):
+    def getContentList(self, webcontent):
         """
         Retrieves a list of information retrieved from the sites defined
         in the sites.xml configuration file.
@@ -995,7 +1001,8 @@ class SingleResultsSite(Site):
         as resources or returns None if the site cannot be discovered.
 
         Argument(s):
-        No arguments are required.
+        webcontent -- actual content of the web page that's been returned
+        from a request.
 
         Return value(s):
         list -- information found from a web site being used as a resource.
@@ -1004,19 +1011,13 @@ class SingleResultsSite(Site):
         The Method has no restrictions.
         """
         try:
-            content = self.getWebScrape()
             repattern = re.compile(self.RegEx, re.IGNORECASE)
-            foundlist = re.findall(repattern, content)
+            foundlist = re.findall(repattern, webcontent)
             return foundlist
         except:
-            message = self.ErrorMessage + " " + self.FullURL
-            if self.Silent:
-                raise SiteError(message)
-            else:
-                self.postMessage(message)
-        return None
-    
-    
+            self.postMessage(self.ErrorMessage + " " + self.FullURL)
+            return None
+
 class MultiResultsSite(Site):
     """
     MultiResultsSite inherits from the Site object and represents
@@ -1043,15 +1044,19 @@ class MultiResultsSite(Site):
         Nothing is returned from this Method.
         """
         self._site = site
-        super(MultiResultsSite,self).__init__(self._site.URL, self._site.WebRetrieveDelay, self._site.TargetType,\
+        super(MultiResultsSite,self).__init__(self._site.URL, self._site.WebRetrieveDelay, \
+                                              self._site.Proxy, self._site.TargetType, \
                                               self._site.ReportStringForResult, self._site.Target, \
-                                              self._site.FriendlyName, self._site.RegEx, self._site.FullURL, \
+                                              self._site.UserAgent, self._site.FriendlyName, \
+                                              self._site.RegEx, self._site.FullURL, \
                                               self._site.ImportantPropertyString, self._site.Params, \
-                                              self._site.Headers, self._site._resulttype,self._site.APIKey,silent=self._site.Silent)        
+                                              self._site.Headers, self._site.APIKey, self._site._quiet)
         self._results = [[] for x in xrange(len(self._site.RegEx))]
         self.postMessage(self.UserMessage + " " + self.FullURL)
+
+        webcontent = self.getWebScrape()
         for index in range(len(self.RegEx)):
-            websitecontent = self.getContentList(index)
+            websitecontent = self.getContentList(webcontent, index)
             if websitecontent is not None:
                 self.addResults(websitecontent, index)
 
@@ -1077,7 +1082,7 @@ class MultiResultsSite(Site):
         else:
             self._results[index] = results
 
-    def getContentList(self, index):
+    def getContentList(self, webcontent, index):
         """
         Retrieves a list of information retrieved from the sites defined
         in the sites.xml configuration file.
@@ -1085,6 +1090,8 @@ class MultiResultsSite(Site):
         as resources or returns None if the site cannot be discovered.
 
         Argument(s):
+        webcontent -- actual content of the web page that's been returned
+        from a request.
         index -- the integer representing the index of the regex list.
 
         Return value(s):
@@ -1094,18 +1101,12 @@ class MultiResultsSite(Site):
         The Method has no restrictions.
         """
         try:
-            content = self.getWebScrape()
             repattern = re.compile(self.RegEx[index], re.IGNORECASE)
-            foundlist = re.findall(repattern, content)
+            foundlist = re.findall(repattern, webcontent)
             return foundlist
         except:
-            message = self.ErrorMessage + " " + self.FullURL
-            if self.Silent:
-                raise SiteError(message)
-            else:
-                self.postMessage(message)
-            
-        return None
+            self.postMessage(self.ErrorMessage + " " + self.FullURL)
+            return None
 
 class PostTransactionPositiveCapableSite(Site):
     """
@@ -1149,12 +1150,16 @@ class PostTransactionPositiveCapableSite(Site):
             regextofindforpost = self._site.RegEx[0]
             newregexlist = self._site.RegEx[1:]
             super(PostTransactionPositiveCapableSite, self).__init__(self._site.URL, self._site.WebRetrieveDelay, \
-                                                                     self._site.TargetType, self._site.ReportStringForResult, \
-                                                                     self._site.Target, self._site.FriendlyName, \
+                                                                     self._site.Proxy, self._site.TargetType, \
+                                                                     self._site.ReportStringForResult, \
+                                                                     self._site.Target, self._site.UserAgent, \
+                                                                     self._site.FriendlyName, \
                                                                      newregexlist, self._site.FullURL, \
                                                                      self._site.ImportantPropertyString, \
                                                                      self._site.Params, self._site.Headers, \
-                                                                     self._site.APIKey, self._site._resulttype,silent=self._site.Silent)            
+                                                                     self._site.APIKey,
+                                                                     self._site._quiet
+            )
             self.postMessage(self.UserMessage + " " + self.FullURL)
             content = self.getContent()
             if content != None:
@@ -1221,12 +1226,8 @@ class PostTransactionPositiveCapableSite(Site):
                 foundlist = re.findall(repattern, content)
                 return foundlist
         except:
-            message = self.ErrorMessage + " " + self.FullURL
-            if self.Silent:
-                raise SiteError(message)
-            else:
-                self.postMessage(message)
-        return None
+            self.postMessage(self.ErrorMessage + " " + self.FullURL)
+            return None
 
     def getContent(self):
         """
@@ -1248,11 +1249,7 @@ class PostTransactionPositiveCapableSite(Site):
             content = self.getWebScrape()
             return content
         except:
-            message = self.ErrorMessage + " " + self.FullURL
-            if self.Silent:
-                raise SiteError(message)
-            else:
-                self.postMessage(message)
+            self.postMessage(self.ErrorMessage + " " + self.FullURL)
             return None
 
     def postIsNecessary(self, regex, content):
@@ -1292,7 +1289,8 @@ class PostTransactionPositiveCapableSite(Site):
     def submitPost(self, raw_params, headers):
         """
         Submits information to a web site being used as a resource that
-        requires a post of information.
+        requires a post of information. Submits via proxy if --proxy
+        option was chosen during execution of the Automater.
         Returns a string that contains entire web site being used as a
         resource including HTML markup information.
 
@@ -1309,21 +1307,27 @@ class PostTransactionPositiveCapableSite(Site):
         Restriction(s):
         The Method has no restrictions.
         """
+        if self.Proxy == None:
+            proxy = urllib2.ProxyHandler()
+            opener = urllib2.build_opener(proxy)
+        else:
+            proxy = urllib2.ProxyHandler({
+                'https': self.Proxy,
+                'http': self.Proxy
+            })
+            opener = urllib2.build_opener(proxy)
+        opener.addheaders = [('User-agent', self.UserAgent)]
         try:
             url = (self.URL)
             params = urllib.urlencode(raw_params)
             request = urllib2.Request(url, params, headers)
             page = urllib2.urlopen(request)
-            page = page.read()
+            page = opener.open(request)
             content = str(page)
             return content
         except:
-            message = self.ErrorMessage + " " + self.FullURL
-            if self.Silent:
-                raise SiteError(message)
-            else:
-                self.postMessage(message)
-        return None
+            self.postMessage(self.ErrorMessage + " " + self.FullURL)
+            return None
 
 class PostTransactionAPIKeySite(Site):
     """
@@ -1352,11 +1356,14 @@ class PostTransactionAPIKeySite(Site):
         Nothing is returned from this Method.
         """
         self._site = site
-        super(PostTransactionAPIKeySite,self).__init__(self._site.URL, self._site.WebRetrieveDelay, self._site.TargetType, \
-                                                       self._site.ReportStringForResult, self._site.Target, \
-                                                       self._site.FriendlyName, self._site.RegEx, self._site.FullURL, \
-                                                       self._site.ImportantPropertyString, self._site.Params, \
-                                                       self._site.Headers, self._site.APIKey,self._site._resulttype, silent=self._site.Silent)
+        super(PostTransactionAPIKeySite,self).__init__(self._site.URL, self._site.WebRetrieveDelay, self._site.Proxy, \
+                                                       self._site.TargetType, self._site.ReportStringForResult, \
+                                                       self._site.Target, self._site.UserAgent, \
+                                                       self._site.FriendlyName, self._site.RegEx, \
+                                                       self._site.FullURL, self._site.ImportantPropertyString, \
+                                                       self._site.Params, self._site.Headers, self._site.APIKey,
+                                                       self._site._quiet
+        )
         self.postMessage(self.UserMessage + " " + self.FullURL)
         content = self.submitPost(self.Params, self.Headers)
         if content != None:
@@ -1417,17 +1424,14 @@ class PostTransactionAPIKeySite(Site):
                 foundlist = re.findall(repattern, content)
                 return foundlist
         except:
-            message = self.ErrorMessage + " " + self.FullURL
-            if self.Silent:
-                raise SiteError(message)
-            else:
-                self.postMessage(message)
-        return None
+            self.postMessage(self.ErrorMessage + " " + self.FullURL)
+            return None
 
     def submitPost(self, raw_params, headers):
         """
         Submits information to a web site being used as a resource that
-        requires a post of information.
+        requires a post of information. Submits via proxy if --proxy
+        option was chosen during execution of the Automater.
         Returns a string that contains entire web site being used as a
         resource including HTML markup information.
 
@@ -1444,18 +1448,24 @@ class PostTransactionAPIKeySite(Site):
         Restriction(s):
         The Method has no restrictions.
         """
+        if self.Proxy == None:
+            proxy = urllib2.ProxyHandler()
+            opener = urllib2.build_opener(proxy)
+        else:
+            proxy = urllib2.ProxyHandler({
+                'https': self.Proxy,
+                'http': self.Proxy
+            })
+            opener = urllib2.build_opener(proxy)
+        opener.addheaders = [('User-agent', self.UserAgent)]
         try:
             url = (self.FullURL)
             params = urllib.urlencode(raw_params)
             request = urllib2.Request(url, params, headers)
-            page = urllib2.urlopen(request)
+            page = opener.open(request)
             page = page.read()
             content = str(page)
             return content
         except:
-            message = self.ErrorMessage + " " + self.FullURL
-            if self.Silent:
-                raise SiteError(message)
-            else:
-                self.postMessage(message)
-        return None
+            self.postMessage(self.ErrorMessage + " " + self.FullURL)
+            return None
