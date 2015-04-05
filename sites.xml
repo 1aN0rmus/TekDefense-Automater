@@ -534,6 +534,184 @@
         <headers></headers>
         <apikey></apikey>
     </site>
+    	<site name="projecthoneypot">
+		<sitetype>
+			<entry>ip</entry>
+		</sitetype>
+        <domainurl>https://www.projecthoneypot.org</domainurl>
+        <reportstringforresult>
+			<entry>[+] ProjectHoneypot activity type:</entry>
+			<entry>[+] ProjectHoneypot first mail received:</entry>
+			<entry>[+] ProjectHoneypot last mail received:</entry>
+			<entry>[+] ProjectHoneypot total mails received:</entry>
+			<entry>[+] ProjectHoneypot spider first seen:</entry>
+			<entry>[+] ProjectHoneypot spider last seen:</entry>
+			<entry>[+] ProjectHoneypot spider sightings:</entry>
+			<entry>[+] ProjectHoneypot user-agent sightings:</entry>
+			<entry>[+] ProjectHoneypot first post on:</entry>
+			<entry>[+] ProjectHoneypot last post on:</entry>
+			<entry>[+] ProjectHoneypot form posts:</entry>
+			<entry>[+] ProjectHoneypot first rule break on:</entry>
+			<entry>[+] ProjectHoneypot last rule break on:</entry>
+			<entry>[+] ProjectHoneypot rule break sightings:</entry>
+			<entry>[+] ProjectHoneypot first dictionary attack on:</entry>
+			<entry>[+] ProjectHoneypot last dictionary attack on:</entry>
+			<entry>[+] ProjectHoneypot dictionary attack sightings:</entry>
+			<entry>[+] ProjectHoneypot first bad host on:</entry>
+			<entry>[+] ProjectHoneypot last bad host on:</entry>
+			<entry>[+] ProjectHoneypot bad host sightings:</entry>
+			<entry>[+] ProjectHoneypot harvester first seen:</entry>
+			<entry>[+] ProjectHoneypot harvester last seen:</entry>
+			<entry>[+] ProjectHoneypot harvester sightings:</entry>
+			<entry>[+] ProjectHoneypot harvester results:</entry>
+		</reportstringforresult>
+		<sitefriendlyname>
+			<entry>type</entry>
+			<entry>firstmail</entry>
+			<entry>lastmail</entry>
+			<entry>mailtotal</entry>
+			<entry>firstspider</entry>
+			<entry>lastspider</entry>
+			<entry>spidertotal</entry>
+			<entry>useragents</entry>
+			<entry>firstpost</entry>
+			<entry>lastpost</entry>
+			<entry>posttotal</entry>
+			<entry>firstbreak</entry>
+			<entry>lastbreaks</entry>
+			<entry>totalbreaks</entry>
+			<entry>firstdictionary</entry>
+			<entry>lastdictionary</entry>
+			<entry>totaldictionary</entry>
+			<entry>firstbadhost</entry>
+			<entry>lastbadhost</entry>
+			<entry>totalbadhost</entry>
+			<entry>firstharvester</entry>
+			<entry>lastharvester</entry>
+			<entry>harvestersightings</entry>
+			<entry>harvesterresults</entry>
+		</sitefriendlyname>
+		<regex>
+			<entry>list_of_ips\.php\?t=[a-z]\&quot;\&gt;([a-zA-Z\s]+)\&lt;\/a\&gt;\&lt;\/b\&gt;</entry>
+			<entry>\&gt;First\&amp;nbsp;Received\&amp;nbsp;From.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])[a-zA-Z0-9\&gt;\&lt;\&quot;\&amp;:,()=;\s\t\/]+Number\&amp;nbsp;Received</entry>
+			<entry>\&gt;Last\&amp;nbsp;Received\&amp;nbsp;From.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])[a-zA-Z0-9\&gt;\&lt;\&quot;:,()=;\s\t\/]+Number\&amp;nbsp;Received</entry>
+			<entry>\&gt;Number\&amp;nbsp;Received.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z\)])</entry>
+			<entry>\&gt;Spider\&amp;nbsp;First\&amp;nbsp;Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Spider\&amp;nbsp;Last\&amp;nbsp;Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z])</entry>
+			<entry>\&gt;Spider\&amp;nbsp;Sightings.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(]+[a-zA-Z\)])</entry>
+			<entry>\&gt;User-Agents.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9\-\(\),\s]+[a-zA-Z\)])</entry>
+			<entry>\&gt;First\&amp;nbsp;Post\&amp;nbsp;On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Last\&amp;nbsp;Post\&amp;nbsp;On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Form\&amp;nbsp;Posts.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z\)])</entry>
+			<entry>\&gt;First\&amp;nbsp;Rule-Break\&amp;nbsp;On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Last\&amp;nbsp;Rule-Break\&amp;nbsp;On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Rule\&amp;nbsp;Breaks.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z\)])</entry>
+			<entry>Dictionary\&amp;nbsp;Attacks[a-zA-Z0-9\&gt;\&lt;\&quot;:,()=;\s\t\/]+\&gt;First\&amp;nbsp;Received\&amp;nbsp;From.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>Dictionary\&amp;nbsp;Attacks[a-zA-Z0-9\&gt;\&lt;\&quot;\&amp;:,()=;\s\t\/]+\&gt;Last\&amp;nbsp;Received\&amp;nbsp;From.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Dictionary\&amp;nbsp;Attacks.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z\)])</entry>
+			<entry>\&gt;First\&amp;nbsp;Bad\&amp;nbsp;Host\&amp;nbsp;Appearance.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Last\&amp;nbsp;Bad\&amp;nbsp;Host\&amp;nbsp;Appearance.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Bad\&amp;nbsp;Host\&amp;nbsp;Appearances.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)\-]+[a-zA-Z\)])</entry>
+			<entry>\&gt;Harvester\&amp;nbsp;First\&amp;nbsp;Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Harvester\&amp;nbsp;Last\&amp;nbsp;Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z])</entry>
+			<entry>\&gt;Harvester\&amp;nbsp;Sightings.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\(\s]+[a-zA-Z\)])</entry>
+			<entry>(?:\&gt;Harvester\&amp;nbsp;Results(?:.+[\n\s].+[\n\s]+)\s{2,}|(?:\&lt;br\s\/\&gt;))(?!\s)([0-9a-zA-Z.\-\s:,()]+)\s{2,}</entry>
+		</regex>
+		<fullurl>http://www.projecthoneypot.org/ip_%TARGET%</fullurl>
+		<importantproperty>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+		</importantproperty>
+        <params></params>
+        <headers></headers>
+        <apikey></apikey>
+	</site>
+		<site name="mcafeethreatDom">
+		<sitetype>
+			<entry>hostname</entry>
+		</sitetype>
+        <domainurl>http://www.mcafee.com</domainurl>
+        <reportstringforresult>
+			<entry>[+] McAfee Web Risk:</entry>
+			<entry>[+] McAfee Web Category:</entry>
+			<entry>[+] McAfee Last Seen:</entry>
+		</reportstringforresult>
+		<sitefriendlyname>
+			<entry>webrep</entry>
+			<entry>category</entry>
+			<entry>lastseen</entry>
+		</sitefriendlyname>
+		<regex>
+			<entry>ctl00_mainContent_imgRisk\&quot;[^\r\n]+title=\&quot;([A-Za-z]+)\&quot;</entry>
+			<entry>Web\sCategory:[\n\s]*\&lt;\/strong\&gt;[\n\s]*([A-Z][A-Za-z\s\/,]+)\&lt;</entry>
+			<entry>Last\sSeen:[\n\s]*\&lt;\/strong\&gt;[\n\s]*([0-9\-]+)\&lt;</entry>
+		</regex>
+		<fullurl>http://www.mcafee.com/threat-intelligence/domain/default.aspx?domain=%TARGET%&amp;region=us</fullurl>
+		<importantproperty>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+		</importantproperty>
+        <params></params>
+        <headers></headers>
+        <apikey></apikey>
+	</site>
+	<site name="mcafeethreatIP">
+		<sitetype>
+			<entry>ip</entry>
+		</sitetype>
+        <domainurl>http://www.mcafee.com</domainurl>
+        <reportstringforresult>
+			<entry>[+] McAfee Web Risk:</entry>
+			<entry>[+] McAfee Email Risk:</entry>
+			<entry>[+] McAfee Network Risk:</entry>
+			<entry>[+] McAfee Web Category:</entry>
+		</reportstringforresult>
+		<sitefriendlyname>
+			<entry>webrep</entry>
+			<entry>mailrep</entry>
+			<entry>networkrep</entry>
+			<entry>category</entry>
+		</sitefriendlyname>
+		<regex>
+			<entry>ctl00_mainContent_imgRisk\&quot;[^\r\n]+src=\&quot;\/img\/Threat_IP\/rep_([a-z]+)\.png\&quot;</entry>
+			<entry>ctl00_mainContent_imgRisk1\&quot;[^\r\n]+src=\&quot;\/img\/Threat_IP\/rep_([a-z]+)\.png\&quot;</entry>
+			<entry>ctl00_mainContent_imgRisk2\&quot;[^\r\n]+src=\&quot;\/img\/Threat_IP\/rep_([a-z]+)\.png\&quot;</entry>
+			<entry>Web\sCategory:[\n\s]*\&lt;\/strong\&gt;[\n\s]*([A-Z][A-Za-z\s\/,]+)\&lt;</entry>	
+		</regex>
+		<fullurl>http://www.mcafee.com/threat-intelligence/ip/default.aspx?ip=%TARGET%&amp;region=us</fullurl>
+		<importantproperty>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+		</importantproperty>
+        <params></params>
+        <headers></headers>
+        <apikey></apikey>
+	</site>
     <site name="SANS API">
 	<sitetype>
 		<entry>ip</entry>
