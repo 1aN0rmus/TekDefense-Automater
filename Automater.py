@@ -37,6 +37,10 @@ from siteinfo import SiteFacade
 from utilities import Parser, IPWrapper
 from outputs import SiteDetailOutput
 from inputs import TargetFile
+import os
+
+AUTOMATER_HOME = os.environ["AUTOMATER_HOME"] if "AUTOMATER_HOME" in os.environ else os.path.dirname(os.path.abspath(__file__))
+os.chdir(AUTOMATER_HOME)
 
 def main():
     """
