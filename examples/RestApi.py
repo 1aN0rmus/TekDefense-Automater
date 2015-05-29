@@ -1,6 +1,7 @@
 #!/usr/bin/python
 """
 Example of Automater automation as a Rest API.
+Also provides a WEB console interface
 Results returned as JSON string
 
 The site names must match the site name attribute in the sites sites.xml file
@@ -19,7 +20,7 @@ Available sites as defined in the sites.xml file in this repository are:
 'allsources' queries all available sites
 
 Usage:
-python example/RestApi.py <list of target domains URLS>
+python example/RestApi.py
 
 HTTP Request format:
   http://127.0.0.1:8880/<site name>/<host name>
@@ -28,6 +29,9 @@ example HTTP grequest
 GET /fortinet_classify/masterdiskeurope.com
 
 {"masterdiskeurope.com": {"Fortinet URL": [{"Type": "hostname", "Result": "Malicious Websites"}]}}
+
+Web Console Interface:
+  http://127.0.0.1:8880
 """
 import io
 import sys
@@ -42,12 +46,23 @@ from outputs import SiteDetailOutput
 
 class AutomaterRestApi(Resource):
     def __init__(self):
+        self.isLeaf = False
         sitefac = SiteFacade()
         Resource.__init__(self)
         for site in sitefac.available_sites():
+            print site
             self.putChild(site, AutomaterRouter(site))
-        self.putChild("allsources", AutomaterRouter(site))
- 
+        self.putChild("allsources", AutomaterRouter("allsources"))
+        
+    def getChild(self, path, request):
+        if path == '':
+            return self
+        return  Resource.getChild(self,path, request)
+
+    def render_GET(self, request):
+        with open ("examples/webroot/all.html", "r") as myfile:
+            return "".join(myfile.readlines())
+        
 class AutomaterRouter(Resource):
     def __init__(self, site):
         self.site = site
@@ -70,17 +85,19 @@ class AutomaterHandler(Resource):
       """
       targetlist = self.target
       sitefac = SiteFacade()
-      
+      #print targetlist
+      #print self.site
       try:
           sitefac.runSiteAutomation(1,None,
                                     [targetlist],
                                     self.site,
-                                    False,"Automater/2.1", True) 
+                                    False,"Automater/2.1", quiet=False) 
           sites = sitefac.Sites
           if sites is not None:
               out = SiteDetailOutput(sites)
               return out.jsonOutput()
-          return "{}"
+          else:
+              return "{}"
       except Exception as e:
           print e.message
           return None

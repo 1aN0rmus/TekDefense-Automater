@@ -14,13 +14,13 @@ from siteinfo import SiteFacade
 from outputs import SiteDetailOutput
 
  
-def run_automater(targets):
+def run_automater(cmd,targets):
     """
     Runs Automator on list of target strings
     and returns results as json encoded string object.
     """
     targetlist = targets
-    source = "allsources"
+    source = cmd #"allsources"
     sitefac = SiteFacade()
     try:
         sitefac.runSiteAutomation(1,None,
@@ -38,7 +38,7 @@ def run_automater(targets):
         return None
         
 def main():
-    print run_automater(sys.argv[1:])
+    print run_automater(sys.argv[1],sys.argv[2:])
 
 
 if __name__ == "__main__":
