@@ -36,6 +36,7 @@ Web Console Interface:
 import io
 import sys
 import csv
+import argparse
 from twisted.web.server import Site
 from twisted.web.resource import Resource
 from twisted.internet import reactor
@@ -50,7 +51,7 @@ class AutomaterRestApi(Resource):
         sitefac = SiteFacade()
         Resource.__init__(self)
         for site in sitefac.available_sites():
-            print site
+            #print site
             self.putChild(site, AutomaterRouter(site))
         self.putChild("allsources", AutomaterRouter("allsources"))
         
@@ -60,7 +61,7 @@ class AutomaterRestApi(Resource):
         return  Resource.getChild(self,path, request)
 
     def render_GET(self, request):
-        with open ("examples/webroot/all.html", "r") as myfile:
+        with open ("examples/webroot/index.html", "r") as myfile:
             return "".join(myfile.readlines())
         
 class AutomaterRouter(Resource):
@@ -106,9 +107,31 @@ class AutomaterHandler(Resource):
         return  self.run_automater()
 
 def main():
+    parser = argparse.ArgumentParser(description='Automator Web and Rest Interface')
+    parser.add_argument('--port',default=8880, type=int,help='port to listen on')
+    parser.add_argument('--bindip',default="127.0.0.1", help='Address to bind to')
+    parser.add_argument('--ssl', help="Use SSL",action="store_true")
+    parser.add_argument('--privkey', default='./privkey.pem', help="Path to private key")
+    parser.add_argument('--cert', default='./cacert.pem', help="Path to public cert")
+    args = parser.parse_args()
     root = AutomaterRestApi()
     factory = Site(root)
-    reactor.listenTCP(8880, factory)
+    if not args.ssl:
+      reactor.listenTCP(args.port, factory, interface=args.bindip)
+    else:
+      from twisted.internet import ssl
+      sslContext = ssl.DefaultOpenSSLContextFactory(
+          args.privkey,
+          args.cacert
+      )
+      reactor.listenSSL(
+          args.port, 
+          factory,
+          contextFactory = sslContext,
+          interface=args.bindip,
+      )
+
+    
     reactor.run()
 
 if __name__ == "__main__":
