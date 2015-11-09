@@ -1,4 +1,3 @@
-TekDefense-Automater XML_Version: 0.21
 TekDefense-Automater Version: 0.21
 ====================
 
