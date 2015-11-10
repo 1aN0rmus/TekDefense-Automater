@@ -20,6 +20,7 @@ import socket
 import re
 from datetime import datetime
 from operator import attrgetter
+import json
 
 class SiteDetailOutput(object):
     """
@@ -361,7 +362,13 @@ class SiteDetailOutput(object):
         f.close()
         print "" + textoutfile + " Generated"
 
+        
     def PrintToCSVFile(self,csvoutfile):
+        f = open(csvoutfile, "wb")
+        self.PrintToCSVFileHandle(f)
+        f.close()
+        
+    def PrintToCSVFileHandle(self,csvoutfilehandle):
         """
         Formats site information correctly and prints it to an output file with comma-seperators.
         Returns nothing.
@@ -377,8 +384,8 @@ class SiteDetailOutput(object):
         """
         sites = sorted(self.ListOfSites, key=attrgetter('Target'))
         target = ""
-        print '\n[+] Generating CSV output: ' + csvoutfile
-        f = open(csvoutfile, "wb")
+        
+        f = csvoutfilehandle
         csvRW = csv.writer(f, quoting=csv.QUOTE_ALL)
         csvRW.writerow(['Target', 'Type', 'Source', 'Result'])
         if sites is not None:
@@ -452,8 +459,9 @@ class SiteDetailOutput(object):
                                     laststring = "" + tgt + typ + source + str(res)
                                     
         f.flush()
-        f.close()
-        print "" + csvoutfile + " Generated"
+        #f.close()
+        
+        
 
     def PrintToHTMLFile(self,htmloutfile):
         """
@@ -649,3 +657,103 @@ class SiteDetailOutput(object):
             </body>
             </html>
             '''
+    def hashOutput(self):
+        """
+        Returns output of automater as a hash table sutible for JSON encoding.
+        The format is:
+        [{<target>:{<site>:{'Type':<Result Type>, 'Result':<Result>}}]
+        """
+        sites = sorted(self._listofsites, key=attrgetter('Target'))
+        target = ""
+        thash = {}
+        def get_hash(h,k):
+            if k in h:
+                h[k]
+            else:
+                h[k] = {}
+            return h[k]
+        def get_array(h,k):
+            if k in h:
+                h[k]
+            else:
+                h[k] = []
+            return h[k]
+        if sites is not None:
+            for site in sites:
+                if not isinstance(site._regex,basestring): #this is a multisite:
+                    for index in range(len(site.RegEx)): #the regexs will ensure we have the exact number of lookups
+                        siteimpprop = site.getImportantProperty(index)
+                        if siteimpprop is None or len(siteimpprop)==0:
+                            tgt = site.Target
+                            typ = site.TargetType
+                            source = site.FriendlyName[index]
+                            res = "No results found"
+                            get_array(get_hash(thash,tgt),source).append({'Type':typ,'Result':res})
+                        else:
+                            if siteimpprop[index] is None or len(siteimpprop[index])==0:
+                                tgt = site.Target
+                                typ = site.TargetType
+                                source = site.FriendlyName[index]
+                                res = "No results found"
+                                #csvRW.writerow([tgt,typ,source,res])
+                                get_array(get_hash(thash,tgt),source).append({'Type':typ,'Result':res})
+                            else:
+                                laststring = ""
+                                #if it's just a string we don't want it to output like a list
+                                if isinstance(siteimpprop, basestring):
+                                    tgt = site.Target
+                                    typ = site.TargetType
+                                    source = site.FriendlyName
+                                    res = siteimpprop
+                                    if "" + tgt + typ + source + res != laststring:
+                                        get_array(get_hash(thash,tgt),source).append({'Type':typ,'Result':res})
+                                        laststring = "" + tgt + typ + source + res
+                                #must be a list since it failed the isinstance check on string
+                                else:
+                                    laststring = ""
+                                    for siteresult in siteimpprop[index]:
+                                        tgt = site.Target
+                                        typ = site.TargetType
+                                        source = site.FriendlyName[index]
+                                        res = siteresult
+                                        if "" + tgt + typ + source + str(res) != laststring:
+                                            get_array(get_hash(thash,tgt),source).append({'Type':typ,'Result':res})
+                                            laststring = "" + tgt + typ + source + str(res)
+                else:#this is a singlesite
+                    siteimpprop = site.getImportantProperty(0)
+                    if siteimpprop is None or len(siteimpprop)==0:
+                        tgt = site.Target
+                        typ = site.TargetType
+                        source = site.FriendlyName
+                        res = "No results found"
+                    else:
+                        laststring = ""
+                        #if it's just a string we don't want it output like a list
+                        if isinstance(siteimpprop, basestring):
+                            tgt = site.Target
+                            typ = site.TargetType
+                            source = site.FriendlyName
+                            res = siteimpprop
+                            if "" + tgt + typ + source + res != laststring:
+                                get_array(get_hash(thash,tgt),source).append({'Type':typ,'Result':res})
+                                
+                                laststring = "" + tgt + typ + source + res
+                        else:
+                            laststring = ""
+                            for siteresult in siteimpprop:
+                                tgt = site.Target
+                                typ = site.TargetType
+                                source = site.FriendlyName if site.FriendlyName else "UNK"
+                                res = siteresult
+                                if "" + tgt + typ + source + str(res) != laststring:
+                                    get_array(get_hash(thash,tgt),source).append({'Type':typ,'Result':res})
+                                    laststring = "" + tgt + typ + source + str(res)
+                                    
+        return thash
+    
+    
+    def jsonOutput(self):
+        """
+        Returns output of automater as JSON encoded string
+        """
+        return json.dumps(self.hashOutput())

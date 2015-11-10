@@ -65,7 +65,7 @@ class SiteFacade(object):
 
         self._sites = []
 
-    def runSiteAutomation(self, webretrievedelay, proxy, targetlist, source, postbydefault, useragent):
+    def runSiteAutomation(self, webretrievedelay, proxy, targetlist, source, postbydefault, useragent, quiet = False):
         """
         Builds site objects representative of each site listed in the sites.xml
         config file. Appends a Site object or one of it's subordinate objects
@@ -103,7 +103,7 @@ class SiteFacade(object):
                             if st.text == targettype:
                                 sitetypematch = True
                         if sitetypematch:
-                            site = Site.buildSiteFromXML(siteelement, webretrievedelay, proxy, targettype, targ, useragent)
+                            site = Site.buildSiteFromXML(siteelement, webretrievedelay, proxy, targettype, targ, useragent, quiet)
                             if (site.Params != None or site.Headers != None) and site.APIKey != None:
                                 self._sites.append(PostTransactionAPIKeySite(site))
                             elif site.Params != None or site.Headers != None:
@@ -164,6 +164,22 @@ class SiteFacade(object):
 
         return "hostname"
 
+    @classmethod
+    def available_sites(self):
+        """
+        Builds site objects representative of each site listed in the sites.xml
+        config file. Appends a Site object or one of it's subordinate objects
+        to the _sites instance variable so retrieved information can be used.
+        Returns nothing.
+        """
+        if SitesFile.fileExists():
+            sitetree = SitesFile.getXMLTree()
+            sitelist = []
+            for siteelement in sitetree.iter(tag = "site"):
+                sitelist.append(siteelement.get("name"))
+        return sitelist
+    
+    
 class Site(object):
     """
     Site is the parent object that represents each site used
@@ -222,10 +238,11 @@ class Site(object):
     _apikey
     _results
     _messagetopost
+    _quiet
     """
     def __init__(self, domainurl, webretrievedelay, proxy, targettype, \
                  reportstringforresult, target, useragent, friendlyname, regex, \
-                 fullurl, importantproperty, params, headers, apikey):
+                 fullurl, importantproperty, params, headers, apikey, quiet):
         """
         Class constructor. Sets the instance variables based on input from
         the arguments supplied when Automater is run and what the sites.xml
@@ -258,7 +275,7 @@ class Site(object):
         XML tag in the sites.xml configuration file.
         apikey -- string or list of strings found in the entry XML tags within
         the apikey XML tag in the sites.xml configuration file.
-
+        quiet -- supress output of status messages to the console
         Return value(s):
         Nothing is returned from this Method.
         """
@@ -289,9 +306,10 @@ class Site(object):
             self._apikey = apikey
         self._results = []
         self._messagetopost = ""
+        self._quiet = quiet
 
     @classmethod
-    def buildSiteFromXML(self, siteelement, webretrievedelay, proxy, targettype, target, useragent):
+    def buildSiteFromXML(self, siteelement, webretrievedelay, proxy, targettype, target, useragent, quiet = False):
         """
         Utilizes the Class Methods within this Class to build the Site object.
         Returns a Site object that defines results returned during the web
@@ -307,7 +325,7 @@ class Site(object):
         target -- the target that will be used to gather information on.
         useragent -- the string utilized to represent the user-agent when
         web requests or submissions are made.
-
+        quiet -- Supress output of status messages to console
         Return value(s):
         Site object.
 
@@ -324,7 +342,7 @@ class Site(object):
         headers = Site.buildDictionaryFromXML(siteelement, "headers")
         apikey = Site.buildStringOrListfromXML(siteelement, "apikey")
         return Site(domainurl, webretrievedelay, proxy, targettype, reportstringforresult, target, \
-                    useragent, sitefriendlyname, regex, fullurl, importantproperty, params, headers, apikey)
+                    useragent, sitefriendlyname, regex, fullurl, importantproperty, params, headers, apikey, quiet)
 
     @classmethod
     def buildStringOrListfromXML(self, siteelement, elementstring):
@@ -823,8 +841,11 @@ class Site(object):
         Restriction(s):
         The Method has no restrictions.
         """
-        self._messagetopost = message
-        print self.MessageToPost
+        if self._quiet:
+            pass
+        else:
+            self._messagetopost = message
+            print self.MessageToPost
 
     def getImportantProperty(self, index):
         """
@@ -936,6 +957,7 @@ class Site(object):
         except:
             self.postMessage('[-] Cannot connect to ' + self.FullURL)
 
+
 class SingleResultsSite(Site):
     """
     SingleResultsSite inherits from the Site object and represents
@@ -964,7 +986,7 @@ class SingleResultsSite(Site):
                                                 self._site.TargetType, self._site.ReportStringForResult, \
                                                 self._site.Target, self._site.UserAgent, self._site.FriendlyName, \
                                                 self._site.RegEx, self._site.FullURL, self._site.ImportantPropertyString, \
-                                                self._site.Params, self._site.Headers, self._site.APIKey)
+                                                self._site.Params, self._site.Headers, self._site.APIKey, self._site._quiet)
         self.postMessage(self.UserMessage + " " + self.FullURL)
         webcontent = self.getWebScrape()
         websitecontent = self.getContentList(webcontent)
@@ -1028,7 +1050,7 @@ class MultiResultsSite(Site):
                                               self._site.UserAgent, self._site.FriendlyName, \
                                               self._site.RegEx, self._site.FullURL, \
                                               self._site.ImportantPropertyString, self._site.Params, \
-                                              self._site.Headers, self._site.APIKey)
+                                              self._site.Headers, self._site.APIKey, self._site._quiet)
         self._results = [[] for x in xrange(len(self._site.RegEx))]
         self.postMessage(self.UserMessage + " " + self.FullURL)
 
@@ -1135,7 +1157,9 @@ class PostTransactionPositiveCapableSite(Site):
                                                                      newregexlist, self._site.FullURL, \
                                                                      self._site.ImportantPropertyString, \
                                                                      self._site.Params, self._site.Headers, \
-                                                                     self._site.APIKey)
+                                                                     self._site.APIKey,
+                                                                     self._site._quiet
+            )
             self.postMessage(self.UserMessage + " " + self.FullURL)
             content = self.getContent()
             if content != None:
@@ -1337,7 +1361,9 @@ class PostTransactionAPIKeySite(Site):
                                                        self._site.Target, self._site.UserAgent, \
                                                        self._site.FriendlyName, self._site.RegEx, \
                                                        self._site.FullURL, self._site.ImportantPropertyString, \
-                                                       self._site.Params, self._site.Headers, self._site.APIKey)
+                                                       self._site.Params, self._site.Headers, self._site.APIKey,
+                                                       self._site._quiet
+        )
         self.postMessage(self.UserMessage + " " + self.FullURL)
         content = self.submitPost(self.Params, self.Headers)
         if content != None:

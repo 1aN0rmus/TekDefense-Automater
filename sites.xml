@@ -125,7 +125,11 @@
         <sitefriendlyname>
 		<entry>RTex DNS</entry>
 	</sitefriendlyname>
-        <regex>
+    <resulttype>
+      <entry>IP</entry>
+      <entry>URL</entry>
+    </resulttype>
+    <regex>
 		<entry>host\"\s\:\s\"(.+)\"</entry>
 	</regex>
 	<fullurl>http://api.tekdefense.com/robtex/rob.php?q=%TARGET%</fullurl>
@@ -172,6 +176,10 @@
 	        <entry>VT pDNSDomain</entry>
 	        <entry>VT pDNSURL</entry>
 	</sitefriendlyname>
+    <resulttype>
+      <entry>Domain</entry>
+      <entry>URL</entry>
+    </resulttype>
         <regex>
 	        <entry>test-ref</entry>
 		<entry>(\d{4}\-\d{1,2}\-\d{1,2})\s+&lt;.{30,70}\/en\/domain\/(.{1,80})\/information</entry>
@@ -207,7 +215,12 @@
 		<entry>IV ISP</entry>
 		<entry>IV Geo</entry>
 	</sitefriendlyname>
-        <regex>
+    <resulttype>
+      <entry>Blacklist</entry>
+      <entry>ISP</entry>
+      <entry>Geo Code</entry>
+    </resulttype>
+    <regex>
 		<entry>An\sError\soccurred</entry>
 		<entry>\&gt;\s(\w+)\&lt;\/td\&gt;\&lt;td\&gt;\&lt;.{30,50}alert\.png</entry>
 		<entry>ISP\&lt;\/td\&gt;\&lt;td\&gt;(.+)\&lt;\/td\&gt;</entry>
@@ -247,6 +260,15 @@
 		<entry>VT Engines</entry>
 		<entry>VT Date</entry>
 	</sitefriendlyname>
+    <resulttype>
+      <entry>Found</entry>
+      <entry>date</entry>
+      <entry>Detected</entry>
+      <entry>Total</entry>
+      <entry>On</entry>
+    </resulttype>
+        
+        
         <regex>
 		<entry>response_code...(1)</entry>
 		<entry>scan_date....(.{18,25})\"\,</entry>
@@ -286,6 +308,10 @@
 		<entry>TE Date</entry>
 		<entry>TE Indicators</entry>
 	</sitefriendlyname>
+    <resulttype>
+      <entry>Date</entry>
+      <entry>Indicators</entry>
+    </resulttype>
         <regex>
 		<entry>Submission\sreceived.\s(.+)\&lt;\/li\&gt;</entry>
 		<entry>1\"&gt;(.{5,100})\&lt;\/td.{10,35}src\=</entry>
@@ -313,6 +339,10 @@
 	        <entry>Vx Date</entry>
 	        <entry>Vx URL</entry>
 	</sitefriendlyname>
+            <resulttype>
+          <entry>Date</entry>
+          <entry>URL</entry>
+        </resulttype>
         <regex>
 	        <entry>\&gt;(\d{2}\-\d{2})\&lt;</entry>
 	        <entry>\[D\].{2,40}\Wphp\?id.{2,10}\&gt;(.{5,100})&lt;\/a</entry>
@@ -337,6 +367,9 @@
         <sitefriendlyname>
 		<entry>Un Redirect</entry>
 	</sitefriendlyname>
+    <resulttype>
+      <entry>URL</entry>
+    </resulttype>
         <regex>
 		<entry>result\"\&gt;\s\&lt;a\shref\=\".+\&gt;(.+)\&lt;\/a\&gt;\s</entry>
 	</regex>
@@ -367,6 +400,13 @@
 		<entry>UV Location</entry>
 		<entry>UV Country</entry>
 	</sitefriendlyname>
+    <resulttype>
+      <entry>IP</entry>
+      <entry>Blacklist</entry>
+      <entry>Domain</entry>
+      <entry>Location</entry>
+      <entry>Country</entry>
+    </resulttype>
         <regex>
 		<entry>An\sError\soccurred</entry>
 		<entry>(\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}).{5,30}Find\swebsites\shosted\shere</entry>
@@ -448,6 +488,14 @@
 		<entry>MC ASN Name</entry>
 		<entry>MC MD5</entry>
 	</sitefriendlyname>
+        <resulttype>
+		<entry>Malc0de Date</entry>
+		<entry>Malc0de IP</entry>
+		<entry>Malc0de Country</entry>
+		<entry>Malc0de ASN</entry>
+		<entry>Malc0de ASN Name</entry>
+		<entry>Malc0de MD5</entry>
+	  </resulttype>
         <regex>
 		<entry>\d{4}\-\d{1,2}\-\d{1,2}</entry>
 		<entry>search=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})</entry>
