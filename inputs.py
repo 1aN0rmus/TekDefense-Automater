@@ -18,7 +18,10 @@ Exception(s):
 No exceptions exported.
 """
 from xml.etree.ElementTree import ElementTree
+import logging
 import os
+
+logger = logging.getLogger("Automater")
 
 class TargetFile(object):
     """
@@ -55,7 +58,7 @@ class TargetFile(object):
                     target = str(i).strip()
                     yield target
         except IOError:
-            print "There was an error reading from the target input file."
+            logger.error("There was an error reading from the target input file.")
 
 
 class SitesFile(object):
@@ -93,8 +96,8 @@ class SitesFile(object):
                 sitetree.parse(f)
                 return sitetree
         except:
-            print "There was an error reading from the sites input file.",
-            print "Please check that the XML file is present and correctly formatted."
+            logger.error("There was an error reading from the sites input file."
+                "Please check that the XML file is present and correctly formatted.")
 
     @classmethod
     def fileExists(self):
