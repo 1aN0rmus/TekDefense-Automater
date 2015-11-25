@@ -126,14 +126,14 @@
             <entry>[+] Scan date submitted:</entry>
             <entry>[+] Detected Engines:</entry>
             <entry>[+] Total Engines:</entry>
-            <entry>[+] Date:</entry>
+            <entry>[+] Vendor | Classification:</entry>
         </reportstringforresult>
         <sitefriendlyname>
             <entry>VT Found</entry>
             <entry>VT Date</entry>
             <entry>VT Detected</entry>
             <entry>VT Engines</entry>
-            <entry>VT Date</entry>
+            <entry>VT Vendor_Class</entry>
         </sitefriendlyname>
         <regex>
             <entry>response_code...(1)</entry>
