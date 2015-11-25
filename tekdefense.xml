@@ -24,7 +24,7 @@
             <entry>ip</entry>
             <entry>hostname</entry>
         </sitetype>
-        <domainurl>https://fortiguard.com/</domainurl>
+        <domainurl>https://fortiguard.com/webfilter</domainurl>
         <reportstringforresult>
             <entry>[+] Fortinet URL Category:</entry>
         </reportstringforresult>
@@ -34,7 +34,7 @@
         <regex>
             <entry>Category:\s(.+)\&lt;\/h3\&gt;\s\&lt;a</entry>
         </regex>
-        <fullurl>https://www.fortiguard.com/ip_rep/index.php?data=%TARGET%&amp;lookup=Lookup</fullurl>
+        <fullurl>https://www.fortiguard.com/iprep?data=%TARGET%</fullurl>
         <importantproperty>
             <entry>Results</entry>
         </importantproperty>
