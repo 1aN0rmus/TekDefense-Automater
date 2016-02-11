@@ -1,4 +1,4 @@
-TekDefense-Automater
+TekDefense-Automater Version: 0.21
 ====================
 
 http://www.tekdefense.com/automater/
@@ -11,4 +11,4 @@ Luckily, a mentor and friend of mine (@jameshub3r) offered his time and expertis
 
 To view a bit more about installation and usage head over to the new Automater page (http://www.tekdefense.com/automater/).
 
-You can download the code directly on Github. Remember Automater is not a single file anymore, you need to download all of the files in the Automater repo to the same directory. To the first person that reports a valid bug to me, I'll send you a random game on Steam.
+You can download the code directly on Github. Remember Automater is not a single file anymore, you need to download all of the files in the Automater repo to the same directory.

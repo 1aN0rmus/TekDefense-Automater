@@ -1,0 +1,625 @@
+<?xml version="1.0"?>
+<automater_root>
+    <site name="robtex">
+        <sitetype>
+            <entry>ip</entry>
+        </sitetype>
+        <domainurl>https://robtex.com/</domainurl>
+        <reportstringforresult>
+            <entry>[+] A records from Robtex.com:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>RTex DNS</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>host\"\s\:\s\"(.+)\"</entry>
+        </regex>
+        <fullurl>http://api.tekdefense.com/robtex/rob.php?q=%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+        </importantproperty>
+    </site>
+    <site name="fortinet_classify">
+        <sitetype>
+            <entry>ip</entry>
+            <entry>hostname</entry>
+        </sitetype>
+        <domainurl>https://fortiguard.com/webfilter</domainurl>
+        <reportstringforresult>
+            <entry>[+] Fortinet URL Category:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>FNet URL</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>Category:\s(.+)\&lt;\/h3\&gt;\s\&lt;a</entry>
+        </regex>
+        <fullurl>https://www.fortiguard.com/iprep?data=%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+        </importantproperty>
+    </site>
+    <site name="vtpDNSIP">
+        <sitetype>
+            <entry>ip</entry>
+        </sitetype>
+        <domainurl>https://www.virustotal.com/en/#search</domainurl>
+        <reportstringforresult>
+            <entry>[+] VT ASN:</entry>
+            <entry>[+] VT Country:</entry>
+            <entry>[+] VT AS Owner:</entry>
+            <entry>[+] VT pDNS:</entry>
+            <entry>[+] VT Malware:</entry>
+            <entry>[+] VT Mal URLs:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>VT ASN</entry>
+            <entry>VT Country</entry>
+            <entry>VT AS Owner</entry>
+            <entry>VT pDNS</entry>
+            <entry>VT Malware</entry>
+            <entry>VT Mal URLs</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>asn....(\w+)\"\,</entry>
+            <entry>country....(\w+)\"\,</entry>
+            <entry>owner....(\w+)\"\,</entry>
+            <entry>last_resolved....(\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2})\"\,\s\"hostname\"\:\s\"(.+?)\"\}</entry>
+            <entry>date....(\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}).+(\w{64})</entry>
+            <entry>url....(http.+?)\".+?date....(\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2})</entry>
+        </regex>
+        <fullurl>http://www.virustotal.com/vtapi/v2/ip-address/report</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+        </importantproperty>
+        <params>
+            <entry key="ip">%TARGET%</entry>
+            <entry key="apikey">b8af96be86983eccfe209fc5dfefa59f65fafa698a74ed638b63a3e367679e5a</entry>
+        </params>
+    </site>
+    <site name="ipvoid">
+        <sitetype>
+            <entry>ip</entry>
+        </sitetype>
+        <domainurl>http://www.ipvoid.com/</domainurl>
+        <reportstringforresult>
+            <entry>[+] Blacklist from IPVoid:</entry>
+            <entry>[+] ISP from IPvoid:</entry>
+            <entry>[+] Country from IPVoid:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>IV Blacklist</entry>
+            <entry>IV ISP</entry>
+            <entry>IV Geo</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>\&gt;\s(\w+)\&lt;\/td\&gt;\&lt;td\&gt;\&lt;.{30,50}alert\.png</entry>
+            <entry>ISP\&lt;\/td\&gt;\&lt;td\&gt;(.+)\&lt;\/td\&gt;</entry>
+            <entry>Country\sCode.+flag\"\s\/\&gt;\s(.+)\&lt;\/td\&gt;</entry>
+        </regex>
+        <fullurl>http://www.ipvoid.com/scan/%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+        </importantproperty>
+        <params>
+            <entry key="ip">%TARGET%</entry>
+            <entry key="go">Scan Now</entry>
+        </params>
+        <headers>
+            <entry key="Content-type">application/x-www-form-urlencoded</entry>
+        </headers>
+    </site>
+    <site name="virustotal">
+        <sitetype>
+            <entry>md5</entry>
+        </sitetype>
+        <domainurl>https://www.virustotal.com</domainurl>
+        <reportstringforresult>
+            <entry>[+] MD5 found on VT:</entry>
+            <entry>[+] Scan date submitted:</entry>
+            <entry>[+] Detected Engines:</entry>
+            <entry>[+] Total Engines:</entry>
+            <entry>[+] Vendor | Classification:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>VT Found</entry>
+            <entry>VT Date</entry>
+            <entry>VT Detected</entry>
+            <entry>VT Engines</entry>
+            <entry>VT Vendor_Class</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>response_code...(1)</entry>
+            <entry>scan_date....(.{18,25})\"\,</entry>
+            <entry>positives...(\d{1,2})\,</entry>
+            <entry>total...(\d{1,2})\,</entry>
+            <entry>\}\,\s\"(.{3,20})\"....detected...true.{19,32}result....(.{11,30})....update</entry>
+        </regex>
+        <fullurl>https://www.virustotal.com/vtapi/v2/file/report</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+        </importantproperty>
+        <params>
+            <entry key="resource">%TARGET%</entry>
+            <entry key="apikey">b8af96be86983eccfe209fc5dfefa59f65fafa698a74ed638b63a3e367679e5a</entry>
+        </params>
+        <headers>
+            <entry key="Content-type">application/x-www-form-urlencoded</entry>
+        </headers>
+    </site>
+    <site name="threatexpert">
+        <sitetype>
+            <entry>md5</entry>
+        </sitetype>
+        <domainurl>http://www.threatexpert.com/</domainurl>
+        <reportstringforresult>
+            <entry>[+] Hash found at ThreatExpert:</entry>
+            <entry>[+] Malicious Indicators from ThreatExpert:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>TE Date</entry>
+            <entry>TE Indicators</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>Submission\sreceived.\s(.+)\&lt;\/li\&gt;</entry>
+            <entry>1\"&gt;(.{5,100})\&lt;\/td.{10,35}src\=</entry>
+        </regex>
+        <fullurl>http://www.threatexpert.com/report.aspx?md5=%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+            <entry>Results</entry>
+        </importantproperty>
+        </site>
+    <site name="vxvault">
+        <sitetype>
+            <entry>md5</entry>
+        </sitetype>
+        <!--supports TLS but uses an invalid cert-->
+        <domainurl>http://vxvault.siri-urz.net/</domainurl>
+        <reportstringforresult>
+            <entry>[+] Date found at VXVault:</entry>
+            <entry>[+] URL found at VXVault:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>Vx Date</entry>
+            <entry>Vx URL</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>\&gt;(\d{2}\-\d{2})\&lt;</entry>
+            <entry>\[D\].{2,40}\Wphp\?id.{2,10}\&gt;(.{5,100})&lt;\/a</entry>
+        </regex>
+        <fullurl>http://vxvault.siri-urz.net/ViriList.php?MD5=%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+            <entry>Results</entry>
+        </importantproperty>
+    </site>
+    <site name="unshortme">
+        <sitetype>
+            <entry>hostname</entry>
+        </sitetype>
+        <domainurl>http://unshort.me</domainurl>
+        <reportstringforresult>
+            <entry>[+] URL redirects to:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>Un Redirect</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>result\"\&gt;\s\&lt;a\shref\=\".+\&gt;(.+)\&lt;\/a\&gt;\s</entry>
+        </regex>
+        <fullurl>http://unshort.me/index.php?r=%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+        </importantproperty>
+    </site>
+    <site name="urlvoid">
+        <sitetype>
+        <entry>hostname</entry>
+        </sitetype>
+        <domainurl>http://www.urlvoid.com/</domainurl>
+        <reportstringforresult>
+            <entry>[+] IP from URLVoid:</entry>
+            <entry>[+] Blacklist from URLVoid:</entry>
+            <entry>[+] Domain Age from URLVoid:</entry>
+            <entry>[+] Geo Coordinates from URLVoid:</entry>
+            <entry>[+] Country from URLVoid:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>UV IP</entry>
+            <entry>UV Blacklists</entry>
+            <entry>UV Domain</entry>
+            <entry>UV Location</entry>
+            <entry>UV Country</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>(\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}).{5,30}Find\swebsites\shosted\shere</entry>
+            <entry>\&gt;\s([ a-zA-Z0-9_-]+)\&lt;\/td\&gt;\&lt;td\&gt;\&lt;.{30,50}alert\.png</entry>
+            <entry>Domain\s1st\sRegistered.+\&lt;td\&gt;(.+)\&lt;\/td\&gt;</entry>
+            <entry>latitude\s\/\slongitude.+\&lt;td\&gt;(.+)\&lt;\/td\&gt;</entry>
+            <entry>alt\=\"flag\".+\&gt;(.+)\&lt;\/td\&gt;</entry>
+        </regex>
+        <fullurl>http://www.urlvoid.com/scan/%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+        </importantproperty>
+        <params>
+            <entry key="ip">%TARGET%</entry>
+            <entry key="go">Scan Now</entry>
+        </params>
+        <headers>
+            <entry key="Content-type">application/x-www-form-urlencoded</entry>
+        </headers>
+    </site>
+    <site name="vtpDNSDom">
+        <sitetype>
+            <entry>hostname</entry>
+        </sitetype>
+        <domainurl>https://www.virustotal.com/en/#search</domainurl>
+        <reportstringforresult>
+            <entry>[+] pDNS data from VirusTotal:</entry>
+            <entry>[+] pDNS malicious URLs from VirusTotal:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>VT pDNSIP</entry>
+            <entry>VT pDNSURL</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>(\d{4}\-\d{1,2}\-\d{1,2})\s+&lt;.{30,70}\/en\/ip-address\/(.{1,80})\/information</entry>
+            <entry>(\d{4}\-\d{1,2}\-\d{1,2}).{1,20}\s+&lt;.{10,80}\/en\/url\/.{1,100}\/analysis\/.{1,5}\s+(http.{1,70}\/)</entry>
+        </regex>
+        <fullurl>https://www.virustotal.com/en/domain/%TARGET%/information/</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+            <entry>Results</entry>
+        </importantproperty>
+        <headers>
+            <entry key="Accept">text/html, application/xhtml+xml, */*</entry>
+            <entry key="Accept-Language">en-US</entry>
+            <entry key="Accept-Encoding">gzip, deflate</entry>
+            <entry key="DNT">1</entry>
+            <entry key="Connection">Keep-Alive</entry>
+        </headers>
+    </site>
+    <site name="malc0de">
+        <sitetype>
+            <entry>ip</entry>
+            <entry>hostname</entry>
+            <entry>md5</entry>
+        </sitetype>
+        <domainurl>https://malc0de.com</domainurl>
+        <reportstringforresult>
+            <entry>[+] Malc0de Date:</entry>
+            <entry>[+] Malc0de IP:</entry>
+            <entry>[+] Malc0de Country:</entry>
+            <entry>[+] Malc0de ASN:</entry>
+            <entry>[+] Malc0de ASN Name:</entry>
+            <entry>[+] Malc0de MD5:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>MC Date</entry>
+            <entry>MC IP</entry>
+            <entry>MC Country</entry>
+            <entry>MC ASN</entry>
+            <entry>MC ASN Name</entry>
+            <entry>MC MD5</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>\d{4}\-\d{1,2}\-\d{1,2}</entry>
+            <entry>search=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})</entry>
+            <entry>(?!search=NA)search=([A-Z]{2})</entry>
+            <entry>search=\d{4,5}..(\d{4,5})</entry>
+            <entry>search=\d{4,5}..([A-Za-z]+)</entry>
+            <entry>latest\-scan\/([A-Fa-f0-9]{32})</entry>
+        </regex>
+        <fullurl>https://malc0de.com/database/index.php?search=%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+        </importantproperty>
+    </site>
+    <!--supports TLS but uses an invalid cert-->
+    <site name="ReputationAuthority">
+        <sitetype>
+            <entry>ip</entry>
+        </sitetype>
+        <domainurl>http://www.reputationauthority.org</domainurl>
+        <reportstringforresult>
+            <entry>[+] Reputation Authority Score:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>RA Score</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>bsnd.+&gt;(\d{1,2}\/\d{1,3})</entry>
+        </regex>
+        <fullurl>http://www.reputationauthority.org/lookup.php?ip=%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+        </importantproperty>
+    </site>
+    <site name="FreeGeo">
+        <sitetype>
+            <entry>ip</entry>
+        </sitetype>
+        <domainurl>https://freegeoip.net</domainurl>
+        <reportstringforresult>
+            <entry>[+] FreeGeoIP Country Name:</entry>
+            <entry>[+] FreeGeoIP Region Name:</entry>
+            <entry>[+] FreeGeoIP City:</entry>
+            <entry>[+] FreeGeoIP Zipcode:</entry>
+            <entry>[+] FreeGeoIP Latitude:</entry>
+            <entry>[+] FreeGeoIP Longitude:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>FGIP CN</entry>
+            <entry>FGIP RN</entry>
+            <entry>FGIP City</entry>
+            <entry>FGIP Zip</entry>
+            <entry>FGIP LAT</entry>
+            <entry>FGIP LON</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>country_name\"\:\"(.+)\"\,\"region_c</entry>
+            <entry>region_name\"\:\"(.+)\"\,\"city</entry>
+            <entry>city\"\:\"(.+)\"\,\"zip</entry>
+            <entry>zipcode\"\:\"(\d{5})</entry>
+            <entry>latitude\"\:(.+)\,\"long</entry>
+            <entry>longitude\"\:(.+)\,\"metro</entry>
+        </regex>
+        <fullurl>https://freegeoip.net/json/%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+        </importantproperty>
+    </site>
+    <site name="SANS API">
+        <sitetype>
+            <entry>ip</entry>
+        </sitetype>
+        <domainurl>https://isc.sans.edu/</domainurl>
+        <reportstringforresult>
+            <entry>[+] SANS total target IPs seen:</entry>
+            <entry>[+] SANS total packets blocked:</entry>
+            <entry>[+] SANS last seen on:</entry>
+            <entry>[+] SANS first seen on:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>SANS attacks</entry>
+            <entry>SANS count</entry>
+            <entry>SANS maxdate</entry>
+            <entry>SANS mindate</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>attacks\&gt;(\d+)\&lt;</entry>
+            <entry>count\&gt;(\d+)\&lt;</entry>
+            <entry>maxdate\&gt;(\d{4}-\d{2}-\d{2})\&lt;</entry>
+            <entry>mindate\&gt;(\d{4}-\d{2}-\d{2})\&lt;</entry>
+        </regex>
+        <fullurl>https://isc.sans.edu/api/ip/%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+            <entry>Results</entry>
+        </importantproperty>
+    </site>
+    <site name="totalhash_ip">
+        <sitetype>
+            <entry>ip</entry>
+            <entry>hostname</entry>
+        </sitetype>
+        <!--supports TLS but uses an invalid cert-->
+        <domainurl>http://totalhash.com/</domainurl>
+        <reportstringforresult>
+            <entry>[+] Totalhash:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>THIP</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>\/analysis/(\w{40}).+(\d{4}\-\d{1,2}\-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2})</entry>
+        </regex>
+        <fullurl>http://totalhash.com/network/dnsrr:*%TARGET%*%20or%20ip:%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+        </importantproperty>
+    </site>
+    <site name="totalhash_md5">
+        <sitetype>
+            <entry>md5</entry>
+        </sitetype>
+        <!--supports TLS but uses an invalid cert-->
+        <domainurl>http://totalhash.com/</domainurl>
+        <reportstringforresult>
+            <entry>[+] Totalhash Found SHA1:</entry>
+        </reportstringforresult>
+        <sitefriendlyname>
+            <entry>THMD5</entry>
+        </sitefriendlyname>
+        <regex>
+            <entry>\/analysis/(\w{40}).+</entry>
+        </regex>
+        <fullurl>http://totalhash.com/search/hash:%TARGET%</fullurl>
+        <importantproperty>
+            <entry>Results</entry>
+        </importantproperty>
+    </site>
+<site name="TekHP">
+        <sitetype>
+		<entry>ip</entry>
+	</sitetype>
+        <domainurl>http://104.236.247.86/static/attackers.out</domainurl>
+        <reportstringforresult>
+		<entry>[+] Tek Honeypot Hit:</entry>
+	</reportstringforresult>
+        <sitefriendlyname>
+		<entry>TekHP</entry>
+	</sitefriendlyname>
+        <regex>
+		<entry>%TARGET%</entry>
+	</regex>
+	<fullurl>http://104.236.247.86/static/attackers.out</fullurl>
+        <importantproperty>
+		<entry>Results</entry>
+	</importantproperty>
+	<params></params>
+	<headers></headers>
+	<apikey></apikey>
+    </site>
+    <site name="Project Honeypot">
+		<sitetype>
+			<entry>ip</entry>
+		</sitetype>
+        <domainurl>https://www.projecthoneypot.org</domainurl>
+        <reportstringforresult>
+			<entry>[+] ProjectHoneypot activity type:</entry>
+			<entry>[+] ProjectHoneypot first mail received:</entry>
+			<entry>[+] ProjectHoneypot last mail received:</entry>
+			<entry>[+] ProjectHoneypot total mails received:</entry>
+			<entry>[+] ProjectHoneypot spider first seen:</entry>
+			<entry>[+] ProjectHoneypot spider last seen:</entry>
+			<entry>[+] ProjectHoneypot spider sightings:</entry>
+			<entry>[+] ProjectHoneypot user-agent sightings:</entry>
+			<entry>[+] ProjectHoneypot first post on:</entry>
+			<entry>[+] ProjectHoneypot last post on:</entry>
+			<entry>[+] ProjectHoneypot form posts:</entry>
+			<entry>[+] ProjectHoneypot first rule break on:</entry>
+			<entry>[+] ProjectHoneypot last rule break on:</entry>
+			<entry>[+] ProjectHoneypot rule break sightings:</entry>
+			<entry>[+] ProjectHoneypot first dictionary attack on:</entry>
+			<entry>[+] ProjectHoneypot last dictionary attack on:</entry>
+			<entry>[+] ProjectHoneypot dictionary attack sightings:</entry>
+			<entry>[+] ProjectHoneypot harvester first seen:</entry>
+			<entry>[+] ProjectHoneypot harvester last seen:</entry>
+			<entry>[+] ProjectHoneypot harvester sightings:</entry>
+			<entry>[+] ProjectHoneypot harvester results:</entry>
+		</reportstringforresult>
+		<sitefriendlyname>
+			<entry>type</entry>
+			<entry>firstmail</entry>
+			<entry>lastmail</entry>
+			<entry>mailtotal</entry>
+			<entry>firstspider</entry>
+			<entry>lastspider</entry>
+			<entry>spidertotal</entry>
+			<entry>useragents</entry>
+			<entry>firstpost</entry>
+			<entry>lastpost</entry>
+			<entry>posttotal</entry>
+			<entry>firstbreak</entry>
+			<entry>lastbreaks</entry>
+			<entry>totalbreaks</entry>
+			<entry>firstdictionary</entry>
+			<entry>lastdictionary</entry>
+			<entry>totaldictionary</entry>
+			<entry>firstharvester</entry>
+			<entry>lastharvester</entry>
+			<entry>harvestersightings</entry>
+			<entry>harvesterresults</entry>
+		</sitefriendlyname>
+		<regex>
+			<entry>list_of_ips\.php\?t=[a-z]\&quot;\&gt;([a-zA-Z\s]+)\&lt;\/a\&gt;\&lt;\/b\&gt;</entry>
+			<entry>\&gt;First\&amp;nbsp;Received\&amp;nbsp;From.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])[a-zA-Z0-9\&gt;\&lt;\&quot;\&amp;:,()=;\s\t\/]+Number\&amp;nbsp;Received</entry>
+			<entry>\&gt;Last\&amp;nbsp;Received\&amp;nbsp;From.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])[a-zA-Z0-9\&gt;\&lt;\&quot;:,()=;\s\t\/]+Number\&amp;nbsp;Received</entry>
+			<entry>\&gt;Number\&amp;nbsp;Received.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z\)])</entry>
+			<entry>\&gt;Spider\&amp;nbsp;First\&amp;nbsp;Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Spider\&amp;nbsp;Last\&amp;nbsp;Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z])</entry>
+			<entry>\&gt;Spider\&amp;nbsp;Sightings.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z\)])</entry>
+			<entry>\&gt;User-Agents.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9\-\(\),\s]+[a-zA-Z\)])</entry>
+			<entry>\&gt;First\&amp;nbsp;Post\&amp;nbsp;On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Last\&amp;nbsp;Post\&amp;nbsp;On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Form\&amp;nbsp;Posts.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z\)])</entry>
+			<entry>\&gt;First\&amp;nbsp;Rule-Break\&amp;nbsp;On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Last\&amp;nbsp;Rule-Break\&amp;nbsp;On.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Rule\&amp;nbsp;Breaks.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z\)])</entry>
+			<entry>Dictionary\&amp;nbsp;Attacks[a-zA-Z0-9\&gt;\&lt;\&quot;:,()=;\s\t\/]+\&gt;First\&amp;nbsp;Received\&amp;nbsp;From.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>Dictionary\&amp;nbsp;Attacks[a-zA-Z0-9\&gt;\&lt;\&quot;\&amp;:,()=;\s\t\/]+\&gt;Last\&amp;nbsp;Received\&amp;nbsp;From.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Dictionary\&amp;nbsp;Attacks.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z\)])</entry>
+			<entry>\&gt;Harvester\&amp;nbsp;First\&amp;nbsp;Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z])</entry>
+			<entry>\&gt;Harvester\&amp;nbsp;Last\&amp;nbsp;Seen.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s\(\)]+[a-zA-Z])</entry>
+			<entry>\&gt;Harvester\&amp;nbsp;Sightings.+[\n\r\t\s]+.+[\n\r\t\s]+([a-zA-Z0-9,\s]+[a-zA-Z\)])</entry>
+			<entry>(?:\&gt;Harvester\&amp;nbsp;Results(?:.+[\n\s].+[\n\s]+)\s{2,}|(?:\&lt;br\s\/\&gt;))(?!\s)([0-9a-zA-Z.\-\s:,()]+)\s{2,}</entry>
+		</regex>
+		<fullurl>http://www.projecthoneypot.org/ip_%TARGET%</fullurl>
+		<importantproperty>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+		</importantproperty>
+        <params></params>
+        <headers></headers>
+        <apikey></apikey>
+	</site>
+		<site name="McAfee ThreatCenter">
+		<sitetype>
+			<entry>hostname</entry>
+		</sitetype>
+        <domainurl>http://www.mcafee.com</domainurl>
+        <reportstringforresult>
+			<entry>[+] McAfee Web Risk:</entry>
+			<entry>[+] McAfee Web Category:</entry>
+			<entry>[+] McAfee Last Seen:</entry>
+		</reportstringforresult>
+		<sitefriendlyname>
+			<entry>webrep</entry>
+			<entry>category</entry>
+			<entry>lastseen</entry>
+		</sitefriendlyname>
+		<regex>
+			<entry>ctl00_mainContent_imgRisk\&quot;\stitle=\&quot;([A-Za-z]+)\&quot;</entry>
+			<entry>Web\sCategory:[\n\s]*\&lt;\/strong\&gt;[\n\s]*([A-Z][A-Za-z\s\/,]+)\&lt;</entry>
+			<entry>Last\sSeen:[\n\s]*\&lt;\/strong\&gt;[\n\s]*([0-9\-]+)\&lt;</entry>
+		</regex>
+		<fullurl>http://www.mcafee.com/threat-intelligence/domain/default.aspx?domain=%TARGET%&amp;region=us</fullurl>
+		<importantproperty>
+			<entry>Results</entry>
+			<entry>Results</entry>
+			<entry>Results</entry>
+		</importantproperty>
+        <params></params>
+        <headers></headers>
+        <apikey></apikey>
+	</site>
+</automater_root>

@@ -6,6 +6,7 @@ Class(es):
 Parser -- Class to handle standard argparse functions with
 a class-based structure.
 IPWrapper -- Class to provide IP Address formatting and parsing.
+VersionChecker -- Class to check if modifications to any files are available
 
 Function(s):
 No global exportable functions are defined.
@@ -16,6 +17,8 @@ No exceptions exported.
 import argparse
 import re
 import os
+import hashlib
+import requests
 
 class Parser(object):
     """
@@ -23,6 +26,7 @@ class Parser(object):
     program's input parameters.
 
     Public Method(s):
+    hasBotOut
     hasHTMLOutFile
     (Property) HTMLOutFile
     hasTextOutFile
@@ -48,7 +52,7 @@ class Parser(object):
     args
     """
 
-    def __init__(self, desc):
+    def __init__(self, desc, version):
         """
         Class constructor. Adds the argparse info into the instance variables.
 
@@ -59,18 +63,40 @@ class Parser(object):
         Nothing is returned from this Method.
         """
         # Adding arguments
-        self._parser = argparse.ArgumentParser(description = desc)
-        self._parser.add_argument('target', help = 'List one IP Address (CIDR or dash notation accepted), URL or Hash to query or pass the filename of a file containing IP Address info, URL or Hash to query each separated by a newline.')
-        self._parser.add_argument('-o', '--output', help = 'This option will output the results to a file.')
-        self._parser.add_argument('-f', '--cef', help = 'This option will output the results to a CEF formatted file.')
-        self._parser.add_argument('-w', '--web', help = 'This option will output the results to an HTML file.')
-        self._parser.add_argument('-c', '--csv', help = 'This option will output the results to a CSV file.')
-        self._parser.add_argument('-d', '--delay', type=int, default = 2, help = 'This will change the delay to the inputted seconds. Default is 2.')
-        self._parser.add_argument('-s', '--source', help = 'This option will only run the target against a specific source engine to pull associated domains.  Options are defined in the name attribute of the site element in the XML configuration file')
-        self._parser.add_argument('--p', '--post', action = "store_true", help = 'This option tells the program to post information to sites that allow posting. By default the program will NOT post to sites that require a post.')
-        self._parser.add_argument('--proxy', help = 'This option will set a proxy to use (eg. proxy.example.com:8080)')
-        self._parser.add_argument('-a', '--useragent', default = 'Automater/2.1', help = 'This option allows the user to set the user-agent seen by web servers being utilized. By default, the user-agent is set to Automater/version')
+        self._parser = argparse.ArgumentParser(description=desc)
+        self._parser.add_argument('target', help='List one IP Address (CIDR or dash notation accepted), URL or Hash to query or pass the filename of a file containing IP Address info, URL or Hash to query each separated by a newline.')
+        self._parser.add_argument('-o', '--output', help='This option will output the results to a file.')
+        self._parser.add_argument('-b', '--bot', action="store_true", help='This option will output minimized results for a bot.')
+        self._parser.add_argument('-f', '--cef', help='This option will output the results to a CEF formatted file.')
+        self._parser.add_argument('-w', '--web', help='This option will output the results to an HTML file.')
+        self._parser.add_argument('-c', '--csv', help='This option will output the results to a CSV file.')
+        self._parser.add_argument('-d', '--delay', type=int, default=2, help='This will change the delay to the inputted seconds. Default is 2.')
+        self._parser.add_argument('-s', '--source', help='This option will only run the target against a specific source engine to pull associated domains. Options are defined in the name attribute of the site element in the XML configuration file. This can be a list of names separated by a semicolon.')
+        self._parser.add_argument('--proxy', help='This option will set a proxy to use (eg. proxy.example.com:8080)')
+        self._parser.add_argument('-a', '--useragent', default='Automater/{version}'.format(version=version), help='This option allows the user to set the user-agent seen by web servers being utilized. By default, the user-agent is set to Automater/version')
+        self._parser.add_argument('-V', '--vercheck', action='store_true', help='This option checks and reports versioning for Automater. Checks each python module in the Automater scope. Default, (no -V) is False')
+        self._parser.add_argument('-r', '--refreshxml', action='store_true', help='This option refreshes the tekdefense.xml file from the remote GitHub site. Default (no -r) is False.')
+        self._parser.add_argument('-v', '--verbose', action='store_true', help='This option prints messages to the screen. Default (no -v) is False.')
         self.args = self._parser.parse_args()
+
+    def hasBotOut(self):
+        """
+        Checks to determine if user requested an output file minimized for use with a Bot.
+        Returns True if user requested minimized Bot output, False if not.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        Boolean.
+
+        Restriction(s):
+        The Method has no restrictions.
+        """
+        if self.args.bot:
+            return True
+        else:
+            return False
 
     def hasCEFOutFile(self):
         """
@@ -112,7 +138,6 @@ class Parser(object):
             return self.args.cef
         else:
             return None
-
 
     def hasHTMLOutFile(self):
         """
@@ -195,6 +220,112 @@ class Parser(object):
             return self.args.output
         else:
             return None
+
+    def versionCheck(self):
+        """
+        Checks to determine if the user wants the program to check for versioning. By default this is True which means
+        the user wants to check for versions.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        Boolean.
+
+        Restriction(s):
+        The Method has no restrictions.
+        """
+        if self.args.vercheck:
+            return True
+        else:
+            return False
+
+    @property
+    def VersionCheck(self):
+        """
+        Checks to determine if the user wants the program to check for versioning. By default this is True which means
+        the user wants to check for versions.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        Boolean.
+
+        Restriction(s):
+        The Method has no restrictions.
+        """
+        return self.versionCheck()
+
+    def verbose(self):
+        """
+        Checks to determine if the user wants the program to send standard output to the screen.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        Boolean.
+
+        Restriction(s):
+        The Method has no restrictions.
+        """
+        if self.args.verbose:
+            return True
+        else:
+            return False
+
+    @property
+    def Verbose(self):
+        """
+        Checks to determine if the user wants the program to send standard output to the screen.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        Boolean.
+
+        Restriction(s):
+        The Method has no restrictions.
+        """
+        return self.verbose()
+
+    def refreshRemoteXML(self):
+        """
+        Checks to determine if the user wants the program to grab the tekdefense.xml information each run.
+        By default this is True.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        Boolean.
+
+        Restriction(s):
+        The Method has no restrictions.
+        """
+        if self.args.refreshxml:
+            return True
+        else:
+            return False
+
+    @property
+    def RefreshRemoteXML(self):
+        """
+        Checks to determine if the user wants the program to grab the tekdefense.xml information each run.
+        By default this is True.
+
+        Argument(s):
+        No arguments are required.
+
+        Return value(s):
+        Boolean.
+
+        Restriction(s):
+        The Method has no restrictions.
+        """
+        return self.refreshRemoteXML()
 
     def hasCSVOutSet(self):
         """
@@ -424,25 +555,6 @@ class Parser(object):
         else:
             return False
 
-    def hasPost(self):
-        """
-        Checks to determine if --p parameter was provided to the program.
-        Returns True if --p was provided, False if not.
-
-        Argument(s):
-        No arguments are required.
-
-        Return value(s):
-        Boolean.
-
-        Restriction(s):
-        The Method has no restrictions.
-        """
-        if self.args.p:
-            return True
-        else:
-            return False
-
     @property
     def InputFile(self):
         """
@@ -499,7 +611,7 @@ class IPWrapper(object):
     """
 
     @classmethod
-    def isIPorIPList(self, target):
+    def isIPorIPList(cls, target):
         """
         Checks if an input string is an IP Address or if it is
         an IP Address in CIDR or dash notation.
@@ -515,26 +627,26 @@ class IPWrapper(object):
         This Method is tagged as a Class Method
         """
         # IP Address range using prefix syntax
-        ipRangePrefix = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}')
-        ipRgeFind = re.findall(ipRangePrefix,target)
-        if (ipRgeFind is not None or len(ipRgeFind) != 0):
-            return True
+        #ipRangePrefix = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}')
+        #ipRgeFind = re.findall(ipRangePrefix, target)
+        #if ipRgeFind is not None or len(ipRgeFind) != 0:
+        #    return True
         ipRangeDash = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}-\d{1,3}')
         ipRgeDashFind = re.findall(ipRangeDash,target)
-        if (ipRgeDashFind is not None or len(ipRgeDashFind) != 0):
+        if ipRgeDashFind is not None or len(ipRgeDashFind) != 0:
             return True
         ipAddress = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
-        ipFind = re.findall(ipAddress,target)
-        if (ipFind is not None and len(ipFind) != 0):
+        ipFind = re.findall(ipAddress, target)
+        if ipFind is not None and len(ipFind) != 0:
             return True
 
         return False
 
     @classmethod
-    def getTarget(self, target):
+    def getTarget(cls, target):
         """
         Determines whether the target provided is an IP Address or
-        an IP Address in CIDR or dash notation. Then creates a list
+        an IP Address in dash notation. Then creates a list
         that can be utilized as targets by the program.
         Returns a list of string IP Addresses that can be used as targets.
 
@@ -548,54 +660,55 @@ class IPWrapper(object):
         This Method is tagged as a Class Method
         """
         # IP Address range using prefix syntax
-        ipRangePrefix = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}', re.IGNORECASE)
-        ipRgeFind = re.findall(ipRangePrefix, target)
         ipRangeDash = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}-\d{1,3}')
         ipRgeDashFind = re.findall(ipRangeDash, target)
-        ipAddress = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
-        ipFind = re.findall(ipAddress, target)
-        if ipRgeFind is not None and len(ipRgeFind) > 0:
-            # this can be used if we ever get bigger than a class C
-            # but truthfully we don't need to split the whole address
-            # since we'll only be using the last octet.
-            iplist = target[:target.index("/")].split(".")
-            ipprefix = givenipprefix=target[target.index("/")+1:]
-            # create a bytearry to hold the one byte
-            # this would be 4 bytes for IPv4 and gives us the capability to grow
-            # if we ever want to go larger than a class C
-            bytearr = bytearray(2)
-            bytearr[0] = int(iplist[3])
-            # prefix must be class C or larger
-            if int(givenipprefix) < 24:
-                ipprefix = 24
-            if int(givenipprefix) > 32 or int(givenipprefix) == 31:
-                ipprefix = 32
-                bytearr[1]=0
-            else:
-                bytearr[1]=pow(2,32-int(ipprefix))#-1
-
-            if bytearr[0]>bytearr[1]:
-                start=bytearr[0]
-                last=bytearr[0]^bytearr[1]
-            else:
-                start=bytearr[0]
-                last=bytearr[1]
-            if start == last:
-                yield target[:target.rindex(".")+1]+str(start)
-            if start<last:
-                for lastoctet in range(start,last):
-                    yield target[:target.rindex(".")+1]+str(lastoctet)
-            else:
-                yield target[:target.rindex(".")+1]+str(start)
         # IP Address range seperated with a dash
-        elif ipRgeDashFind is not None and len(ipRgeDashFind) > 0:
+        if ipRgeDashFind is not None and len(ipRgeDashFind) > 0:
             iplist = target[:target.index("-")].split(".")
-            iplast = target[target.index("-")+1:]
-            if int(iplist[3])<int(iplast):
-                for lastoctet in range(int(iplist[3]),int(iplast)+1):
-                    yield target[:target.rindex(".")+1]+str(lastoctet)
+            iplast = target[target.index("-") + 1:]
+            if int(iplist[3]) < int(iplast):
+                for lastoctet in xrange(int(iplist[3]), int(iplast) + 1):
+                    yield target[:target.rindex(".") + 1] + str(lastoctet)
             else:
-                yield target[:target.rindex(".")+1]+str(iplist[3])
+                yield target[:target.rindex(".") + 1] + str(iplist[3])
         # it's just an IP address at this point
         else:
             yield target
+
+
+class VersionChecker(object):
+
+    def __init__(self):
+        super(VersionChecker, self).__init__()
+
+    @classmethod
+    def getModifiedFileInfo(cls, prefix, gitlocation, filelist):
+        modifiedfiles = []
+        try:
+            for filename in filelist:
+                md5local = VersionChecker.getMD5OfLocalFile(filename)
+                md5remote = VersionChecker.getMD5OfRemoteFile(prefix + filename)
+                if md5local != md5remote:
+                    modifiedfiles.append(filename)
+            if len(modifiedfiles) == 0:
+                return 'All Automater files are up to date'
+            else:
+                return 'The following files require update: {files}.\nSee {gitlocation} to update these files'.\
+                    format(files=', '.join(modifiedfiles), gitlocation=gitlocation)
+        except:
+            return 'There was an error while checking the version of the Automater files. Please see {gitlocation} ' \
+                   'to determine if there is an issue with your local files'.format(gitlocation=gitlocation)
+
+    @classmethod
+    def getMD5OfLocalFile(cls, filename):
+        md5offile = None
+        with open(filename, 'rb') as f:
+            md5offile = hashlib.md5(f.read()).hexdigest()
+        return md5offile
+
+    @classmethod
+    def getMD5OfRemoteFile(cls, location, proxy=None):
+        md5offile = None
+        resp = requests.get(location, proxies=proxy, verify=False, timeout=5)
+        md5offile = hashlib.md5(str(resp.content)).hexdigest()
+        return md5offile
