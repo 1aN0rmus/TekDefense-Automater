@@ -432,8 +432,7 @@
             <entry>ip</entry>
             <entry>hostname</entry>
         </sitetype>
-        <!--supports TLS but uses an invalid cert-->
-        <domainurl>http://totalhash.com/</domainurl>
+        <domainurl>https://totalhash.cymru.com/</domainurl>
         <reportstringforresult>
             <entry>[+] Totalhash:</entry>
         </reportstringforresult>
@@ -443,7 +442,7 @@
         <regex>
             <entry>\/analysis/(\w{40}).+(\d{4}\-\d{1,2}\-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2})</entry>
         </regex>
-        <fullurl>http://totalhash.com/network/dnsrr:*%TARGET%*%20or%20ip:%TARGET%</fullurl>
+        <fullurl>https://totalhash.cymru.com/network/dnsrr:*%TARGET%*%20or%20ip:%TARGET%</fullurl>
         <importantproperty>
             <entry>Results</entry>
         </importantproperty>
@@ -452,8 +451,7 @@
         <sitetype>
             <entry>md5</entry>
         </sitetype>
-        <!--supports TLS but uses an invalid cert-->
-        <domainurl>http://totalhash.com/</domainurl>
+        <domainurl>https://totalhash.cymru.com</domainurl>
         <reportstringforresult>
             <entry>[+] Totalhash Found SHA1:</entry>
         </reportstringforresult>
@@ -463,7 +461,7 @@
         <regex>
             <entry>\/analysis/(\w{40}).+</entry>
         </regex>
-        <fullurl>http://totalhash.com/search/hash:%TARGET%</fullurl>
+        <fullurl>https://totalhash.cymru.com/search/hash:%TARGET%</fullurl>
         <importantproperty>
             <entry>Results</entry>
         </importantproperty>
