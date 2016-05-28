@@ -140,7 +140,7 @@
             <entry>scan_date....(.{18,25})\"\,</entry>
             <entry>positives...(\d{1,2})\,</entry>
             <entry>total...(\d{1,2})\,</entry>
-            <entry>\}\,\s\"(.{3,20})\"....detected...true.{19,32}result....(.{11,30})....update</entry>
+            <entry>\"([^"]{1,20})\"....detected...true.{19,32}result....([^"]{8,50})....update[^\}]*\}</entry>
         </regex>
         <fullurl>https://www.virustotal.com/vtapi/v2/file/report</fullurl>
         <importantproperty>
