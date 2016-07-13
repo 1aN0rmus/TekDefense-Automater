@@ -1,9 +1,11 @@
-TekDefense-Automater Version: 0.21
+Forked from TekDefense-Automater Version: 0.21
 ====================
+
+This fork merely adds a class allowing the use of the tool from another script without needing to revert to the CLI.  All
+else is as per the original.
 
 http://www.tekdefense.com/automater/
 http://www.tekdefense.com/news/2013/12/4/finally-the-new-automater-release-is-out.html
-
 
 Automater is a tool that I originally created to automate the OSINT analysis of IP addresses. It quickly grew and became a tool to do analysis of IP Addresses, URLs, and Hashes. Unfortunately though, this was my first python project and I made a lot of mistakes, and as the project grew it bacame VERY hard for me to maintain. 
 
