@@ -32,11 +32,7 @@ class ListOutput(object):
                             continue
                         else:
                             if siteimpprop[index] is None or len(siteimpprop[index])==0:
-                                tgt = site.Target
-                                typ = site.TargetType
-                                source = site.FriendlyName[index]
-                                res = "No results found"
-                                resultList.append([tgt,typ,source,res])
+                                continue
                             else:
                                 laststring = ""
                                 #if it's just a string we don't want it to output like a list
@@ -125,11 +121,7 @@ class Automater():
                             continue
                         else:
                             if siteimpprop[index] is None or len(siteimpprop[index])==0:
-                                tgt = site.Target
-                                typ = site.TargetType
-                                source = site.FriendlyName[index]
-                                res = "No results found"
-                                resultList.append([tgt,typ,source,res])
+                                continue
                             else:
                                 laststring = ""
                                 #if it's just a string we don't want it to output like a list
