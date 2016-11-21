@@ -30,7 +30,7 @@ import re
 import time
 import os
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, dirname
 from requests.exceptions import ConnectionError
 from outputs import SiteDetailOutput
 from inputs import SitesFile
@@ -38,8 +38,8 @@ from utilities import VersionChecker
 
 requests.packages.urllib3.disable_warnings()
 
-__TEKDEFENSEXML__ = 'tekdefense.xml'
-__SITESXML__ = 'sites.xml'
+__TEKDEFENSEXML__ = join(dirname(__file__), 'tekdefense.xml')
+__SITESXML__ = join(dirname(__file__), 'sites.xml')
 
 class SiteFacade(object):
     """
