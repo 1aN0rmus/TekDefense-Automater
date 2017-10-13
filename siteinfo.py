@@ -29,6 +29,7 @@ import requests
 import re
 import time
 import os
+import sys
 from os import listdir
 from os.path import isfile, join
 from requests.exceptions import ConnectionError
@@ -38,7 +39,10 @@ from utilities import VersionChecker
 
 requests.packages.urllib3.disable_warnings()
 
-__TEKDEFENSEXML__ = 'tekdefense.xml'
+
+__EXECUTION_PATH__ = os.path.dirname(os.path.realpath(sys.argv[0]))
+__TEKDEFENSEXML__ = os.path.join(__EXECUTION_PATH__,
+                                 'tekdefense.xml')
 __SITESXML__ = 'sites.xml'
 
 class SiteFacade(object):
