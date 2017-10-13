@@ -20,14 +20,16 @@ No exceptions exported.
 import os
 import hashlib
 import requests
+import sys
 from outputs import SiteDetailOutput
 from requests.exceptions import ConnectionError
 from requests.exceptions import HTTPError
 from xml.etree.ElementTree import ElementTree
 
 __REMOTE_TEKD_XML_LOCATION__ = 'https://raw.githubusercontent.com/1aN0rmus/TekDefense-Automater/master/tekdefense.xml'
-__TEKDEFENSEXML__ = 'tekdefense.xml'
-
+__EXECUTION_PATH__ = os.path.dirname(os.path.realpath(sys.argv[0]))
+__TEKDEFENSEXML__ = os.path.join(__EXECUTION_PATH__,
+                                 'tekdefense.xml')
 class TargetFile(object):
     """
     TargetFile provides a Class Method to retrieve information from a file-
