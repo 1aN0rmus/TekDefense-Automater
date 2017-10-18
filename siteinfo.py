@@ -1353,11 +1353,11 @@ class MultiResultsSite(Site):
                                               self._site.RegEx, self._site.FullURL, self._site.BotOutputRequested,
                                               self._site.ImportantPropertyString, self._site.Params,
                                               self._site.Headers, self._site.Method, self._site.PostData, site._verbose)
-        self._results = [[] for x in xrange(len(self._site.RegEx))]
+        self._results = [[] for x in range(len(self._site.RegEx))]
         self.postMessage(self.UserMessage + " " + self.FullURL)
 
         webcontent = self.getWebScrape()
-        for index in xrange(len(self.RegEx)):
+        for index in range(len(self.RegEx)):
             websitecontent = self.getContentList(webcontent, index)
             if websitecontent:
                 self.addMultiResults(websitecontent, index)
@@ -1439,7 +1439,7 @@ class MethodPostSite(Site):
         content = self.submitPost()
         if content:
             if not isinstance(self.FriendlyName, str):  # this is a multi instance
-                self._results = [[] for x in xrange(len(self.RegEx))]
+                self._results = [[] for x in range(len(self.RegEx))]
                 for index in range(len(self.RegEx)):
                     self.addMultiResults(self.getContentList(content, index), index)
             else:  # this is a single instance
