@@ -65,7 +65,7 @@ def main():
 
     # if no target run and print help
     if parser.hasNoTarget():
-        print '[!] No argument given.'
+        print('[!] No argument given.')
         parser.print_help()  # need to fix this. Will later
         sys.exit()
 
