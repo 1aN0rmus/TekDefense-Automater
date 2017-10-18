@@ -163,7 +163,7 @@ class SiteFacade(object):
                                      botoutputrequested, self._verbose)
         if site.Method == "POST":
             self._sites.append(MethodPostSite(site))
-        elif isinstance(site.RegEx, basestring):
+        elif isinstance(site.RegEx, str):
             self._sites.append(SingleResultsSite(site))
         else:
             self._sites.append(MultiResultsSite(site))
@@ -1088,7 +1088,7 @@ class Site(object):
         Restriction(s):
         The Method has no restrictions.
         """
-        if isinstance(self._importantProperty, basestring):
+        if isinstance(self._importantProperty, str):
             siteimpprop = getattr(self, "get" + self._importantProperty, Site.getResults)
         else:
             siteimpprop = getattr(self, "get" + self._importantProperty[index], Site.getResults)
@@ -1438,7 +1438,7 @@ class MethodPostSite(Site):
                                              verbose=site._verbose)
         content = self.submitPost()
         if content:
-            if not isinstance(self.FriendlyName, basestring):  # this is a multi instance
+            if not isinstance(self.FriendlyName, str):  # this is a multi instance
                 self._results = [[] for x in xrange(len(self.RegEx))]
                 for index in range(len(self.RegEx)):
                     self.addMultiResults(self.getContentList(content, index), index)
