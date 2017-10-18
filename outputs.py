@@ -129,7 +129,7 @@ class SiteDetailOutput(object):
         target = ""
         if sites is not None:
             for site in sites:
-                if not isinstance(site._regex,basestring):  # this is a multisite
+                if not isinstance(site._regex,str):  # this is a multisite
                     for index in range(len(site.RegEx)):  # the regexs will ensure we have the exact number of lookups
                         siteimpprop = site.getImportantProperty(index)
                         if target != site.Target:
@@ -154,7 +154,7 @@ class SiteDetailOutput(object):
                                 else:
                                     laststring = ""
                                     # if it's just a string we don't want it output like a list
-                                    if isinstance(siteimpprop[index], basestring):
+                                    if isinstance(siteimpprop[index], str):
                                         if "" + site.ReportStringForResult[index] + " " + str(siteimpprop) != laststring:
                                             print("" + site.ReportStringForResult[index] + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                             laststring = "" + site.ReportStringForResult[index] + " " + str(siteimpprop)
@@ -175,7 +175,7 @@ class SiteDetailOutput(object):
                     else:
                         laststring = ""
                         #if it's just a string we don't want it output like a list
-                        if isinstance(siteimpprop, basestring):
+                        if isinstance(siteimpprop, str):
                             if "" + site.ReportStringForResult + " " + str(siteimpprop) != laststring:
                                 print("" + site.ReportStringForResult + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                 laststring = "" + site.ReportStringForResult + " " + str(siteimpprop)
@@ -207,7 +207,7 @@ class SiteDetailOutput(object):
         target = ""
         if sites is not None:
             for site in sites:
-                if not isinstance(site._regex, basestring):  # this is a multisite
+                if not isinstance(site._regex, str):  # this is a multisite
                     for index in range(len(site.RegEx)):  # the regexs will ensure we have the exact number of lookups
                         siteimpprop = site.getImportantProperty(index)
                         if target != site.Target:
@@ -221,7 +221,7 @@ class SiteDetailOutput(object):
                             else:
                                 laststring = ""
                                 # if it's just a string we don't want it output like a list
-                                if isinstance(siteimpprop[index], basestring):
+                                if isinstance(siteimpprop[index], str):
                                     if "" + site.ReportStringForResult[index] + " " + str(siteimpprop) != laststring:
                                         print("" + site.ReportStringForResult[index] + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                         laststring = "" + site.ReportStringForResult[index] + " " + str(siteimpprop)
@@ -242,7 +242,7 @@ class SiteDetailOutput(object):
                     else:
                         laststring = ""
                         # if it's just a string we don't want it output like a list
-                        if isinstance(siteimpprop, basestring):
+                        if isinstance(siteimpprop, str):
                             if "" + site.ReportStringForResult + " " + str(siteimpprop) != laststring:
                                 print("" + site.ReportStringForResult + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                 laststring = "" + site.ReportStringForResult + " " + str(siteimpprop)
@@ -296,7 +296,7 @@ class SiteDetailOutput(object):
         # cefRW.writerow(['Target', 'Type', 'Source', 'Result'])
         if sites is not None:
             for site in sites:
-                if not isinstance(site._regex,basestring):  # this is a multisite:
+                if not isinstance(site._regex,str):  # this is a multisite:
                     for index in range(len(site.RegEx)):  # the regexs will ensure we have the exact number of lookups
                         siteimpprop = site.getImportantProperty(index)
                         if siteimpprop is None or len(siteimpprop)==0:
@@ -319,7 +319,7 @@ class SiteDetailOutput(object):
                             else:
                                 laststring = ""
                                 # if it's just a string we don't want it to output like a list
-                                if isinstance(siteimpprop, basestring):
+                                if isinstance(siteimpprop, str):
                                     tgt = site.Target
                                     typ = site.TargetType
                                     source = site.FriendlyName
@@ -354,7 +354,7 @@ class SiteDetailOutput(object):
                     else:
                         laststring = ""
                         # if it's just a string we don't want it output like a list
-                        if isinstance(siteimpprop, basestring):
+                        if isinstance(siteimpprop, str):
                             tgt = site.Target
                             typ = site.TargetType
                             source = site.FriendlyName
@@ -404,7 +404,7 @@ class SiteDetailOutput(object):
         f = open(textoutfile, "w")
         if sites is not None:
             for site in sites:
-                if not isinstance(site._regex,basestring): #this is a multisite
+                if not isinstance(site._regex,str): #this is a multisite
                     for index in range(len(site.RegEx)): #the regexs will ensure we have the exact number of lookups
                         siteimpprop = site.getImportantProperty(index)
                         if target != site.Target:
@@ -418,7 +418,7 @@ class SiteDetailOutput(object):
                             else:
                                 laststring = ""
                                 #if it's just a string we don't want it to output like a list
-                                if isinstance(siteimpprop[index], basestring):
+                                if isinstance(siteimpprop[index], str):
                                     if "" + site.ReportStringForResult[index] + " " + str(siteimpprop) != laststring:
                                         f.write("\n" + site.ReportStringForResult[index] + " " + str(siteimpprop))
                                         laststring = "" + site.ReportStringForResult[index] + " " + str(siteimpprop)
@@ -439,7 +439,7 @@ class SiteDetailOutput(object):
                     else:
                         laststring = ""
                         #if it's just a string we don't want it output like a list
-                        if isinstance(siteimpprop, basestring):
+                        if isinstance(siteimpprop, str):
                             if "" + site.ReportStringForResult + " " + str(siteimpprop) != laststring:
                                 f.write("\n" + site.ReportStringForResult + " " + str(siteimpprop))
                                 laststring = "" + site.ReportStringForResult + " " + str(siteimpprop)
@@ -475,7 +475,7 @@ class SiteDetailOutput(object):
         csvRW.writerow(['Target', 'Type', 'Source', 'Result'])
         if sites is not None:
             for site in sites:
-                if not isinstance(site._regex,basestring): #this is a multisite:
+                if not isinstance(site._regex,str): #this is a multisite:
                     for index in range(len(site.RegEx)): #the regexs will ensure we have the exact number of lookups
                         siteimpprop = site.getImportantProperty(index)
                         if siteimpprop is None or len(siteimpprop)==0:
@@ -494,7 +494,7 @@ class SiteDetailOutput(object):
                             else:
                                 laststring = ""
                                 #if it's just a string we don't want it to output like a list
-                                if isinstance(siteimpprop, basestring):
+                                if isinstance(siteimpprop, str):
                                     tgt = site.Target
                                     typ = site.TargetType
                                     source = site.FriendlyName
@@ -524,7 +524,7 @@ class SiteDetailOutput(object):
                     else:
                         laststring = ""
                         #if it's just a string we don't want it output like a list
-                        if isinstance(siteimpprop, basestring):
+                        if isinstance(siteimpprop, str):
                             tgt = site.Target
                             typ = site.TargetType
                             source = site.FriendlyName
@@ -568,7 +568,7 @@ class SiteDetailOutput(object):
         f.write(self.getHTMLOpening())
         if sites is not None:
             for site in sites:
-                if not isinstance(site._regex,basestring): #this is a multisite:
+                if not isinstance(site._regex,str): #this is a multisite:
                     for index in range(len(site.RegEx)): #the regexs will ensure we have the exact number of lookups
                         siteimpprop = site.getImportantProperty(index)
                         if siteimpprop is None or len(siteimpprop)==0:
@@ -588,7 +588,7 @@ class SiteDetailOutput(object):
                                 f.write(tableData)
                             else:
                                 # if it's just a string we don't want it to output like a list
-                                if isinstance(siteimpprop, basestring):
+                                if isinstance(siteimpprop, str):
                                     tgt = site.Target
                                     typ = site.TargetType
                                     source = site.FriendlyName
@@ -614,7 +614,7 @@ class SiteDetailOutput(object):
                         f.write(tableData)
                     else:
                         # if it's just a string we don't want it output like a list
-                        if isinstance(siteimpprop, basestring):
+                        if isinstance(siteimpprop, str):
                             tgt = site.Target
                             typ = site.TargetType
                             source = site.FriendlyName
