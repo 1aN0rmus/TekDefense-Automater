@@ -25,6 +25,11 @@ No global exportable functions are defined.
 Exception(s):
 No exceptions exported.
 """
+from __future__ import print_function
+from builtins import str
+from builtins import range
+from past.builtins import basestring
+from builtins import object
 import requests
 import re
 import time
@@ -107,10 +112,10 @@ class SiteFacade(object):
         localsitetree = SitesFile.getXMLTree(__SITESXML__, self._verbose)
 
         if not localsitetree and not remotesitetree:
-            print 'Unfortunately there is neither a {tekd} file nor a {sites} file that can be utilized for proper' \
+            print('Unfortunately there is neither a {tekd} file nor a {sites} file that can be utilized for proper' \
                   ' parsing.\nAt least one configuration XML file must be available for Automater to work properly.\n' \
                   'Please see {url} for further instructions.'\
-                .format(tekd=__TEKDEFENSEXML__, sites=__SITESXML__, url=versionlocation)
+                .format(tekd=__TEKDEFENSEXML__, sites=__SITESXML__, url=versionlocation))
         else:
             if localsitetree:
                 for siteelement in localsitetree.iter(tag="site"):
@@ -123,8 +128,8 @@ class SiteFacade(object):
                                     self.buildSiteList(siteelement, webretrievedelay, proxy, targettype, target,
                                                        useragent, botoutputrequested)
                     else:
-                        print 'A problem was found in the {sites} file. There appears to be a site entry with ' \
-                              'unequal numbers of regexs and reporting requirements'.format(sites=__SITESXML__)
+                        print('A problem was found in the {sites} file. There appears to be a site entry with ' \
+                              'unequal numbers of regexs and reporting requirements'.format(sites=__SITESXML__))
             if remotesitetree:
                 for siteelement in remotesitetree.iter(tag="site"):
                     if self.siteEntryIsValid(siteelement):
@@ -136,8 +141,8 @@ class SiteFacade(object):
                                     self.buildSiteList(siteelement, webretrievedelay, proxy, targettype, target,
                                                        useragent, botoutputrequested)
                     else:
-                        print 'A problem was found in the {sites} file. There appears to be a site entry with ' \
-                              'unequal numbers of regexs and reporting requirements'.format(sites=__SITESXML__)
+                        print('A problem was found in the {sites} file. There appears to be a site entry with ' \
+                              'unequal numbers of regexs and reporting requirements'.format(sites=__SITESXML__))
 
     def getSiteInfoIfSiteTypesMatch(self, source, target, siteelement):
         if source == "allsources" or source == siteelement.get("name"):
@@ -1353,11 +1358,11 @@ class MultiResultsSite(Site):
                                               self._site.RegEx, self._site.FullURL, self._site.BotOutputRequested,
                                               self._site.ImportantPropertyString, self._site.Params,
                                               self._site.Headers, self._site.Method, self._site.PostData, site._verbose)
-        self._results = [[] for x in xrange(len(self._site.RegEx))]
+        self._results = [[] for x in range(len(self._site.RegEx))]
         self.postMessage(self.UserMessage + " " + self.FullURL)
 
         webcontent = self.getWebScrape()
-        for index in xrange(len(self.RegEx)):
+        for index in range(len(self.RegEx)):
             websitecontent = self.getContentList(webcontent, index)
             if websitecontent:
                 self.addMultiResults(websitecontent, index)
@@ -1439,7 +1444,7 @@ class MethodPostSite(Site):
         content = self.submitPost()
         if content:
             if not isinstance(self.FriendlyName, basestring):  # this is a multi instance
-                self._results = [[] for x in xrange(len(self.RegEx))]
+                self._results = [[] for x in range(len(self.RegEx))]
                 for index in range(len(self.RegEx)):
                     self.addMultiResults(self.getContentList(content, index), index)
             else:  # this is a single instance

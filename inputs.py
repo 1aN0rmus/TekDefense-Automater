@@ -17,6 +17,8 @@ No global exportable functions are defined.
 Exception(s):
 No exceptions exported.
 """
+from builtins import str
+from builtins import object
 import os
 import hashlib
 import requests
