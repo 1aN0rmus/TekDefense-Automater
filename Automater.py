@@ -35,6 +35,7 @@ main -- Provides the instantiation point for Automater.
 Exception(s):
 No exceptions exported.
 """
+from __future__ import print_function
 
 import sys
 from siteinfo import SiteFacade, Site
@@ -65,7 +66,7 @@ def main():
 
     # if no target run and print help
     if parser.hasNoTarget():
-        print '[!] No argument given.'
+        print('[!] No argument given.')
         parser.print_help()  # need to fix this. Will later
         sys.exit()
 
