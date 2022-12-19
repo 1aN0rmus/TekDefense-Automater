@@ -126,21 +126,21 @@
             <entry>[+] Scan date submitted:</entry>
             <entry>[+] Detected Engines:</entry>
             <entry>[+] Total Engines:</entry>
-            <entry>[+] Date:</entry>
+            <entry>[+] Vendor | Classification:</entry>
         </reportstringforresult>
         <sitefriendlyname>
             <entry>VT Found</entry>
             <entry>VT Date</entry>
             <entry>VT Detected</entry>
             <entry>VT Engines</entry>
-            <entry>VT Date</entry>
+            <entry>VT Vendor_Class</entry>
         </sitefriendlyname>
         <regex>
             <entry>response_code...(1)</entry>
             <entry>scan_date....(.{18,25})\"\,</entry>
             <entry>positives...(\d{1,2})\,</entry>
             <entry>total...(\d{1,2})\,</entry>
-            <entry>\}\,\s\"(.{3,20})\"....detected...true.{19,32}result....(.{11,30})....update</entry>
+            <entry>\"([^"]{1,20})\"....detected...true.{19,32}result....([^"]{8,50})....update[^\}]*\}</entry>
         </regex>
         <fullurl>https://www.virustotal.com/vtapi/v2/file/report</fullurl>
         <importantproperty>
@@ -432,8 +432,7 @@
             <entry>ip</entry>
             <entry>hostname</entry>
         </sitetype>
-        <!--supports TLS but uses an invalid cert-->
-        <domainurl>http://totalhash.com/</domainurl>
+        <domainurl>https://totalhash.cymru.com/</domainurl>
         <reportstringforresult>
             <entry>[+] Totalhash:</entry>
         </reportstringforresult>
@@ -443,7 +442,7 @@
         <regex>
             <entry>\/analysis/(\w{40}).+(\d{4}\-\d{1,2}\-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2})</entry>
         </regex>
-        <fullurl>http://totalhash.com/network/dnsrr:*%TARGET%*%20or%20ip:%TARGET%</fullurl>
+        <fullurl>https://totalhash.cymru.com/network/dnsrr:*%TARGET%*%20or%20ip:%TARGET%</fullurl>
         <importantproperty>
             <entry>Results</entry>
         </importantproperty>
@@ -452,8 +451,7 @@
         <sitetype>
             <entry>md5</entry>
         </sitetype>
-        <!--supports TLS but uses an invalid cert-->
-        <domainurl>http://totalhash.com/</domainurl>
+        <domainurl>https://totalhash.cymru.com</domainurl>
         <reportstringforresult>
             <entry>[+] Totalhash Found SHA1:</entry>
         </reportstringforresult>
@@ -463,7 +461,7 @@
         <regex>
             <entry>\/analysis/(\w{40}).+</entry>
         </regex>
-        <fullurl>http://totalhash.com/search/hash:%TARGET%</fullurl>
+        <fullurl>https://totalhash.cymru.com/search/hash:%TARGET%</fullurl>
         <importantproperty>
             <entry>Results</entry>
         </importantproperty>
